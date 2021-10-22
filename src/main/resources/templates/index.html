@@ -70,7 +70,7 @@
 <main role="main" class="flex-shrink-0">
   <div class="container pt-2">
     <h4 class="pt-4 py-2">Подборка популярных товаров</h4>
-    <div class="card-deck row row-cols-1 row-cols-sm-2 row-cols-lg-4">
+    <div id="items" class="card-deck row row-cols-1 row-cols-sm-2 row-cols-lg-4">
       <div th:each="item: ${mainPageDto.getPopularItem()}">
         <a class="text-decoration-none text-reset" th:href="@{'item/' + ${item.getId()}}">
           <div class="gcard">
@@ -79,7 +79,7 @@
               <h5 class="card-title" th:text="${item.getName()}">NAME</h5>
               <p class="font-weight-bold">Цена: <span class="text-danger" th:text="${item.getPrice().intValue()}">PRICE</span></p>
               <p th:text="${item.getDescription().substring(0, 50) + '...'}">DESCRIPTION</p>
-              <a th:href="@{'cart/' + ${item.getId()}}" class="btn btn-primary btn-sm">В корзину</a>
+              <a href="#" th:attr="data-item-id=${item.id}" class="btn btn-primary btn-sm">В корзину</a>
             </div>
           </div>
         </a>
@@ -208,5 +208,6 @@
         integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF"
         crossorigin="anonymous"></script>
 <script th:src="@{/js/cart.js}"></script>
+<script th:src="@{/js/main.js}"></script>
 </body>
 </html>

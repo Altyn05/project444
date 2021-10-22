@@ -1,9 +1,6 @@
 package com.amr.project.model.dto;
 
-import com.amr.project.model.entity.Country;
-import com.amr.project.model.entity.Image;
 import lombok.*;
-import org.mapstruct.Mapper;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -43,7 +40,7 @@ public class ItemDto {
         return null;
     }
 
-    public Long getRating() {
+    public Long countRating() {
         if (!reviews.isEmpty()) {
             return Math.round(reviews.stream().mapToDouble(ReviewDto::getRating).sum() / reviews.size());
         }
