@@ -16,4 +16,11 @@ public class ShowMainPageDTO {
     List<CategoryMainPageDto> category;
     String items;
     String shops;
+    long itemsCount;
+    long shopsCount;
+    int totalItemPages;
+    int totalShopPages;
+    int itemPage;
+    int shopPage;
+    
 }

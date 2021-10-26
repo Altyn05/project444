@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class MainPageController {
+    private static final int ITEMS_PER_PAGE = 4;
+    private static final int SHOPS_PER_PAGE = 6;
 
     private final ShowMainPageService showMainPageService;
 
@@ -21,20 +23,31 @@ public class MainPageController {
     }
 
     @GetMapping
-    public String showMainPage(@RequestParam(value = "searchName", required = false) String searchName, Model model) {
+    public String showMainPage(
+            @RequestParam(value = "searchName", required = false) String searchName
+            , @RequestParam(value = "itemPage", defaultValue = "1") int itemPage
+            , @RequestParam(value = "shopPage", defaultValue = "1") int shopPage
+            , Model model
+    ) {
         ShowMainPageDTO showMainPageDTO;
+        
         if (searchName != null){
-            showMainPageDTO = showMainPageService.showSearch(searchName);
+            showMainPageDTO = showMainPageService.showSearch(searchName, itemPage, ITEMS_PER_PAGE, shopPage, SHOPS_PER_PAGE);
         } else {
-            showMainPageDTO = showMainPageService.show();
+            showMainPageDTO = showMainPageService.show(itemPage, ITEMS_PER_PAGE, shopPage, SHOPS_PER_PAGE);
         }
         model.addAttribute("mainPageDto", showMainPageDTO);
         return "index";
     }
 
     @GetMapping("/category/{id}")
-    public String showMainCategory(Model model, @PathVariable Long id) {
- //       model.addAttribute("mainPageDto", showMainPageService.findItemsByCategory(id));
+    public String showMainCategory(
+            Model model
+            , @PathVariable Long id
+            , @RequestParam(value = "itemPage", defaultValue = "1") int itemPage
+            , @RequestParam(value = "shopPage", defaultValue = "1") int shopPage
+    ) {
+       model.addAttribute("mainPageDto", showMainPageService.findItemsByCategory(id, itemPage, ITEMS_PER_PAGE, shopPage, SHOPS_PER_PAGE));
         return "index";
     }
 }
