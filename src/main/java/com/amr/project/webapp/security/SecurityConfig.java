@@ -1,6 +1,8 @@
 package com.amr.project.webapp.security;
 
+import com.amr.project.oauth2.OAuth2LoginSuccessHandler;
 import com.amr.project.webapp.security.handler.LoginSuccessHandler;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,7 +16,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserDetailsService userDetailsService;
     private final LoginSuccessHandler loginSuccessHandler;
-    
+
+    @Autowired
+    private OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
+
     public SecurityConfig(UserDetailsService userDetailsService, LoginSuccessHandler loginSuccessHandler) {
         this.userDetailsService = userDetailsService;
         this.loginSuccessHandler = loginSuccessHandler;
@@ -24,8 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
                 .userDetailsService(userDetailsService)
-                .passwordEncoder(passwordEncoder())
-        ;
+                .passwordEncoder(passwordEncoder());
     }
     
     @Override
@@ -36,11 +40,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 
                 .and()
                 .authorizeRequests()
-                .antMatchers("/").permitAll()
+                .antMatchers("/", "/error").permitAll()
                 .antMatchers("/sign").anonymous()
                 .antMatchers("/user/**").hasAnyAuthority("USER", "ADMIN")
                 .antMatchers("/admin/**").hasAuthority("ADMIN")
-                
+
                 .and()
                 .formLogin()
                 .loginPage("/")
@@ -48,7 +52,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginProcessingUrl("/")
                 .usernameParameter("username")
                 .passwordParameter("password")
-                
+
+                .and()
+                .oauth2Login()
+                .successHandler(oAuth2LoginSuccessHandler)
+
                 .and()
                 .logout()
                 .logoutUrl("/logout")
