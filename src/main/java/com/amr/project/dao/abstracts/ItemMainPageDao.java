@@ -2,14 +2,15 @@ package com.amr.project.dao.abstracts;
 
 
 import com.amr.project.model.entity.Item;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
 public interface ItemMainPageDao extends ReadWriteDao<Item, Long> {
 
-    List<Item> findItemsByCategoryId(Long categoryId, int page, int itemsPerPage);
-    List<Item> findPopularItems(int page, int itemsPerPage);
-    List<Item> searchItems(String search, int page, int itemsPerPage);
-    long itemsCount();
+    Page<Item> findItemsByCategoryId(Long categoryId, Pageable pageable);
+    Page<Item> findPopularItems(Pageable pageable);
+    Page<Item> searchItems(String search, Pageable pageable);
 }
 

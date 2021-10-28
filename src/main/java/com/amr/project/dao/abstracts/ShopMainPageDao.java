@@ -1,12 +1,11 @@
 package com.amr.project.dao.abstracts;
 
 import com.amr.project.model.entity.Shop;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface ShopMainPageDao extends ReadWriteDao<Shop, Long> {
-    List<Shop> findPopularShops(int page, int itemsPerPage);
-    List<Shop> searchShops(String search, int page, int itemsPerPage);
-    long shopsCount();
+    Page<Shop> findPopularShops(Pageable pageable);
+    Page<Shop> searchShops(String search, Pageable pageable);
 
 }

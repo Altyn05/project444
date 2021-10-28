@@ -24,4 +24,5 @@ public interface ShopMapper {
 
     List<ShopMainPageDTO> shopListToListShopMainPageDTO(List<Shop> list);
 
+    ShopMainPageDTO shopToSHopMainPageDTO(Shop shop);
 }

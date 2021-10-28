@@ -1,9 +1,10 @@
 package com.amr.project.webapp.controller;
 
-
 import com.amr.project.model.dto.ShowMainPageDTO;
 import com.amr.project.service.abstracts.ShowMainPageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,9 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class MainPageController {
-    private static final int ITEMS_PER_PAGE = 4;
-    private static final int SHOPS_PER_PAGE = 6;
-
     private final ShowMainPageService showMainPageService;
 
     @Autowired
@@ -24,30 +22,46 @@ public class MainPageController {
 
     @GetMapping
     public String showMainPage(
-            @RequestParam(value = "searchName", required = false) String searchName
-            , @RequestParam(value = "itemPage", defaultValue = "1") int itemPage
-            , @RequestParam(value = "shopPage", defaultValue = "1") int shopPage
-            , Model model
+            Model model,
+            @RequestParam(value = "searchName", defaultValue = "") String searchName,
+            @RequestParam(value = "itemPage", defaultValue = "0") int itemPage,
+            @RequestParam(value = "itemSize", defaultValue = "4") int itemSize,
+            @RequestParam(value = "shopPage", defaultValue = "0") int shopPage,
+            @RequestParam(value = "shopSize", defaultValue = "6") int shopSize
     ) {
+        if (itemPage < 0) {
+            itemPage = 0;
+        }
+        if (shopPage < 0) {
+            shopPage = 0;
+        }
+        Pageable itemPageable = PageRequest.of(itemPage, itemSize);
+        Pageable shopPageable = PageRequest.of(shopPage, shopSize);
         ShowMainPageDTO showMainPageDTO;
         
-        if (searchName != null){
-            showMainPageDTO = showMainPageService.showSearch(searchName, itemPage, ITEMS_PER_PAGE, shopPage, SHOPS_PER_PAGE);
+        if ("".equals(searchName)){
+            showMainPageDTO = showMainPageService.show(itemPageable, shopPageable);
         } else {
-            showMainPageDTO = showMainPageService.show(itemPage, ITEMS_PER_PAGE, shopPage, SHOPS_PER_PAGE);
+            showMainPageDTO = showMainPageService
+                    .showSearch(searchName, itemPageable, shopPageable);
         }
-        model.addAttribute("mainPageDto", showMainPageDTO);
+        model.addAttribute("mainPageDto", showMainPageDTO)
+                .addAttribute("searchName", searchName);
         return "index";
     }
 
     @GetMapping("/category/{id}")
     public String showMainCategory(
-            Model model
-            , @PathVariable Long id
-            , @RequestParam(value = "itemPage", defaultValue = "1") int itemPage
-            , @RequestParam(value = "shopPage", defaultValue = "1") int shopPage
+            Model model,
+            @PathVariable Long id,
+            @RequestParam(value = "itemPage", defaultValue = "0") int itemPage,
+            @RequestParam(value = "itemSize", defaultValue = "4") int itemSize,
+            @RequestParam(value = "shopPage", defaultValue = "0") int shopPage,
+            @RequestParam(value = "shopSize", defaultValue = "6") int shopSize
     ) {
-       model.addAttribute("mainPageDto", showMainPageService.findItemsByCategory(id, itemPage, ITEMS_PER_PAGE, shopPage, SHOPS_PER_PAGE));
+        Pageable itemPageable = PageRequest.of(itemPage, itemSize);
+        Pageable shopPageable = PageRequest.of(shopPage, shopSize);
+        model.addAttribute("mainPageDto", showMainPageService.findItemsByCategory(id, itemPageable, shopPageable));
         return "index";
     }
 }

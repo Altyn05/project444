@@ -2,33 +2,40 @@ package com.amr.project.dao.impl;
 
 import com.amr.project.dao.abstracts.ShopMainPageDao;
 import com.amr.project.model.entity.Shop;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
-
 import java.util.List;
 
 @Repository
-public class ShopMainPageDaoImpl extends ReadWriteDaoImpl<Shop, Long> implements ShopMainPageDao {
+public class ShopMainPageDaoImpl extends ReadWriteDaoImpl<Shop, Long>
+        implements ShopMainPageDao {
 
     @Override
-    public List<Shop> findPopularShops(int page, int itemsPerPage) {
-        return em.createQuery("Select u from Shop u order by u.rating DESC", Shop.class)
-                .setFirstResult((page - 1) * itemsPerPage)
-                .setMaxResults(itemsPerPage)
+    public Page<Shop> findPopularShops(Pageable pageable) {
+        List<Shop> list = em.createQuery(
+                "Select s from Shop s order by s.rating DESC", Shop.class)
+                .setFirstResult((int) pageable.getOffset())
+                .setMaxResults(pageable.getPageSize())
                 .getResultList();
-    }
-    
-    @Override
-    public List<Shop> searchShops(String search, int page, int itemsPerPage) {
-        return em.createQuery("select sh from Shop sh where sh.name LIKE :param", Shop.class)
-                .setParameter("param", "%" + search + "%")
-                .setFirstResult((page - 1) * itemsPerPage)
-                .setMaxResults(itemsPerPage)
-                .getResultList();
-    }
-    
-    @Override
-    public long shopsCount() {
-        return (long) em.createQuery("SELECT COUNT(s.id) FROM Shop s")
+        long size = (long) em.createQuery("Select COUNT(s.id) from Shop s")
                 .getSingleResult();
+        return new PageImpl<>(list, pageable, size);
+    }
+    
+    @Override
+    public Page<Shop> searchShops(String search, Pageable pageable) {
+        List<Shop> list = em.createQuery(
+                "select s from Shop s where s.name LIKE :param", Shop.class)
+                .setParameter("param", "%" + search + "%")
+                .setFirstResult((int) pageable.getOffset())
+                .setMaxResults(pageable.getPageSize())
+                .getResultList();
+        long size = (long) em.createQuery(
+                "select COUNT(s.id) from Shop s where s.name LIKE :param")
+                .setParameter("param", "%" + search + "%")
+                .getSingleResult();
+        return new PageImpl<>(list, pageable, size);
     }
 }
