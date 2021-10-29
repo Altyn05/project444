@@ -30,6 +30,8 @@
                         Каталог
                     </button>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/">Все товары</a>
+                        <div class="dropdown-divider"></div>
                         <a class="dropdown-item" th:href="@{/category/{categoryId}/(categoryId=${category.getId()})}"
                            th:each="category: ${mainPageDto.getCategory()}">
                             <th:block th:text="${category.getName()}"></th:block>
