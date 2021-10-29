@@ -43,6 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/", "/error").permitAll()
                 .antMatchers("/sign").anonymous()
                 .antMatchers("/user/**").hasAnyAuthority("USER", "ADMIN")
+                .antMatchers("/user/**").hasRole("USER")
                 .antMatchers("/admin/**").hasAuthority("ADMIN")
 
                 .and()
@@ -55,7 +56,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .and()
                 .oauth2Login()
-                .successHandler(oAuth2LoginSuccessHandler)
 
                 .and()
                 .logout()

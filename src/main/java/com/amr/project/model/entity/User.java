@@ -26,6 +26,11 @@ public class User implements UserDetails {
     private String lastName;
     private int age;
 
+    @Column(name = "auth_provider")
+    private String authProvider;
+    @Column(name = "id_provider")
+    private String idProvider;
+
     @ManyToMany
     @JoinTable(
             name = "users_addresses",
@@ -34,7 +39,7 @@ public class User implements UserDetails {
     )
     private List<Address> address;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.REFRESH)
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),

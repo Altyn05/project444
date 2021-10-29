@@ -8,10 +8,13 @@ import com.amr.project.model.entity.User;
 import com.amr.project.service.abstracts.UserService;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
+@Transactional
 public class UserServiceImpl extends ReadWriteServiceImpl<User, Long> implements UserService {
     private UserDao userDao;
     private RoleDao roleDao;
@@ -32,7 +35,13 @@ public class UserServiceImpl extends ReadWriteServiceImpl<User, Long> implements
         userDao.persist(user);
     }
 
+    @Override
     public User findUserByUsername(String username) {
         return userDao.findUserByUsername(username);
+    }
+
+    @Override
+    public Optional<User> findUserByEmail(String email) {
+        return userDao.findUserByEmail(email);
     }
 }

@@ -7,8 +7,16 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class RoleDaoImpl extends ReadWriteDaoImpl<Role, Long> implements RoleDao {
 
+    @Override
     public Role getRoleById(Long id) {
         return em.createQuery("select u from Role u where u.id=:id", Role.class)
                 .setParameter("id", id).getSingleResult();
+    }
+
+    @Override
+    public Role getRoleByName(String name) {
+        return em.createQuery("select r from Role r where r.name = :name", Role.class)
+                .setParameter("name", name)
+                .getSingleResult();
     }
 }

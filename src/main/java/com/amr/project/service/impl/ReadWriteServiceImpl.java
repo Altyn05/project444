@@ -3,20 +3,22 @@ package com.amr.project.service.impl;
 
 import com.amr.project.dao.abstracts.ReadWriteDao;
 import com.amr.project.service.abstracts.ReadWriteService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public abstract class ReadWriteServiceImpl<T, ID> implements ReadWriteService<T, ID> {
 
     private final ReadWriteDao<T, ID> readWriteDao;
 
+    @Autowired
     protected ReadWriteServiceImpl(ReadWriteDao<T, ID> readWriteDao) {
         this.readWriteDao = readWriteDao;
     }
-
-
 
     @Override
     @Transactional
