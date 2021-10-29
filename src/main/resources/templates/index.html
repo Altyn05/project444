@@ -93,26 +93,29 @@
         </ul>
         
         <div class="card-deck row row-cols-1 row-cols-sm-2 row-cols-lg-4">
-            <div th:each="item: ${mainPageDto.popularItem.content}">
-                <a class="text-decoration-none text-reset"
-                   th:href="@{'item/' + ${item.id}}">
-                    <div class="gcard">
-                        <div class="d-flex justify-content-center">
+            <div class="d-flex"
+                 th:each="item: ${mainPageDto.popularItem.content}">
+                <div class="gcard d-flex flex-column flex-grow-1">
+                    <div>
+                        <a th:href="@{'item/' + ${item.id}}">
                             <img th:src="${item.images[0].toBase64()}"
-                                class="card-img-top" alt="фото товара">
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title" th:text="${item.name}">NAME</h5>
+                                 class="card-img-top item-img" alt="фото товара">
+                        </a>
+                    </div>
+                    <div class="card-body d-flex flex-column flex-grow-1">
+                        <a class="text-decoration-none text-reset d-flex flex-column flex-grow-1"
+                           th:href="@{'item/' + ${item.id}}">
+                            <h5 class="card-title item-title" th:text="${item.name}">NAME</h5>
                             <p class="font-weight-bold">
                                 Цена: <span class="text-danger"
                                             th:text="${item.price.intValue()}">PRICE</span>
                             </p>
-                            <p th:text="${item.description.substring(0, 50) + '...'}">DESCRIPTION</p>
+                            <p class="flex-grow-1" th:text="${item.description.substring(0, 50) + '...'}">DESCRIPTION</p>
                             <a th:href="@{'cart/' + ${item.id}}"
-                               class="btn btn-primary btn-sm">В корзину</a>
-                        </div>
+                               class="btn btn-primary btn-sm w-100">В корзину</a>
+                        </a>
                     </div>
-                </a>
+                </div>
             </div>
         </div>
             <nav aria-label="Popular items page navigation">
@@ -183,7 +186,7 @@
                 <div class="gcard">
                     <div class="d-flex justify-content-center"><img
                             th:src="${shop.logo.toBase64()}"
-                            class="card-img-top" alt="лого магазина"></div>
+                            class="card-img-top shop-img" alt="лого магазина"></div>
                     <div class="card-body">
                         <h5 class="card-title" th:text="${shop.name}">
                             NAME</h5>
