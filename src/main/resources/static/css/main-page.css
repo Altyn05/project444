@@ -1,6 +1,8 @@
+
 .size .page-link {
     color: grey;
 }
+
 .size > .page-item.active > .page-link {
     border-color: grey;
     background-color: grey;
@@ -9,6 +11,11 @@
 .item-img {
     height: 200px;
     object-fit: cover;
+}
+
+.shop-img {
+    height: 100px;
+    object-fit: contain;
 }
 
 .item-title {
