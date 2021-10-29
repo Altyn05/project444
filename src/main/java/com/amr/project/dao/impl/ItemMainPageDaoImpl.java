@@ -1,11 +1,9 @@
 package com.amr.project.dao.impl;
 
-
 import com.amr.project.dao.abstracts.ItemMainPageDao;
 import com.amr.project.model.entity.Item;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
@@ -66,13 +64,5 @@ public class ItemMainPageDaoImpl extends ReadWriteDaoImpl<Item, Long>
                 .getResultList();
 
         return new PageImpl<>(list, pageable, size);
-    }
-
-    private Pageable pageCheck(long size, Pageable p) {
-        long lastPage = (size - 1) / p.getPageSize();
-        if (p.getOffset() > lastPage * p.getPageSize()) {
-            return PageRequest.of((int) lastPage, p.getPageSize());
-        }
-        return p;
     }
 }

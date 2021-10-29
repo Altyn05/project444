@@ -5,6 +5,8 @@ import org.hibernate.metamodel.internal.MetamodelImpl;
 import org.hibernate.persister.entity.EntityPersister;
 import org.hibernate.persister.entity.SingleTableEntityPersister;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -88,5 +90,16 @@ public abstract class ReadWriteDaoImpl<T, ID> implements ReadWriteDao<T, ID> {
         } else {
             throw new IllegalArgumentException(modelClazz + " does not map to a single table.");
         }
+    }
+
+    protected Pageable pageCheck(long size, Pageable p) {
+        if (p.isUnpaged()) {
+            return p;
+        }
+        long lastPage = (size - 1) / p.getPageSize();
+        if (p.getOffset() > lastPage * p.getPageSize()) {
+            return PageRequest.of((int) lastPage, p.getPageSize());
+        }
+        return p;
     }
 }

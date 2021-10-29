@@ -4,9 +4,9 @@ import com.amr.project.dao.abstracts.ShopMainPageDao;
 import com.amr.project.model.entity.Shop;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
+
 import java.util.List;
 
 @Repository
@@ -44,13 +44,5 @@ public class ShopMainPageDaoImpl extends ReadWriteDaoImpl<Shop, Long>
                 .setMaxResults(pageable.getPageSize())
                 .getResultList();
         return new PageImpl<>(list, pageable, size);
-    }
-
-    private Pageable pageCheck(long size, Pageable p) {
-        long lastPage = (size - 1) / p.getPageSize();
-        if (p.getOffset() > lastPage * p.getPageSize()) {
-            return PageRequest.of((int) lastPage, p.getPageSize());
-        }
-        return p;
     }
 }

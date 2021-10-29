@@ -75,10 +75,10 @@
         <!-- Number of items per page -->
         <ul class="pagination pagination-sm justify-content-end mb-0 size">
             <li class="page-item disabled">
-                <a href="#" class="page-link">Показывать по:</a>
+                <a href="#" class="page-link">Показывать:</a>
             </li>
             <li class="page-item"
-                th:each="i : ${pageSizes}"
+                th:each="i : ${itemPageSizes}"
                 th:classappend="${mainPageDto.popularItem.size == i} ? 'active'">
                 <a class="page-link"
                    th:href="@{./(searchName = ${searchName},
@@ -86,7 +86,7 @@
                                 itemSize = ${i},
                                 shopPage = ${mainPageDto.popularShop.number},
                                 shopSize = ${mainPageDto.popularShop.size})}"
-                   th:text="${i}"></a>
+                   th:text="${i > 100 ? 'Все' : i}"></a>
             </li>
         </ul>
         
@@ -160,10 +160,10 @@
         <!-- Number of items per page -->
         <ul class="pagination pagination-sm justify-content-end mb-0 size">
             <li class="page-item disabled">
-                <a href="#" class="page-link">Показывать по:</a>
+                <a href="#" class="page-link">Показывать:</a>
             </li>
             <li class="page-item"
-                th:each="i : ${pageSizes}"
+                th:each="i : ${shopPageSizes}"
                 th:classappend="${mainPageDto.popularShop.size == i} ? 'active'">
                 <a class="page-link"
                    th:href="@{./(searchName = ${searchName},
@@ -171,7 +171,7 @@
                                 itemSize = ${mainPageDto.popularItem.size},
                                 shopPage = ${mainPageDto.popularShop.number},
                                 shopSize = ${i})}"
-                   th:text="${i}"></a>
+                   th:text="${i > 100 ? 'Все' : i}"></a>
             </li>
         </ul>
         

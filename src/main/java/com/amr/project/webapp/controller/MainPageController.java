@@ -13,7 +13,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class MainPageController {
-    private static final int[] PAGE_SIZE = new int[]{1, 2, 3, 4, 5, 6, 8, 10};
+    private static final int[] ITEM_PAGE_SIZE =
+            new int[]{4, 12, 24, 48, Integer.MAX_VALUE};
+    private static final int[] SHOP_PAGE_SIZE =
+            new int[]{6, 12, 24, 48, Integer.MAX_VALUE};
 
     private final ShowMainPageService showMainPageService;
 
@@ -31,16 +34,10 @@ public class MainPageController {
             @RequestParam(value = "shopPage", defaultValue = "0") int shopPage,
             @RequestParam(value = "shopSize", defaultValue = "6") int shopSize
     ) {
-        if (itemPage < 0) {
-            itemPage = 0;
-        }
-        if (shopPage < 0) {
-            shopPage = 0;
-        }
         Pageable itemPageable = PageRequest.of(itemPage, itemSize);
         Pageable shopPageable = PageRequest.of(shopPage, shopSize);
+
         ShowMainPageDTO showMainPageDTO;
-        
         if (searchName.isBlank()){
             showMainPageDTO = showMainPageService
                     .show(itemPageable, shopPageable);
@@ -50,7 +47,8 @@ public class MainPageController {
         }
         model.addAttribute("mainPageDto", showMainPageDTO)
                 .addAttribute("searchName", searchName)
-                .addAttribute("pageSizes", PAGE_SIZE);
+                .addAttribute("itemPageSizes", ITEM_PAGE_SIZE)
+                .addAttribute("shopPageSizes", SHOP_PAGE_SIZE);
         return "index";
     }
 
@@ -61,12 +59,14 @@ public class MainPageController {
             @RequestParam(value = "itemPage", defaultValue = "0") int itemPage,
             @RequestParam(value = "itemSize", defaultValue = "4") int itemSize,
             @RequestParam(value = "shopPage", defaultValue = "0") int shopPage,
-            @RequestParam(value = "shopSize", defaultValue = "4") int shopSize
+            @RequestParam(value = "shopSize", defaultValue = "6") int shopSize
     ) {
         Pageable itemPageable = PageRequest.of(itemPage, itemSize);
         Pageable shopPageable = PageRequest.of(shopPage, shopSize);
+
         model.addAttribute("mainPageDto", showMainPageService.findItemsByCategory(id, itemPageable, shopPageable))
-                .addAttribute("pageSizes", PAGE_SIZE);
+                .addAttribute("itemPageSizes", ITEM_PAGE_SIZE)
+                .addAttribute("shopPageSizes", SHOP_PAGE_SIZE);
         return "index";
     }
 }
