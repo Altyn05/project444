@@ -1,0 +1,7 @@
+.size .page-link {
+    color: grey;
+}
+.size > .page-item.active > .page-link {
+    border-color: grey;
+    background-color: grey;
+}

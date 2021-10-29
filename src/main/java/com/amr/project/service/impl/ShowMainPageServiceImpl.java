@@ -29,15 +29,20 @@ public class ShowMainPageServiceImpl implements ShowMainPageService {
     private final CategoryMapper categoryMapper = Mappers.getMapper(CategoryMapper.class);
 
     @Autowired
-    public ShowMainPageServiceImpl(ItemMainPageDao itemMainPageDao, ShopMainPageDao shopMainPageDao,
-                                   CategoryDao categoryDao) {
+    public ShowMainPageServiceImpl(
+            ItemMainPageDao itemMainPageDao,
+            ShopMainPageDao shopMainPageDao,
+            CategoryDao categoryDao
+    ) {
         this.itemMainPageDao = itemMainPageDao;
         this.shopMainPageDao = shopMainPageDao;
         this.categoryDao = categoryDao;
     }
     
     @Override
-    public ShowMainPageDTO showSearch(String s, Pageable itemPages, Pageable shopPages) {
+    public ShowMainPageDTO showSearch(
+            String s, Pageable itemPages, Pageable shopPages
+    ) {
         return new ShowMainPageDTO(
                 shopPageConverter(shopMainPageDao.searchShops(s, shopPages)),
                 itemPageConverter(itemMainPageDao.searchItems(s, itemPages)),
@@ -49,7 +54,9 @@ public class ShowMainPageServiceImpl implements ShowMainPageService {
     }
 
     @Override
-    public ShowMainPageDTO findItemsByCategory(Long categoryId, Pageable itemPages, Pageable shopPages) {
+    public ShowMainPageDTO findItemsByCategory(
+            Long categoryId, Pageable itemPages, Pageable shopPages
+    ) {
         return new ShowMainPageDTO(
                 shopPageConverter(
                         shopMainPageDao.findPopularShops(shopPages)),
@@ -61,7 +68,6 @@ public class ShowMainPageServiceImpl implements ShowMainPageService {
                 "Подборка популярных магазинов"
         );
     }
-
 
     @Override
     public ShowMainPageDTO show(Pageable itemPages, Pageable shopPages) {
