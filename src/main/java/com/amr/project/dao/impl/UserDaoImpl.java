@@ -21,4 +21,12 @@ public class UserDaoImpl extends ReadWriteDaoImpl<User, Long> implements UserDao
                 .findAny();
     }
 
+    @Override
+    public Optional<User> findUserByIdProvider(String id) {
+        return em.createQuery("select u from User u where u.idProvider = :id", User.class)
+                .setParameter("id", id)
+                .getResultStream()
+                .findAny();
+    }
+
 }

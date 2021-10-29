@@ -10,7 +10,6 @@ import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserRequest;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
-import org.springframework.security.oauth2.core.OAuth2Error;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Service;
 
@@ -34,42 +33,23 @@ public class CustomOidcUserService extends OidcUserService {
     @Override
     public OidcUser loadUser(OidcUserRequest userRequest) throws OAuth2AuthenticationException {
         oidcUser = new CustomOidcUser(super.loadUser(userRequest));
-        processAuthUser(userRequest);
+        Optional<User> existingUser = userService.findUserByIdProvider(oidcUser.getAttribute("sub"));
+        if (existingUser.isPresent()) {
+            updateExistingUser(existingUser.get());
+        } else {
+            registerNewUser(userRequest);
+        }
         return  oidcUser;
     }
 
-    private void processAuthUser(OAuth2UserRequest userRequest) {
-        if (Objects.isNull(oidcUser.getEmail())) {
-            throw new OAuth2AuthenticationException(new OAuth2Error("При аутентификации oidc-пользователя не найден email"));
-        }
-
-        Optional<User> OptionalUser = userService.findUserByEmail(oidcUser.getEmail());
-        User existingUser;
-        if (OptionalUser.isPresent()) {
-            existingUser = OptionalUser.get();
-            if (!existingUser.getAuthProvider().equals(userRequest.getClientRegistration().getRegistrationId())) {
-                throw new OAuth2AuthenticationException(new OAuth2Error(
-                        "Вы уже зарегистрированы с учетной записью " + existingUser.getAuthProvider() +
-                                ". Пожалйста, войдите со своего " + existingUser.getAuthProvider() + " аккаунта."
-                ));
-            }
-            updateExistingUser(existingUser, oidcUser);
-        } else {
-            registerNewUser(userRequest, oidcUser);
-        }
-    }
-
-    private void updateExistingUser(User user, OidcUser oidcUser) {
+    private void updateExistingUser(User user) {
         user.setUsername(oidcUser.getName());
-        user.setFirstName(oidcUser.getGivenName());
-        user.setLastName(oidcUser.getFamilyName());
+        user.setEmail(oidcUser.getEmail());
         userService.update(user);
     }
 
-    private void registerNewUser(OAuth2UserRequest userRequest, OidcUser oidcUser) {
+    private void registerNewUser(OAuth2UserRequest userRequest) {
         User user = new User();
-        user.setFirstName(oidcUser.getGivenName());
-        user.setLastName(oidcUser.getFamilyName());
         user.setUsername(oidcUser.getName());
         user.setEmail(oidcUser.getEmail());
         user.addRole(roleService.getRoleByName("USER"));
@@ -77,7 +57,7 @@ public class CustomOidcUserService extends OidcUserService {
         userImage.ImageFromURL(oidcUser.getPicture());
         user.addImage(userImage);
         user.setAuthProvider(userRequest.getClientRegistration().getRegistrationId());
-        user.setIdProvider((oidcUser.getIdToken().getClaim("sub")));
+        user.setIdProvider((oidcUser.getAttribute("sub")));
         user.getImages().forEach(imageService::persist);
         userService.persist(user);
     }

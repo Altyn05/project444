@@ -7,11 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
-import org.springframework.security.oauth2.core.OAuth2Error;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -30,29 +28,13 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         oauth2User = new CustomOAuth2User(super.loadUser(userRequest));
-        processAuthUser(userRequest);
-        return oauth2User;
-    }
-
-    private void processAuthUser(OAuth2UserRequest userRequest) {
-        if (Objects.isNull(oauth2User.getEmail())) {
-            throw new OAuth2AuthenticationException(new OAuth2Error("При аутентификации oidc-пользователя не найден email"));
-        }
-
-        Optional<User> OptionalUser = userService.findUserByEmail(oauth2User.getEmail());
-        User existingUser;
-        if (OptionalUser.isPresent()) {
-            existingUser = OptionalUser.get();
-            if (!existingUser.getAuthProvider().equals(userRequest.getClientRegistration().getRegistrationId())) {
-                throw new OAuth2AuthenticationException(new OAuth2Error(
-                        "Вы уже зарегистрированы с учетной записью " + existingUser.getAuthProvider() +
-                                ". Пожалйста, войдите со своего " + existingUser.getAuthProvider() + " аккаунта."
-                ));
-            }
-            updateExistingUser(existingUser);
+        Optional<User> existingUser = userService.findUserByIdProvider(oauth2User.getAttribute("id"));
+        if (existingUser.isPresent()) {
+            updateExistingUser(existingUser.get());
         } else {
             registerNewUser(userRequest);
         }
+        return oauth2User;
     }
 
     private void updateExistingUser(User user) {

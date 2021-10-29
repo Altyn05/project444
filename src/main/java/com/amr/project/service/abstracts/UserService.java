@@ -9,4 +9,5 @@ public interface UserService {
     void registerNewUser(User user);
     User findUserByUsername(String username);
     Optional<User> findUserByEmail(String email);
+    Optional<User> findUserByIdProvider(String id);
 }
