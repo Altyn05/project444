@@ -45,6 +45,8 @@ public class CustomOidcUserService extends OidcUserService {
     private void updateExistingUser(User user) {
         user.setUsername(oidcUser.getName());
         user.setEmail(oidcUser.getEmail());
+        user.setFirstName(oidcUser.getGivenName());
+        user.setLastName(oidcUser.getFamilyName());
         userService.update(user);
     }
 
@@ -52,6 +54,8 @@ public class CustomOidcUserService extends OidcUserService {
         User user = new User();
         user.setUsername(oidcUser.getName());
         user.setEmail(oidcUser.getEmail());
+        user.setFirstName(oidcUser.getGivenName());
+        user.setLastName(oidcUser.getFamilyName());
         user.addRole(roleService.getRoleByName("USER"));
         Image userImage = new Image();
         userImage.ImageFromURL(oidcUser.getPicture());
@@ -60,6 +64,7 @@ public class CustomOidcUserService extends OidcUserService {
         user.setIdProvider((oidcUser.getAttribute("sub")));
         user.getImages().forEach(imageService::persist);
         userService.persist(user);
+
     }
 
 }
