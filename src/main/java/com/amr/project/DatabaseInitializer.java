@@ -120,7 +120,7 @@ public class DatabaseInitializer {
 
         users.add(getUser("Ivan", "Ivanov", Gender.MALE, path + "0.jpg"));
         users.add(getUser("Vasily", "Vasiliev", Gender.MALE, path + "1.jpg"));
-        users.add(getUser("Piter", "Petrov", Gender.MALE, path + "2.jpg"));
+//        users.add(getUser("Piter", "Petrov", Gender.MALE, path + "2.jpg"));
 //        users.add(getUser("Irina", "Irinova", Gender.FEMALE, path + "3.jpg"));
 //        users.add(getUser("Sveta", "Svetova", Gender.FEMALE, path + "4.jpg"));
 //        users.add(getUser("Alex", "Alexeev", Gender.MALE, path + "5.jpg"));

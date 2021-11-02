@@ -32,7 +32,7 @@
             <div class="navbar-nav">
                 <img class="nav-link" style="max-height: 40px"
                      src="https://seeklogo.com/images/S/shop-direct-logo-D86EF9FED5-seeklogo.com.png" alt="logo" />
-                <a class="nav-link" href="#">Магазины</a>
+                <a class="nav-link" href="#" onclick = "openShops()">Магазины</a>
                 <a class="nav-link" href="#">Товары</a>
                 <a class="nav-link" href="#">Избранное</a>
                 <a class="nav-link" href="#">еще...</a>
@@ -61,7 +61,7 @@
                             <li><a class="dropdown-item" href="#">Избранное</a></li>
                             <li class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="#">История заказов</a></li>
-                            <li><a class="dropdown-item" href="#">Мои Магазины</a></li>
+                            <li><a class="dropdown-item" href="#" onclick = "openShops()">Мои Магазины</a></li>
                             <li><a class="dropdown-item" href="#">Мои Заказы</a></li>
                             <li class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="#" onclick="return openSettings();">Настройки</a></li>
@@ -167,15 +167,9 @@
             <div class="tab-content" id="pills-tabContent">
                 <div class="tab-pane fade show active" id="pills-shops" role="tabpanel"
                      aria-labelledby="pills-shops-tab">
-                    Магазины здесь
-
-                        <frame src="http://www.kakprosto.ru" />
-                        <frame src="http://www.sapato.ru" />
-
-                    <p>блабла</p>
-                    <ul class = "usershops">
-                        <!-- Shops -->
-                    </ul>
+                    <table class = "usershops table">
+                        <!-- Shops from script user_page_shops.js  -->
+                    </table>
                 </div>
                 <div class="tab-pane fade" id="pills-orders" role="tabpanel" aria-labelledby="pills-orders-tab">
                     Заказы здесь</div>
@@ -280,6 +274,7 @@
 <script src="/js/user_page/user_page_tabs.js"></script>
 <script src="/js/user_page/user_page_profile.js"></script>
 <script src="/js/user_page/user_page_shops.js"></script>
+
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
