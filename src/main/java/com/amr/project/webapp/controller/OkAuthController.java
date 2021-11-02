@@ -91,7 +91,7 @@ public class OkAuthController {
             user.setUsername(jsonUser.getString("uid"));
             user.setAge(jsonUser.getInt("age"));
             user.setEmail(jsonUser.getString("uid"));
-            user.addRole(roleService.getRoleByName("USER"));
+            roleService.getRoleByName("USER").ifPresent(user::addRole);
         }
 
         return user;

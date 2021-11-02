@@ -67,7 +67,7 @@ public class CustomOidcUserService extends OidcUserService {
         user.setEmail(oidcUser.getEmail());
         user.setFirstName(oidcUser.getGivenName());
         user.setLastName(oidcUser.getFamilyName());
-        user.addRole(roleService.getRoleByName("USER"));
+        roleService.getRoleByName("USER").ifPresent(user::addRole);
         Image userImage = new Image();
         userImage.ImageFromURL(oidcUser.getPicture());
         user.addImage(userImage);

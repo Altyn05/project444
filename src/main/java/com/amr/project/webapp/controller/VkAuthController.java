@@ -97,7 +97,7 @@ public class VkAuthController {
             user.setLastName(jsonUser.getString("last_name"));
             user.setUsername(((VKOAuth2AccessToken) accessToken).getEmail());
             user.setEmail(((VKOAuth2AccessToken) accessToken).getEmail());
-            user.addRole(roleService.getRoleByName("USER"));
+            roleService.getRoleByName("USER").ifPresent(user::addRole);
         }
         return user;
     }

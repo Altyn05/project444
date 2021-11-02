@@ -2,6 +2,7 @@ package com.amr.project.dao.impl;
 
 import com.amr.project.dao.abstracts.UserDao;
 import com.amr.project.model.entity.User;
+import com.amr.project.util.SingleResultUtil;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -15,18 +16,14 @@ public class UserDaoImpl extends ReadWriteDaoImpl<User, Long> implements UserDao
 
     @Override
     public Optional<User> findUserByEmail(String email) {
-        return em.createQuery("select u from User u where u.email = :email", User.class)
-                .setParameter("email", email)
-                .getResultStream()
-                .findAny();
+        return SingleResultUtil.getSingleResultOrNull(
+                em.createQuery("select u from User u where u.email = :email", User.class).setParameter("email", email));
     }
 
     @Override
     public Optional<User> findUserByIdProvider(String id) {
-        return em.createQuery("select u from User u where u.idProvider = :id", User.class)
-                .setParameter("id", id)
-                .getResultStream()
-                .findAny();
+        return SingleResultUtil.getSingleResultOrNull(
+                em.createQuery("select u from User u where u.idProvider = :id", User.class).setParameter("id", id));
     }
 
 }
