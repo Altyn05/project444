@@ -18,7 +18,7 @@ public class CustomOidcUser implements OidcUser {
 
     @Override
     public String getName() {
-        return oidcUser.getFullName();
+        return oidcUser.getEmail();
     }
 
     public String getEmail() {

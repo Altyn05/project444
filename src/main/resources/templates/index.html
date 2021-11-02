@@ -155,10 +155,10 @@
             </div>
             <div class="modal-body p-3">
                 <p>или войдите с помощью:</p>
-                <div class="d-flex flex-wrap justify-content-around">
-                    <a class="mx-3 p-2" href="https://oauth.vk.com/authorize?client_id=7987723&display=popup&redirect_uri=http://localhost:8888/login/oauth2/code/vk&scope=email&response_type=code&v=5.131"><img th:src="@{/img/logo-vk.svg}" width="40" alt="vk"></a>
+                <div class="d-flex flex-wrap justify-content-around" id="oauth">
+                    <a class="mx-3 p-2" th:href="@{/oauth2/vk}"><img th:src="@{/img/logo-vk.svg}" width="40" alt="vk"></a>
                     <a class="mx-3 p-2" th:href="@{/oauth2/authorization/google}"><img th:src="@{/img/logo-google.svg}" width="40" alt="google"></a>
-                    <a class="mx-3 p-2" href="https://connect.ok.ru/oauth/authorize?client_id=512000857114&scope=valuable_access,long_access_token&response_type=code&redirect_uri=http://localhost:8888/login/oauth2/code/ok"><img th:src="@{/img/logo-ok.svg}" width="40" alt="ok"></a>
+                    <a class="mx-3 p-2" th:href="@{/oauth2/ok}"><img th:src="@{/img/logo-ok.svg}" width="40" alt="ok"></a>
                     <a class="mx-3 p-2" th:href="@{/oauth2/authorization/facebook}"><img th:src="@{/img/logo-fb.svg}" width="40" alt="fb"></a>
                 </div>
             </div>
