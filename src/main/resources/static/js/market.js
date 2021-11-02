@@ -53,7 +53,7 @@ function getProductsTop(data, amount = -1) {
                 '<h5 class="card-title text-dark">' + itemList[i]["name"] + '</h5>' +
                 '<p class="card-text text-secondary">' + itemList[i]["description"] + '</p>' +
                 '<p class="card-text">Цена: <span class="text-danger">' + itemList[i]["price"] + '</span></p>' +
-                '<a href="#" class="btn btn-primary">Страница товара</a>' +
+                '<a href="' + window.location.origin + '/item/' + itemList[i]["id"] + '" class="btn btn-primary">Страница товара</a>' +
                 '</div>' +
                 '</div>'
         } catch (e) {

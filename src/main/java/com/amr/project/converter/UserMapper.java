@@ -1,15 +1,11 @@
 package com.amr.project.converter;
 
-import com.amr.project.model.dto.OrderDto;
-import com.amr.project.model.dto.UserDto;
-import com.amr.project.model.entity.Address;
-import com.amr.project.model.entity.Image;
-import com.amr.project.model.entity.Order;
-import com.amr.project.model.entity.User;
-import com.amr.project.model.dto.AddressDto;
-import com.amr.project.model.dto.ImageDto;
+import com.amr.project.model.dto.*;
+import com.amr.project.model.entity.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+
+import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {
@@ -24,6 +20,12 @@ public interface UserMapper {
     AddressDto addressToAddressDto(Address address);
     ImageDto imageToImageDto(Image image);
     OrderDto orderToOrderDto(Order order);
+
+    List<AdminUserDto> userListToListAdminUserDto(List<User> list);
+
+    AdminUserDto userToAdminUserDto(User user);
+
+    List<UserDto> userListToListUserDto(List<User> list);
 
     default String getUserName(User user) {
         return user.getFirstName() + " " + user.getLastName();

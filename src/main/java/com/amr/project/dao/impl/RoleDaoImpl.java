@@ -11,4 +11,10 @@ public class RoleDaoImpl extends ReadWriteDaoImpl<Role, Long> implements RoleDao
         return em.createQuery("select u from Role u where u.id=:id", Role.class)
                 .setParameter("id", id).getSingleResult();
     }
+
+    @Override
+    public Role getRoleByName(String name) {
+        return em.createQuery("select u from Role u where u.name=:name", Role.class)
+                .setParameter("name", name).getSingleResult();
+    }
 }

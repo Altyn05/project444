@@ -38,7 +38,7 @@ public class ShowMainPageServiceImpl implements ShowMainPageService {
         this.shopMainPageDao = shopMainPageDao;
         this.categoryDao = categoryDao;
     }
-    
+
     @Override
     public ShowMainPageDTO showSearch(
             String s, Pageable itemPages, Pageable shopPages
