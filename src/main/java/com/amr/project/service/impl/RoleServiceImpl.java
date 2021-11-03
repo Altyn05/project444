@@ -8,21 +8,31 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Optional;
 
 @Service
 @Transactional
 public class RoleServiceImpl extends ReadWriteServiceImpl<Role, Long> implements RoleService {
 
-    @Autowired
-    private RoleDao roleDao;
+    private final RoleDao roleDao;
 
-    protected RoleServiceImpl(ReadWriteDao<Role, Long> readWriteDao) {
+    @Autowired
+    public RoleServiceImpl(ReadWriteDao<Role, Long> readWriteDao, RoleDao roleDao) {
         super(readWriteDao);
+        this.roleDao = roleDao;
     }
 
     @Override
-    public Optional<Role> getRoleByName(String name) {
+    public Role getRoleByName(String name) {
+        return roleDao.getRoleByName(name);
+    }
+
+    @Override
+    public Role findById(Long id) {
+        return roleDao.getRoleById(id);
+    }
+
+    @Override
+    public Role findByName(String name) {
         return roleDao.getRoleByName(name);
     }
 

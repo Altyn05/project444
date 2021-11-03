@@ -1,5 +1,9 @@
 package com.amr.project.model.dto;
 
+
+import lombok.Data;
+
+@Data
 public class RoleDto {
     private Long id;
     private String name;
@@ -31,4 +35,6 @@ public class RoleDto {
     public void setName(String name) {
         this.name = name;
     }
+
+
 }

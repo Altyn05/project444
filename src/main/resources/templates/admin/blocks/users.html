@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="usersPage">
+    <div class="container">
+        <div class="col-10">
+            <!--            <div class="row">-->
+            <div class="col-3">
+                <div>
+                    <div id="searchWrapperUsers">
+                        <label for="searchBarUsers"></label><input
+                            type="text"
+                            name="searchBar"
+                            id="searchBarUsers"
+                            placeholder="поиск по пользователям"
+                    />
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-3">
+                <button type="button" class="btn btn-success btn" data-bs-toggle="modal"
+                        data-bs-target="#createModalUser">
+                    Создать Пользователя
+                </button>
+            </div>
+            <!--            </div>-->
+            <table class="table table">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Login</th>
+                    <th scope="col">Электронная почта</th>
+                    <th scope="col">Номер телефона</th>
+                    <th scope="col">Имя</th>
+                    <th scope="col">Фамилия</th>
+                    <th scope="col">Магазины</th>
+                    <th scope="col">Роли</th>
+                    <th scope="col">Activity</th>
+                    <th scope="col">Редактировать</th>
+                    <th scope="col">Удалить</th>
+                </tr>
+                </thead>
+                <tbody id="usersList">
+                </tbody>
+            </table>
+            <!--            Модальные окна -->
+
+            <div class="modal fade" id="editModalUser" tabindex="-1" aria-labelledby="editModalLabelUser"
+                 aria-hidden="true">
+                <div class="modal-dialog ">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editModalLabelUser">Редактировать Пользователя</h5>
+                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form class="editFormUser">
+                                <div class="row">
+                                    <div class="col-3">
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group text-center">
+                                            <label for="editIdUser" class="font-weight-bold">ID</label>
+                                            <input type="text" class="form-control" id="editIdUser" name="id" readonly/>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group text-center">
+                                            <label for="editNameUser" class="font-weight-bold">Login</label>
+                                            <input type="text" class="form-control" id="editNameUser" name="name"/>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="col-6">
+                                        <div class="form-group text-center">
+                                            <label for="editEmailUser" class="font-weight-bold">Электронная
+                                                почта:</label>
+                                            <input type="text" class="form-control" id="editEmailUser" name="email"/>
+                                            <br>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group text-center">
+                                            <label for="editPasswordUser" class="font-weight-bold">Пароль:</label>
+                                            <input type="password" class="form-control" id="editPasswordUser"
+                                                   name="password"/>
+                                            <br>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group text-center">
+                                            <label for="editPhoneUser" class="font-weight-bold">Телефон:</label>
+                                            <input type="text" class="form-control" id="editPhoneUser" name="phone"/>
+                                            <br>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group text-center">
+                                            <label for="editFirstNameUser" class="font-weight-bold">Имя:</label>
+                                            <input type="text" class="form-control" id="editFirstNameUser"
+                                                   name="firstname"/>
+                                            <br>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group text-center">
+                                            <label for="editLastNameUser" class="font-weight-bold">Фамилия:</label>
+                                            <input type="text" class="form-control" id="editLastNameUser"
+                                                   name="lastname"/>
+                                            <br>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value=""
+                                                   id="editActivateUser">
+                                            <label class="form-check-label" for="editActivateUser">
+                                                Активировать аккаунт/ Убрать активацию
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group text-center">
+                                            <label for="inputRoleEditUser"><p class="font-weight-bold">Список
+                                                ролей:</p>
+                                            </label>
+                                            <select id="inputRoleEditUser" class="form-control" multiple
+                                                    size="2" name="roles">
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть
+                                    </button>
+                                    <input type="button" class="btn btn-primary subBTNUser" data-bs-dismiss="modal"
+                                           value="Изменить"/>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="deleteModalUser" tabindex="-1" aria-labelledby="deleteModalLabelUser"
+                 aria-hidden="true">
+                <div class="modal-dialog ">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deleteModalLabelUser">Удалить Пользователя</h5>
+                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form class="deleteFormUser">
+                                <div class="row">
+                                    <div class="col-3">
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group text-center">
+                                            <label for="deleteIdUser" class="font-weight-bold">ID</label>
+                                            <input type="text" class="form-control" id="deleteIdUser" name="id"
+                                                   readonly/>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group text-center">
+                                            <label for="deleteNameUser" class="font-weight-bold">Login</label>
+                                            <input type="text" class="form-control" id="deleteNameUser" name="name"
+                                                   readonly/>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group text-center">
+                                            <label for="deleteEmailUser" class="font-weight-bold">Электронная
+                                                почта:</label>
+                                            <input type="text" class="form-control" id="deleteEmailUser" name="email"
+                                                   readonly/>
+                                            <br>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group text-center">
+                                            <label for="deletePasswordUser" class="font-weight-bold">Пароль:</label>
+                                            <input type="password" class="form-control" id="deletePasswordUser"
+                                                   name="password" readonly/>
+                                            <br>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group text-center">
+                                            <label for="deletePhoneUser" class="font-weight-bold">Телефон:</label>
+                                            <input type="text" class="form-control" id="deletePhoneUser" name="phone"
+                                                   readonly/>
+                                            <br>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group text-center">
+                                            <label for="deleteFirstNameUser" class="font-weight-bold">Имя:</label>
+                                            <input type="text" class="form-control" id="deleteFirstNameUser"
+                                                   name="firstname" readonly/>
+                                            <br>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group text-center">
+                                            <label for="deleteLastNameUser" class="font-weight-bold">Фамилия:</label>
+                                            <input type="text" class="form-control" id="deleteLastNameUser"
+                                                   name="lastname" readonly/>
+                                            <br>
+                                        </div>
+                                    </div>
+
+
+                                        <div class="form-group text-center">
+                                            <label for="inputRoleDeleteUser"><p class="font-weight-bold">Список
+                                                ролей:</p>
+                                            </label>
+                                            <select id="inputRoleDeleteUser" class="form-control" multiple
+                                                    size="2" name="roles" disabled>
+                                            </select>
+                                        </div>
+                                        <br>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть
+                                    </button>
+                                    <input type="button" class="btn btn-primary delBTNUser" data-bs-dismiss="modal"
+                                           value="Удалить"/>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="createModalUser" tabindex="-1" aria-labelledby="createModalLabelUser"
+                 aria-hidden="true">
+                <div class="modal-dialog ">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="createModalLabelUser">Создать Пользователя</h5>
+                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form class="createFormUser">
+                                <div class="row">
+                                    <div class="col-3">
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group text-center">
+                                            <label for="createNameUser" class="font-weight-bold">Login</label>
+                                            <input type="text" class="form-control" id="createNameUser" name="name"/>
+                                            <br>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group text-center">
+                                            <label for="createEmailUser" class="font-weight-bold">Электронная
+                                                почта:</label>
+                                            <input type="text" class="form-control" id="createEmailUser" name="email"/>
+                                            <br>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+
+                                        <div class="form-group text-center">
+                                            <label for="createPasswordUser" class="font-weight-bold">Пароль:</label>
+                                            <input type="password" class="form-control" id="createPasswordUser"
+                                                   name="password"/>
+                                            <br>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group text-center">
+                                            <label for="createPhoneUser" class="font-weight-bold">Телефон:</label>
+                                            <input type="text" class="form-control" id="createPhoneUser" name="phone"/>
+                                            <br>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group text-center">
+                                            <label for="createFirstNameUser" class="font-weight-bold">Имя:</label>
+                                            <input type="text" class="form-control" id="createFirstNameUser"
+                                                   name="firstname"/>
+                                            <br>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group text-center">
+                                            <label for="createLastNameUser" class="font-weight-bold">Фамилия:</label>
+                                            <input type="text" class="form-control" id="createLastNameUser"
+                                                   name="lastname"/>
+                                            <br>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="true"
+                                                   id="createActivateUser">
+                                            <label class="form-check-label" for="createActivateUser">
+                                                Активировать аккаунт/ Убрать активацию
+                                            </label>
+                                        </div>
+                                    </div>
+
+
+                                        <div class="form-group text-center">
+                                            <label for="inputRoleCreateUser"><p class="font-weight-bold">Список
+                                                ролей:</p>
+                                            </label>
+                                            <select id="inputRoleCreateUser" class="form-control" multiple
+                                                    size="2" name="roles">
+                                            </select>
+                                        </div>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть
+                                    </button>
+                                    <input type="button" class="btn btn-primary createBTNUser" data-bs-dismiss="modal"
+                                           value="Создать"/>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+
+    <script src="/js/adminUsers.js"></script>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>
+</html>

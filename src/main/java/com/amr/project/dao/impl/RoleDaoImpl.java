@@ -5,8 +5,6 @@ import com.amr.project.model.entity.Role;
 import com.amr.project.util.SingleResultUtil;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
-
 @Repository
 public class RoleDaoImpl extends ReadWriteDaoImpl<Role, Long> implements RoleDao {
 
@@ -17,9 +15,9 @@ public class RoleDaoImpl extends ReadWriteDaoImpl<Role, Long> implements RoleDao
     }
 
     @Override
-    public Optional<Role> getRoleByName(String name) {
+    public Role getRoleByName(String name) {
         return SingleResultUtil.getSingleResultOrNull(
                 em.createQuery("select r from Role r where r.name = :name", Role.class).setParameter("name", name)
-        );
+        ).orElse(null);
     }
 }

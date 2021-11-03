@@ -55,7 +55,7 @@ public class OkAuthController {
         OAuth2AccessToken accessToken = okService.getAccessToken(code);
 
         User user = getUserByToken(accessToken);
-        roleService.getRoleByName("USER").ifPresent(user::addRole);
+        user.addRole(roleService.getRoleByName("USER"));
         User existingUser = userService.findUserByEmail(user.getEmail()).orElse(null);
 
         if (existingUser != null) {

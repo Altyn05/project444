@@ -1,12 +1,16 @@
 package com.amr.project.model.entity;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-@Data
+@ToString
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "shops")
 public class Shop {
@@ -21,18 +25,23 @@ public class Shop {
     @Column(columnDefinition = "text")
     private String description;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "country_id")
     private Country location;
 
-    @OneToMany(mappedBy = "shop")
+
+    @OneToMany(mappedBy = "shop",
+            cascade = CascadeType.ALL)
+    @ToString.Exclude
     private List<Item> items = new ArrayList<>();
 
     @OneToMany(mappedBy = "shop")
+    @ToString.Exclude
     private List<Review> reviews;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "logo_id")
+    @ToString.Exclude
     private Image logo;
 
     private int count;
@@ -40,9 +49,11 @@ public class Shop {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
+    @ToString.Exclude
     private User user;
 
     @OneToMany(mappedBy = "shop")
+    @ToString.Exclude
     private List<Discount> discounts;
 
     private boolean isModerated;
@@ -50,4 +61,16 @@ public class Shop {
     private String moderatedRejectReason;
     private boolean isPretendedToBeDeleted = false;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Shop shop = (Shop) o;
+        return Objects.equals(name, shop.name) && Objects.equals(email, shop.email) && Objects.equals(phone, shop.phone) && Objects.equals(description, shop.description) && Objects.equals(location, shop.location);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, email, phone, description, location);
+    }
 }

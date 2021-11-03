@@ -1,11 +1,15 @@
 package com.amr.project.model.entity;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.Set;
 
-@Data
+@ToString
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "addresses")
 public class Address {
@@ -15,10 +19,14 @@ public class Address {
     private Long id;
     private String cityIndex;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "country_id")
+    @ToString.Exclude
     private Country country;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "city_id")
+    @ToString.Exclude
     private City city;
 
     private String street;
@@ -30,6 +38,7 @@ public class Address {
             joinColumns = @JoinColumn(name = "address_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
+    @ToString.Exclude
     private Set<User> users;
 
     public Address(String cityIndex, Country country, City city, String street, String house) {
@@ -40,7 +49,16 @@ public class Address {
         this.house = house;
     }
 
-    public Address() {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Address address = (Address) o;
+        return Objects.equals(cityIndex, address.cityIndex) && Objects.equals(country, address.country) && Objects.equals(city, address.city) && Objects.equals(street, address.street) && Objects.equals(house, address.house);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(cityIndex, country, city, street, house);
     }
 }

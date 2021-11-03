@@ -49,15 +49,16 @@ public class Item {
     private String moderatedRejectReason;
     private boolean isPretendedToBeDeleted;
 
+
     public void addCategory(Category category) {
-        if(categories == null) {
+        if (categories == null) {
             categories = new ArrayList<>();
         }
         categories.add(category);
     }
 
     public void addImage(Image image) {
-        if(images == null) {
+        if (images == null) {
             images = new ArrayList<>();
         }
         images.add(image);
