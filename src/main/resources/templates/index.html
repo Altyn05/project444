@@ -30,6 +30,8 @@
                         Каталог
                     </button>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="/">Все товары</a>
+                        <div class="dropdown-divider"></div>
                         <a class="dropdown-item" th:href="@{/category/{categoryId}/(categoryId=${category.getId()})}"
                            th:each="category: ${mainPageDto.getCategory()}">
                             <th:block th:text="${category.getName()}"></th:block>
@@ -69,171 +71,183 @@
 
 <!-- Begin main content -->
 <main role="main" class="flex-shrink-0">
-  <div class="container py-2">
-    <h4 class="pt-4">Подборка популярных товаров</h4>
-      
-      <!-- Number of items per page -->
-      <ul class="pagination pagination-sm justify-content-end mb-0 size">
-          <li class="page-item disabled">
-              <a href="#" class="page-link">Показывать:</a>
-          </li>
-          <li class="page-item"
-              th:each="i : ${itemPageSizes}"
-              th:classappend="${mainPageDto.popularItem.size == i} ? 'active'">
-              <a class="page-link"
-                 th:href="@{./(searchName = ${searchName},
-                                itemPage = ${mainPageDto.popularItem.number},
-                                itemSize = ${i},
-                                shopPage = ${mainPageDto.popularShop.number},
-                                shopSize = ${mainPageDto.popularShop.size})}"
-                 th:text="${i > 100 ? 'Все' : i}"></a>
-          </li>
-      </ul>
+    <div class="container py-2">
+        <h4 class="pt-4">Подборка популярных товаров</h4>
+        
+        <!-- Number of items per page -->
+        <ul class="pagination pagination-sm justify-content-end mb-0 size">
+            <li class="page-item disabled">
+                <a href="#" class="page-link">Показывать:</a>
+            </li>
+            <li class="page-item"
+                th:each="i : ${itemPageSizes}"
+                th:classappend="${mainPageDto.popularItem.size == i} ? 'active'">
+                <a class="page-link"
+                   th:href="@{./(searchName = ${searchName},
+                                 itemPage = ${mainPageDto.popularItem.number},
+                                 itemSize = ${i},
+                                 shopPage = ${mainPageDto.popularShop.number},
+                                 shopSize = ${mainPageDto.popularShop.size})}"
+                   th:text="${i > 100 ? 'Все' : i}"></a>
+            </li>
+        </ul>
     
-      <div class="card-deck row row-cols-1 row-cols-sm-2 row-cols-lg-4">
-      <div th:each="item: ${mainPageDto.popularItem.content}">
-        <a class="text-decoration-none text-reset"
-           th:href="@{'item/' + ${item.id}}">
-          <div class="gcard">
-            <div class="d-flex justify-content-center">
-                <img th:src="${item.images[0].toBase64()}"
-                     class="card-img-top" alt="фото товара">
+        <div class="card-deck row row-cols-1 row-cols-sm-2 row-cols-lg-4">
+            <div class="d-flex"
+                 th:each="item: ${mainPageDto.popularItem.content}">
+                <div class="gcard d-flex flex-column flex-grow-1">
+                    <div>
+                        <a th:href="@{'item/' + ${item.id}}">
+                            <img th:src="${item.images[0].toBase64()}"
+                                 class="card-img-top item-img" alt="фото товара">
+                        </a>
+                    </div>
+                    <div class="card-body d-flex flex-column flex-grow-1">
+                        <a class="text-decoration-none text-reset d-flex flex-column flex-grow-1"
+                           th:href="@{'item/' + ${item.id}}">
+                            <h5 class="card-title item-title" th:text="${item.name}">
+                                NAME
+                            </h5>
+                            <p class="font-weight-bold">
+                                Цена: <span class="text-danger" th:text="${item.price.intValue()}">PRICE</span>
+                            </p>
+                            <p class="flex-grow-1" th:text="${item.description.substring(0, 50) + '...'}">
+                                DESCRIPTION
+                            </p>
+                            <a th:href="@{'cart/' + ${item.id}}" class="btn btn-primary btn-sm w-100">
+                                В корзину
+                            </a>
+                        </a>
+                    </div>
+                </div>
             </div>
-            <div class="card-body">
-              <h5 class="card-title" th:text="${item.name}">NAME</h5>
-              <p class="font-weight-bold">
-                  Цена: <span class="text-danger"
-                              th:text="${item.price.intValue()}">PRICE</span>
-              </p>
-              <p th:text="${item.description.substring(0, 50) + '...'}">DESCRIPTION</p>
-              <a href="#" th:attr="data-item-id=${item.id}"
-                 class="btn btn-primary btn-sm">В корзину</a>
-            </div>
-          </div>
-        </a>
-      </div>
-    </div>
-      <nav aria-label="Popular items page navigation">
-          <ul class="pagination justify-content-center mt-2"
-              th:if="${mainPageDto.popularItem.totalPages > 1}">
-              <li class="page-item"
-                  th:classappend="${!mainPageDto.popularItem.hasPrevious()} ? 'disabled'">
-                  <a class="page-link"
-                     th:href="@{./(searchName = ${searchName},
-                                    itemPage = ${mainPageDto.popularItem.number - 1},
-                                    itemSize = ${mainPageDto.popularItem.size},
-                                    shopPage = ${mainPageDto.popularShop.number},
-                                    shopSize = ${mainPageDto.popularShop.size})}"
-                     aria-label="Previous">
-                      <span aria-hidden="true">&laquo;</span>
-                  </a>
-              </li>
-              <li class="page-item"
-                  th:each="i : ${#numbers.sequence(0, mainPageDto.popularItem.totalPages - 1)}"
-                  th:classappend="${mainPageDto.popularItem.number == i} ? 'active'">
-                  <a class="page-link"
-                     th:href="@{./(searchName = ${searchName},
-                           itemPage = ${i},
-                           itemSize = ${mainPageDto.popularItem.size},
-                           shopPage = ${mainPageDto.popularShop.number},
-                           shopSize = ${mainPageDto.popularShop.size})}"
-                     th:text="${i} + 1"></a>
-              </li>
-              <li class="page-item"
-                  th:classappend="${!mainPageDto.popularItem.hasNext()} ? 'disabled'">
-                  <a class="page-link"
-                     th:href="@{./(searchName = ${searchName},
-                                    itemPage = ${mainPageDto.popularItem.number + 1},
-                                    itemSize = ${mainPageDto.popularItem.size},
-                                    shopPage = ${mainPageDto.popularShop.number},
-                                    shopSize = ${mainPageDto.popularShop.size})}"
-                     aria-label="Next">
-                      <span aria-hidden="true">&raquo;</span>
-                  </a>
-              </li>
-          </ul>
-      </nav>
-      
-
-    <h4 class="pt-4">Подборка популярных магазинов</h4>
-    
-      <!-- Number of items per page -->
-      <ul class="pagination pagination-sm justify-content-end mb-0 size">
-          <li class="page-item disabled">
-              <a href="#" class="page-link">Показывать:</a>
-          </li>
-          <li class="page-item"
-              th:each="i : ${shopPageSizes}"
-              th:classappend="${mainPageDto.popularShop.size == i} ? 'active'">
-              <a class="page-link"
-                 th:href="@{./(searchName = ${searchName},
-                                itemPage = ${mainPageDto.popularItem.number},
-                                itemSize = ${mainPageDto.popularItem.size},
-                                shopPage = ${mainPageDto.popularShop.number},
-                                shopSize = ${i})}"
-                 th:text="${i > 100 ? 'Все' : i}"></a>
-          </li>
-      </ul>
-    
-      <div class="card-deck row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-6">
-      <div class="shop-card"
-           th:each="shop: ${mainPageDto.popularShop.content}">
-        <div class="gcard">
-          <div class="d-flex justify-content-center">
-              <img th:src="${shop.logo.toBase64()}"
-                   class="card-img-top" alt="лого магазина">
-          </div>
-          <div class="card-body">
-            <h5 class="card-title" th:text="${shop.name}">NAME</h5>
-            <p class="card-text" th:text="${shop.description}">DESCRIPTION</p>
-            <a th:href="@{'market/' + ${shop.id}}" class="btn btn-primary btn-sm">Перейти</a>
-          </div>
         </div>
-      </div>
-    </div>
-    
-      <nav aria-label="Popular shops page navigation">
-          <ul class="pagination justify-content-center mt-2"
-              th:if="${mainPageDto.popularShop.totalPages > 1}">
-              <li class="page-item"
-                  th:classappend="${!mainPageDto.popularShop.hasPrevious()} ? 'disabled'">
-                  <a class="page-link"
-                     th:href="@{./(searchName = ${searchName},
-                                itemPage = ${mainPageDto.popularItem.number},
-                                itemSize = ${mainPageDto.popularItem.size},
-                                shopPage = ${mainPageDto.popularShop.number - 1},
-                                shopSize = ${mainPageDto.popularShop.size})}"
+        
+        <nav aria-label="Popular items page navigation">
+            <ul class="pagination justify-content-center mt-2"
+                th:if="${mainPageDto.popularItem.totalPages > 1}">
+                <li class="page-item"
+                    th:classappend="${!mainPageDto.popularItem.hasPrevious()} ? 'disabled'">
+                    <a class="page-link"
+                        th:href="@{./(searchName = ${searchName},
+                                      itemPage = ${mainPageDto.popularItem.number - 1},
+                                      itemSize = ${mainPageDto.popularItem.size},
+                                      shopPage = ${mainPageDto.popularShop.number},
+                                      shopSize = ${mainPageDto.popularShop.size})}"
                      aria-label="Previous">
                       <span aria-hidden="true">&laquo;</span>
                   </a>
-              </li>
-              <li class="page-item"
-                  th:each="i : ${#numbers.sequence(0, mainPageDto.popularShop.totalPages - 1)}"
-                  th:classappend="${mainPageDto.popularShop.number == i} ? 'active'">
-                  <a class="page-link"
-                     th:href="@{./(searchName = ${searchName},
-                       itemPage = ${mainPageDto.popularItem.number},
-                       itemSize = ${mainPageDto.popularItem.size},
-                       shopPage = ${i},
-                       shopSize = ${mainPageDto.popularShop.size})}"
-                     th:text="${i} + 1"></a>
-              </li>
-              <li class="page-item"
-                  th:classappend="${!mainPageDto.popularShop.hasNext()} ? 'disabled'">
-                  <a class="page-link"
-                     th:href="@{./(searchName = ${searchName},
-                                itemPage = ${mainPageDto.popularItem.number},
-                                itemSize = ${mainPageDto.popularItem.size},
-                                shopPage = ${mainPageDto.popularShop.number} + 1,
-                                shopSize = ${mainPageDto.popularShop.size})}"
-                     aria-label="Next">
-                      <span aria-hidden="true">&raquo;</span>
-                  </a>
-              </li>
-          </ul>
-      </nav>
-      
-  </div>
+                </li>
+                <li class="page-item"
+                    th:each="i : ${#numbers.sequence(0, mainPageDto.popularItem.totalPages - 1)}"
+                    th:classappend="${mainPageDto.popularItem.number == i} ? 'active'">
+                    <a class="page-link"
+                       th:href="@{./(searchName = ${searchName},
+                                     itemPage = ${i},
+                                     itemSize = ${mainPageDto.popularItem.size},
+                                     shopPage = ${mainPageDto.popularShop.number},
+                                     shopSize = ${mainPageDto.popularShop.size})}"
+                       th:text="${i} + 1"></a>
+                </li>
+                <li class="page-item"
+                    th:classappend="${!mainPageDto.popularItem.hasNext()} ? 'disabled'">
+                    <a class="page-link"
+                       th:href="@{./(searchName = ${searchName},
+                                     itemPage = ${mainPageDto.popularItem.number + 1},
+                                     itemSize = ${mainPageDto.popularItem.size},
+                                     shopPage = ${mainPageDto.popularShop.number},
+                                     shopSize = ${mainPageDto.popularShop.size})}"
+                       aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <h4 class="pt-4">Подборка популярных магазинов</h4>
+    
+        <!-- Number of items per page -->
+        <ul class="pagination pagination-sm justify-content-end mb-0 size">
+            <li class="page-item disabled">
+                <a href="#" class="page-link">Показывать:</a>
+            </li>
+            <li class="page-item"
+                th:each="i : ${shopPageSizes}"
+                th:classappend="${mainPageDto.popularShop.size == i} ? 'active'">
+                <a class="page-link"
+                   th:href="@{./(searchName = ${searchName},
+                                 itemPage = ${mainPageDto.popularItem.number},
+                                 itemSize = ${mainPageDto.popularItem.size},
+                                 shopPage = ${mainPageDto.popularShop.number},
+                                 shopSize = ${i})}"
+                   th:text="${i > 100 ? 'Все' : i}"></a>
+            </li>
+        </ul>
+    
+        <div class="card-deck row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-6">
+            <div class="shop-card d-flex"
+                 th:each="shop: ${mainPageDto.popularShop.content}">
+                <div class="gcard  d-flex flex-column flex-grow-1">
+                    <div class="d-flex justify-content-center">
+                        <img th:src="${shop.logo.toBase64()}"
+                             class="card-img-top shop-img" alt="лого магазина">
+                    </div>
+                    <div class="card-body d-flex flex-column flex-grow-1">
+                        <h5 class="card-title" th:text="${shop.name}">
+                            NAME
+                        </h5>
+                        <p class="card-text flex-grow-1" th:text="${shop.description}">
+                            DESCRIPTION
+                        </p>
+                        <a th:href="@{'market/' + ${shop.id}}" class="btn btn-primary btn-sm">
+                            Перейти
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <nav aria-label="Popular shops page navigation">
+            <ul class="pagination justify-content-center mt-2"
+                th:if="${mainPageDto.popularShop.totalPages > 1}">
+                <li class="page-item"
+                    th:classappend="${!mainPageDto.popularShop.hasPrevious()} ? 'disabled'">
+                    <a class="page-link"
+                       th:href="@{./(searchName = ${searchName},
+                                     itemPage = ${mainPageDto.popularItem.number},
+                                     itemSize = ${mainPageDto.popularItem.size},
+                                     shopPage = ${mainPageDto.popularShop.number - 1},
+                                     shopSize = ${mainPageDto.popularShop.size})}"
+                       aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item"
+                    th:each="i : ${#numbers.sequence(0, mainPageDto.popularShop.totalPages - 1)}"
+                    th:classappend="${mainPageDto.popularShop.number == i} ? 'active'">
+                    <a class="page-link"
+                       th:href="@{./(searchName = ${searchName},
+                                     itemPage = ${mainPageDto.popularItem.number},
+                                     itemSize = ${mainPageDto.popularItem.size},
+                                     shopPage = ${i},
+                                     shopSize = ${mainPageDto.popularShop.size})}"
+                       th:text="${i} + 1"></a>
+                </li>
+                <li class="page-item"
+                    th:classappend="${!mainPageDto.popularShop.hasNext()} ? 'disabled'">
+                    <a class="page-link"
+                       th:href="@{./(searchName = ${searchName},
+                                     itemPage = ${mainPageDto.popularItem.number},
+                                     itemSize = ${mainPageDto.popularItem.size},
+                                     shopPage = ${mainPageDto.popularShop.number} + 1,
+                                     shopSize = ${mainPageDto.popularShop.size})}"
+                       aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
 </main>
 <!-- End main content -->
 
