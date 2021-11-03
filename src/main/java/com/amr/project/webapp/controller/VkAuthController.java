@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
+import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
 @Controller
@@ -63,7 +64,8 @@ public class VkAuthController {
         OAuth2AccessToken accessToken = getAccessToken(code);
 
         User user = getUserByToken(accessToken);
-        roleService.getRoleByName("USER").ifPresent(user::addRole);
+        user.addRole(roleService.getRoleByName("USER"));
+
         User existingUser = userService.findUserByEmail(user.getEmail()).orElse(null);
 
         if (existingUser != null) {

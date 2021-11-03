@@ -29,7 +29,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
         CustomOAuth2User oauth2User = new CustomOAuth2User(super.loadUser(userRequest));
         User user = userMapper.oauth2UserToUser(oauth2User, userRequest);
-        roleService.getRoleByName("USER").ifPresent(user::addRole);
+        user.addRole(roleService.getRoleByName("USER"));
 
         User existingUser = userService.findUserByEmail(oauth2User.getEmail()).orElse(null);
         if (existingUser != null) {

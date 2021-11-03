@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <!-- служебная часть -->
 
 <head>
@@ -37,6 +38,49 @@
                 <a class="nav-link" href="#">еще...</a>
             </div>
         </div>
+        <div>
+        <a class="centertext-secondary btn btn-outline-warning text-primary" style = "margin-right: 50px " href="/">На главную страницу для покупок</a>
+    </div>
+
+
+        <div class="text-secondary">
+            <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+                <ul class="navbar-nav">
+                    <li>
+
+                        <img class="avatar" style="border-radius: 50%; max-width: 40px" name="avatar_foto"
+                             src="https://www.avito.st/stub_avatars/А/10_256x256.png" alt="Аватар">
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="avatar_name nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" name="avatar_name"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            Name Surname
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarDarkDropdownMenuLink">
+                            <li><a class="dropdown-item" href="#">Корзина</a></li>
+                            <li><a class="dropdown-item" href="#">Избранное</a></li>
+                            <li class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">История заказов</a></li>
+                            <li><a class="dropdown-item" href="#">Мои Магазины</a></li>
+                            <li><a class="dropdown-item" href="#">Мои Заказы</a></li>
+                            <li class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#" onclick="return openSettings();">Настройки</a></li>
+                            <li class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="/logout">Выйти</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <sec:authorize access="isAuthenticated()">
+                            <a class="text-secondary btn btn-outline-warning text-primary" href="/logout">Выйти</a>
+                        </sec:authorize>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+
+
     </div>
 </nav>
 
@@ -45,7 +89,7 @@
     <div class="row">
 
         <!-- SIEDEBAR -->
-        <div class="col-md-4">
+        <div class="col-md-3">
 
             <div class="flex-shrink-0 p-3 bg-white" style="width: 280px;">
                 <!-- CAROUSEL -->
@@ -68,18 +112,18 @@
 <!--                     class="round img-fluid" alt="фото" />-->
                 <ul class="list-unstyled ps-0">
                     <li class="mb-1">
-                        <h3 class="user_data">Ivan Ivanov</h3>
+                        <h3 class="user_data">Имя Фамилия</h3>
                     <li class="border-top my-3"></li>
                     <li class="user_data link-dark rounded">Возраст:</li>
                     <li class="user_data link-dark rounded">Пол:</li>
 
                     <!-- TABS -->
                     <li>
-                        <ul class="nav nav-tabs" >
+                        <ul class="addr11 address-tab nav nav-tabs" >
 
                         </ul>
 
-                        <div class="tab-content">
+                        <div class="addr12 address-content tab-content">
 
                         </div>
                     </li>
@@ -101,11 +145,11 @@
 
         </div>
         <!-- TABS -->
-        <div class="col-md-8">
+        <div class="col-md-9">
 
             <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="pills-shops-tab" data-bs-toggle="pill"
+                    <button class="nav-link" id="pills-shops-tab" data-bs-toggle="pill" onclick = "showUserShops()"
                             data-bs-target="#pills-shops" type="button" role="tab" aria-controls="pills-shops"
                             aria-selected="true">Мои Магазины</button>
                 </li>
@@ -114,12 +158,114 @@
                             data-bs-target="#pills-orders" type="button" role="tab" aria-controls="pills-orders"
                             aria-selected="false">Мои Заказы</button>
                 </li>
+                <li hidden class="nav-item" role="presentation">
+                    <button class="nav-link" id="pills-settings-tab" data-bs-toggle="pill"
+                            data-bs-target="#pills-settings" type="button" role="tab" aria-controls="pills-settings"
+                            aria-selected="false">Настройки профиля</button>
+                </li>
             </ul>
             <div class="tab-content" id="pills-tabContent">
                 <div class="tab-pane fade show active" id="pills-shops" role="tabpanel"
-                     aria-labelledby="pills-shops-tab">Магазины здесь</div>
+                     aria-labelledby="pills-shops-tab">
+                    Магазины здесь
+
+                        <frame src="http://www.kakprosto.ru" />
+                        <frame src="http://www.sapato.ru" />
+
+                    <p>блабла</p>
+                    <ul class = "usershops">
+                        <!-- Shops -->
+                    </ul>
+                </div>
                 <div class="tab-pane fade" id="pills-orders" role="tabpanel" aria-labelledby="pills-orders-tab">
                     Заказы здесь</div>
+                <div class="tab-pane fade" id="pills-settings" role="tabpanel" aria-labelledby="pills-settings-tab">
+                    <!-- шаблон профиля https://bbbootstrap.com/snippets/bootstrap-edit-profile-accounts-setting-template-80240656 -->
+
+
+
+                    <div class="wrapper bg-white mt-sm-5">
+                        <h4 class="pb-4 border-bottom">Настройки профиля</h4>
+                        <div class="d-flex align-items-start py-3 border-bottom">
+                            <img style="border-radius: 50%; max-width: 100px" src="https://www.avito.st/stub_avatars/А/10_256x256.png" name="loadfoto" class="img mx-2" alt="">
+                            <div class="pl-sm-4 pl-2" id="img-section"> <b>Фото профиля</b>
+                                <p>Добавить файл не более 1MB</p>
+                                <div class="btn btn-mdb-color btn-rounded float-left">
+                                    <input type="file" accept = "image/jpeg,image/png" class="newfoto">
+                                    <button type="button" data-toggle="modal" data-target="#editFoto" onclick = "fotoEdit()" >Редактировать</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Edit Profile -->
+                        <div class="py-2">
+                            <div class="row py-2">
+                                <div class="col-md-6"> <label for="firstname">Имя</label> <input type="text" class="profile bg-light form-control" placeholder="Имя"> </div>
+                                <div class="col-md-6 pt-md-0 pt-3"> <label for="lastname">Фамилия</label> <input type="text" class="profile bg-light form-control" placeholder="Фамилия"> </div>
+                            </div>
+                            <div class="row py-2">
+                                <div class="col-md-6"> <label for="email">Почта</label> <input type="text" class="profile bg-light form-control" placeholder="email@email.com"> </div>
+                                <div class="col-md-6 pt-md-0 pt-3"> <label for="phone">Телефон</label> <input type="tel" class="profile bg-light form-control" placeholder="+7 000 000 0000"> </div>
+                            </div>
+                            <div class="row py-2">
+                                <div class="col-md-6"> <label for="age">Возраст</label> <input type="number" class="profile bg-light form-control" placeholder="100"> </div>
+                                <div class="col-md-6 pt-md-0 pt-3"> <label for="birthday">Дата рождения</label> <input type="date" class="profile bg-light form-control" placeholder="01.01.2001"> </div>
+                            </div>
+                            <div class="row py-2">
+                                <div class="col-md-6"> <label for="gender">Пол</label> <select name="gender" id="gender" class="bg-light">
+                                    <option class="profile" value="male">MALE</option>
+                                    <option class="profile" value="female">FEMALE</option>
+                                </select> </div>
+                            </div>
+                            <div class="addresses row py-2">
+                                    <ul class="addr21 address-tab nav nav-tabs" >
+
+                                    </ul>
+                                    <!-- Addresses -->
+                                    <div class="addr22 address-content tab-content">
+
+                                    </div>
+                                <button type="button" class="btn btn-info"  onclick="saveAddresses()">Изменить адреса</button>
+                            </div>
+                            <div class="py-3 pb-4 border-bottom"> <button class="save btn btn-primary mr-3" onclick="handleClickSubmitProfile()">Сохранить</button> <button class="btn border button" onclick="openShops();">Закрыть</button> </div>
+                            <div class="d-sm-flex align-items-center pt-3" id="deactivate">
+                                <div> <b>Deactivate your account</b>
+                                    <p>Details about your company account and password</p>
+                                </div>
+                                <div class="ml-auto"> <button class="btn danger">Deactivate</button> </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Modal Delete Foto -->
+                    <div class="modal fade" id="editFoto" tabindex="-1" aria-labelledby="editFotoModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="editFotoModalLabel">Поменять картинки</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <!-- Modal windows -->
+                                <div class="modal-body">
+                                    <table class = "editFotoModal">
+                                        <!-- from scrip fotoEdit()  -->
+                                    </table>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                                    <button type="button" class="btn btn-primary"  data-dismiss="modal" onclick = "saveFoto()">Изменить</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+                </div>
             </div>
         </div>
 
@@ -129,8 +275,11 @@
 
 
 <!-- custom scripts -->
-<script src="/js/user_page_rest.js"></script>
-<script src="/js/user_page.js"></script>
+<script src="/js/user_page/user_page_rest.js"></script>
+<script src="/js/user_page/user_page.js"></script>
+<script src="/js/user_page/user_page_tabs.js"></script>
+<script src="/js/user_page/user_page_profile.js"></script>
+<script src="/js/user_page/user_page_shops.js"></script>
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->

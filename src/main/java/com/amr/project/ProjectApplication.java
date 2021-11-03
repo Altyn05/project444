@@ -19,5 +19,4 @@ public class ProjectApplication {
         SpringApplication.run(ProjectApplication.class, args);
         System.err.println("    APP START");
     }
-
 }

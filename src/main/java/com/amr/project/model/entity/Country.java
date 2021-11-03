@@ -1,11 +1,16 @@
 package com.amr.project.model.entity;
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
-@Data
+@ToString
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "countries")
 public class Country {
@@ -17,14 +22,26 @@ public class Country {
 
     @OneToMany(
             mappedBy = "country",
-            cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REMOVE}
+            cascade = CascadeType.ALL
     )
+    @JsonIgnore
+    @ToString.Exclude
     private List<City> cities;
 
     public Country(String name) {
         this.name = name;
     }
 
-    public Country() {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Country country = (Country) o;
+        return Objects.equals(name, country.name) && Objects.equals(cities, country.cities);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, cities);
     }
 }

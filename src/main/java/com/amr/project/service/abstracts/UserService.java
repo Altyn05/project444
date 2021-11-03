@@ -10,4 +10,6 @@ public interface UserService extends ReadWriteService<User, Long> {
     User findUserByUsername(String username);
     Optional<User> findUserByEmail(String email);
     Optional<User> findUserByIdProvider(String id);
+    User findUserByActivationCode(String activationCode);
+    User findById(Long id);
 }

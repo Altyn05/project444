@@ -1,8 +1,9 @@
-package com.amr.project;
+    package com.amr.project;
 
 import com.amr.project.dao.abstracts.*;
 import com.amr.project.model.entity.*;
 import com.amr.project.model.enums.Gender;
+import com.amr.project.service.abstracts.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +14,8 @@ import java.util.concurrent.ThreadLocalRandom;
 
 @Component
 public class DatabaseInitializer {
+
+    private final UserService userService;
 
     private final RoleDao roleDao;
     private final UserDao userDao;
@@ -37,7 +40,7 @@ public class DatabaseInitializer {
     @Autowired
     public DatabaseInitializer(RoleDao roleDao, UserDao userDao, AddressDao addressDao,
                                CountryDao countryDao, CityDao cityDao, CategoryDao categoryDao,
-                               ItemDao itemDao, ImageDao imageDao, ShopDao shopDao, ReviewDao reviewDao) {
+                               ItemDao itemDao, ImageDao imageDao, ShopDao shopDao, ReviewDao reviewDao,UserService userService) {
 
         this.roleDao = roleDao;
         this.userDao = userDao;
@@ -49,6 +52,7 @@ public class DatabaseInitializer {
         this.imageDao = imageDao;
         this.shopDao = shopDao;
         this.reviewDao = reviewDao;
+        this.userService = userService;
     }
 
     @PostConstruct
@@ -66,12 +70,10 @@ public class DatabaseInitializer {
         categories.forEach(categoryDao::persist);
 
         users = getUsers();
-        //USER Можно пока одного юзера сделать фискированным чтобы время сэкономить?
         users.get(0).setUsername("user");
         users.get(0).setPassword("user");
         users.get(0).setRoles(null);
         users.get(0).addRole(roles.stream().filter(r -> r.getName() == "USER").findFirst().orElse(null));
-        //USER Можно пока одного юзера сделать фискированным чтобы время сэкономить?
         users.forEach(user -> {
             user.getAddress().forEach(addressDao::persist);
             user.getImages().forEach(imageDao::persist);
@@ -92,6 +94,12 @@ public class DatabaseInitializer {
 
         reviews = getReviews();
         reviews.forEach(reviewDao::persist);
+
+        User userAlexander = new User("kooppex@gmail.com", "root228", "root228",
+                "Alexander", "Baranov");
+        Set<Role> adminRole = new HashSet<>();
+        adminRole.add(roleDao.getRoleById(2L));
+        userService.registerNewUser(userAlexander);
 
     }
 
@@ -118,7 +126,6 @@ public class DatabaseInitializer {
         users.add(getUser("Dmitry", "Dmitrov", Gender.MALE, path + "7.jpg"));
         users.add(getUser("Kiril", "Kirilov", Gender.MALE, path + "8.jpg"));
         users.add(getUser("Pavel", "Pavlov", Gender.MALE, path + "9.jpg"));
-
         return users;
     }
 
@@ -128,7 +135,6 @@ public class DatabaseInitializer {
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setActivate(true);
-        user.setActivationCode("1");
         user.setEmail(user.getFirstName().toLowerCase() + user.getLastName().toLowerCase() + "@mail.com");
         user.setAge(Integer.parseInt(randomNumberString(2)));
         user.setUsername(user.getFirstName().toLowerCase() + user.getAge());

@@ -1,12 +1,17 @@
 package com.amr.project.model.entity;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
+import java.util.Objects;
 
 
-@Data
+@ToString
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "cities")
 public class City {
@@ -17,16 +22,40 @@ public class City {
 
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "country_id")
     private Country country;
+
+    @OneToMany(
+            mappedBy = "city",
+            cascade = CascadeType.ALL
+    )
+    @JsonIgnore
+    @ToString.Exclude
+    private List<Address> addresses;
 
     public City(String name, Country country) {
         this.name = name;
         this.country = country;
     }
 
-    public City() {
+    public City(String name) {
+        this.name = name;
+    }
 
+    public City(City byName) {
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        City city = (City) o;
+        return Objects.equals(name, city.name) && Objects.equals(country, city.country);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, country);
     }
 }

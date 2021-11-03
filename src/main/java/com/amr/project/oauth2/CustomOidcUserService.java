@@ -30,7 +30,7 @@ public class CustomOidcUserService extends OidcUserService {
 
         CustomOidcUser oidcUser = new CustomOidcUser(super.loadUser(userRequest));
         User user = userMapper.oidcUserToUser(oidcUser, userRequest);
-        roleService.getRoleByName("USER").ifPresent(user::addRole);
+        user.addRole(roleService.getRoleByName("USER"));
 
         User existingUser = userService.findUserByEmail(oidcUser.getEmail()).orElse(null);
         if (existingUser != null) {

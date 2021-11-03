@@ -25,3 +25,10 @@ async function sendRequest(method, url, body = null) {
 function getUserPrincipal() {
     return sendRequest('GET', "/api/users/principal")
 }
+
+async function updateUser() {
+    sendRequest('PUT', "/api/users/",  tempUser).then(resp=>{
+        user = resp
+        writeUserData()
+    })
+}
