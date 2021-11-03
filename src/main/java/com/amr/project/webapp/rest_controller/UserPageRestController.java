@@ -18,7 +18,8 @@ public class UserPageRestController {
 
     @GetMapping("/users/principal")
     public Object getUserPrincipal() {
-        String principalName = SecurityContextHolder.getContext().getAuthentication().getName();
-        return userMapper.toDto(userService.findUserByUsername(principalName));
+        return userMapper.toDto(userService.findUserByUsername(
+                SecurityContextHolder.getContext().getAuthentication().getName())
+        );
     }
 }

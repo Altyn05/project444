@@ -1,5 +1,6 @@
 package com.amr.project.webapp.controller;
 
+import com.amr.project.converter.OAuth2UserMapper;
 import com.amr.project.model.entity.User;
 import com.amr.project.service.abstracts.RoleService;
 import com.amr.project.service.abstracts.UserService;
@@ -20,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
-import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
 @Controller
@@ -30,14 +30,17 @@ public class OkAuthController {
     private final OAuth20Service okService;
     private final UserService userService;
     private final RoleService roleService;
+    private final OAuth2UserMapper userMapper;
     private final Environment env;
 
     @Autowired
     public OkAuthController(@Qualifier("okOAuthService") OAuth20Service okService,
-                            UserService userService, RoleService roleService, Environment env) {
+                            UserService userService, RoleService roleService,
+                            OAuth2UserMapper userMapper, Environment env) {
         this.okService = okService;
         this.userService = userService;
         this.roleService = roleService;
+        this.userMapper = userMapper;
         this.env = env;
     }
 
@@ -47,24 +50,21 @@ public class OkAuthController {
     }
 
     @GetMapping("/code")
-    public String processOAuth2User(@RequestParam(value = "code", required = false) String code) throws Exception {
+    public String processOAuth2User(@RequestParam(value = "code", required = false) String code) throws IOException, ExecutionException, InterruptedException {
 
         OAuth2AccessToken accessToken = okService.getAccessToken(code);
 
         User user = getUserByToken(accessToken);
-        Optional<User> existingUser = userService.findUserByEmail(user.getEmail());
+        roleService.getRoleByName("USER").ifPresent(user::addRole);
+        User existingUser = userService.findUserByEmail(user.getEmail()).orElse(null);
 
-        if (existingUser.isPresent()) {
-            if (!user.getAuthProvider().equals(existingUser.get().getAuthProvider())) {
-                throw new Exception("Пользователь с таким имейл уже существует. Войдите со своим " + existingUser.get().getAuthProvider() + " аккаунтом.");
-            }
-            user.setId(existingUser.get().getId());
+        if (existingUser != null) {
+            user.setId(existingUser.getId());
             userService.update(user);
         } else {
             userService.persist(user);
         }
         authenticate(user);
-
         return "redirect:/";
     }
 
@@ -74,7 +74,6 @@ public class OkAuthController {
     }
 
     private User getUserByToken(OAuth2AccessToken accessToken) throws IOException, ExecutionException, InterruptedException {
-        User user = new User();
 
         final OAuthRequest request = new OAuthRequest(Verb.GET, String.format(
                 "https://api.ok.ru/api/users/getCurrentUser?application_key=%1$s&format=JSON",
@@ -83,18 +82,11 @@ public class OkAuthController {
 
         okService.signRequest(accessToken, request);
         try (Response response = okService.execute(request)) {
-            JSONObject jsonUser = new JSONObject(response.getBody());
-            user.setAuthProvider("ok");
-            user.setIdProvider(jsonUser.getString("uid"));
-            user.setFirstName(jsonUser.getString("first_name"));
-            user.setLastName(jsonUser.getString("last_name"));
-            user.setUsername(jsonUser.getString("uid"));
-            user.setAge(jsonUser.getInt("age"));
-            user.setEmail(jsonUser.getString("uid"));
-            roleService.getRoleByName("USER").ifPresent(user::addRole);
+            return userMapper.okUserToUser(
+                    new JSONObject(response.getBody()),
+                    env.getProperty("ok.client-name")
+            );
         }
-
-        return user;
     }
 
 }

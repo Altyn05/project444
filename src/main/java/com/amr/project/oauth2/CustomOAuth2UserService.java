@@ -28,18 +28,17 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     public OAuth2User loadUser(OAuth2UserRequest userRequest) {
 
         CustomOAuth2User oauth2User = new CustomOAuth2User(super.loadUser(userRequest));
-        User user = userMapper.googleUserToUser(oauth2User, userRequest);
+        User user = userMapper.oauth2UserToUser(oauth2User, userRequest);
         roleService.getRoleByName("USER").ifPresent(user::addRole);
 
         User existingUser = userService.findUserByEmail(oauth2User.getEmail()).orElse(null);
         if (existingUser != null) {
-            if (!userRequest.getClientRegistration().getRegistrationId().equals(existingUser.getAuthProvider())) {
-                //todo
-            }
-            userService.update(existingUser);
+            user.setId(existingUser.getId());
+            userService.update(user);
         } else {
             userService.persist(user);
         }
+
         return oauth2User;
     }
 
