@@ -50,7 +50,8 @@ public class User implements UserDetails {
     private Gender gender;
     private Calendar birthday;
 
-    @OneToMany
+
+    @ManyToMany
     @ToString.Exclude
     private List<Image> images;
 

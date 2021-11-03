@@ -32,7 +32,7 @@ public class AdminRestController {
     private final CategoryMapper categoryMapper = Mappers.getMapper(CategoryMapper.class);
     private final ShopMapper shopMapper = Mappers.getMapper(ShopMapper.class);
     private final ItemMapper itemMapper = Mappers.getMapper(ItemMapper.class);
-    private final UserMapper userMapper = Mappers.getMapper(UserMapper.class);
+    private final AdminUserMapper userMapper = Mappers.getMapper(AdminUserMapper.class);
 
     public AdminRestController(AdminService adminService, CountryService countryService, CityService cityService,
                                AddressService addressService, CategoryService categoryService, UserService userService,
