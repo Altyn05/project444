@@ -2,7 +2,7 @@ package com.amr.project.webapp.controller;
 
 import com.amr.project.converter.OAuth2UserMapper;
 import com.amr.project.model.entity.User;
-import com.amr.project.service.abstracts.RoleService;
+import com.amr.project.oauth2.UserProcessingService;
 import com.amr.project.service.abstracts.UserService;
 import com.github.openjson.JSONObject;
 import com.github.scribejava.core.model.OAuth2AccessToken;
@@ -13,8 +13,6 @@ import com.github.scribejava.core.oauth.OAuth20Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.env.Environment;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,17 +27,17 @@ public class OkAuthController {
 
     private final OAuth20Service okService;
     private final UserService userService;
-    private final RoleService roleService;
+    private final UserProcessingService processingService;
     private final OAuth2UserMapper userMapper;
     private final Environment env;
 
     @Autowired
     public OkAuthController(@Qualifier("okOAuthService") OAuth20Service okService,
-                            UserService userService, RoleService roleService,
+                            UserService userService, UserProcessingService processingService,
                             OAuth2UserMapper userMapper, Environment env) {
         this.okService = okService;
         this.userService = userService;
-        this.roleService = roleService;
+        this.processingService = processingService;
         this.userMapper = userMapper;
         this.env = env;
     }
@@ -55,22 +53,10 @@ public class OkAuthController {
         OAuth2AccessToken accessToken = okService.getAccessToken(code);
 
         User user = getUserByToken(accessToken);
-        user.addRole(roleService.getRoleByName("USER"));
         User existingUser = userService.findUserByEmail(user.getEmail()).orElse(null);
+        processingService.process(user, existingUser, true);
 
-        if (existingUser != null) {
-            user.setId(existingUser.getId());
-            userService.update(user);
-        } else {
-            userService.persist(user);
-        }
-        authenticate(user);
         return "redirect:/";
-    }
-
-    private void authenticate(User user) {
-        SecurityContextHolder.getContext().setAuthentication(
-                new UsernamePasswordAuthenticationToken(user, user.getPassword(), user.getAuthorities()));
     }
 
     private User getUserByToken(OAuth2AccessToken accessToken) throws IOException, ExecutionException, InterruptedException {
