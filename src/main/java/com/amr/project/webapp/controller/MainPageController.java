@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class MainPageController {
-    private static final int[] ITEM_PAGE_SIZE =
-            new int[]{4, 12, 24, 48, Integer.MAX_VALUE};
-    private static final int[] SHOP_PAGE_SIZE =
-            new int[]{6, 12, 24, 48, Integer.MAX_VALUE};
+    private static final int[] ITEM_PAGE_SIZE = new int[]
+            {4, 12, 24, 48, Integer.MAX_VALUE};
+    private static final int[] SHOP_PAGE_SIZE = new int[]
+            {6, 12, 24, 48, Integer.MAX_VALUE};
 
     private final ShowMainPageService showMainPageService;
 

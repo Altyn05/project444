@@ -4,8 +4,8 @@ import com.amr.project.converter.CategoryMapper;
 import com.amr.project.converter.ItemMapper;
 import com.amr.project.converter.ShopMapper;
 import com.amr.project.dao.abstracts.CategoryDao;
-import com.amr.project.dao.abstracts.ItemMainPageDao;
-import com.amr.project.dao.abstracts.ShopMainPageDao;
+import com.amr.project.dao.abstracts.ItemDao;
+import com.amr.project.dao.abstracts.ShopDao;
 import com.amr.project.model.dto.ItemMainPageDTO;
 import com.amr.project.model.dto.ShopMainPageDTO;
 import com.amr.project.model.dto.ShowMainPageDTO;
@@ -21,22 +21,25 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ShowMainPageServiceImpl implements ShowMainPageService {
-    private final ItemMainPageDao itemMainPageDao;
-    private final ShopMainPageDao shopMainPageDao;
+    private final ItemDao itemDao;
+    private final ShopDao shopDao;
     private final CategoryDao categoryDao;
-    private final ShopMapper shopMapper = Mappers.getMapper(ShopMapper.class);
-    private final ItemMapper itemMapper = Mappers.getMapper(ItemMapper.class);
-    private final CategoryMapper categoryMapper = Mappers.getMapper(CategoryMapper.class);
+    private final ShopMapper shopMapper;
+    private final ItemMapper itemMapper;
+    private final CategoryMapper categoryMapper;
 
     @Autowired
     public ShowMainPageServiceImpl(
-            ItemMainPageDao itemMainPageDao,
-            ShopMainPageDao shopMainPageDao,
+            ItemDao itemDao,
+            ShopDao shopDao,
             CategoryDao categoryDao
     ) {
-        this.itemMainPageDao = itemMainPageDao;
-        this.shopMainPageDao = shopMainPageDao;
+        this.itemDao = itemDao;
+        this.shopDao = shopDao;
         this.categoryDao = categoryDao;
+        shopMapper = Mappers.getMapper(ShopMapper.class);
+        itemMapper = Mappers.getMapper(ItemMapper.class);
+        categoryMapper = Mappers.getMapper(CategoryMapper.class);
     }
 
     @Override
@@ -44,9 +47,9 @@ public class ShowMainPageServiceImpl implements ShowMainPageService {
             String s, Pageable itemPages, Pageable shopPages
     ) {
         return new ShowMainPageDTO(
-                shopPageConverter(shopMainPageDao.searchShops(s, shopPages)),
-                itemPageConverter(itemMainPageDao.searchItems(s, itemPages)),
-                categoryMapper.categoryListToListCategoryMainPageDTO(
+                shopPageConverter(shopDao.searchPagedShops(s, shopPages)),
+                itemPageConverter(itemDao.searchPagedItems(s, itemPages)),
+                categoryMapper.categoryListToListCategoryDTO(
                         categoryDao.getAll(Category.class)),
                 "Поиск товаров",
                 "Поиск магазинов"
@@ -59,10 +62,10 @@ public class ShowMainPageServiceImpl implements ShowMainPageService {
     ) {
         return new ShowMainPageDTO(
                 shopPageConverter(
-                        shopMainPageDao.findPopularShops(shopPages)),
-                itemPageConverter(itemMainPageDao
-                        .findItemsByCategoryId(categoryId, itemPages)),
-                categoryMapper.categoryListToListCategoryMainPageDTO(
+                        shopDao.findPagedPopularShops(shopPages)),
+                itemPageConverter(itemDao
+                        .findPagedItemsByCategoryId(categoryId, itemPages)),
+                categoryMapper.categoryListToListCategoryDTO(
                         categoryDao.getAll(Category.class)),
                 "Подборка популярных товаров по категориям",
                 "Подборка популярных магазинов"
@@ -73,10 +76,10 @@ public class ShowMainPageServiceImpl implements ShowMainPageService {
     public ShowMainPageDTO show(Pageable itemPages, Pageable shopPages) {
         return new ShowMainPageDTO(
                 shopPageConverter(
-                        shopMainPageDao.findPopularShops(shopPages)),
+                        shopDao.findPagedPopularShops(shopPages)),
                 itemPageConverter(
-                        itemMainPageDao.findPopularItems(itemPages)),
-                categoryMapper.categoryListToListCategoryMainPageDTO(
+                        itemDao.findPagedPopularItems(itemPages)),
+                categoryMapper.categoryListToListCategoryDTO(
                         categoryDao.getAll(Category.class)),
                 "Подборка популярных товаров",
                 "Подборка популярных магазинов"
@@ -87,6 +90,6 @@ public class ShowMainPageServiceImpl implements ShowMainPageService {
         return page.map(itemMapper::itemToItemMainPageDTO);
     }
     private Page<ShopMainPageDTO> shopPageConverter(Page<Shop> page) {
-        return page.map(shopMapper::shopToSHopMainPageDTO);
+        return page.map(shopMapper::shopToShopMainPageDTO);
     }
 }

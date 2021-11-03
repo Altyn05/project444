@@ -20,5 +20,5 @@ public interface ShopMapper {
 
     AdminShopDto shopToAdminShopDto(Shop shop);
 
-    ShopMainPageDTO shopToSHopMainPageDTO(Shop shop);
+    ShopMainPageDTO shopToShopMainPageDTO(Shop shop);
 }
