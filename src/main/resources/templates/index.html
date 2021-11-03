@@ -92,7 +92,7 @@
             </li>
         </ul>
     
-        <div class="card-deck row row-cols-1 row-cols-sm-2 row-cols-lg-4">
+        <div id="items" class="card-deck row row-cols-1 row-cols-sm-2 row-cols-lg-4">
             <div class="d-flex"
                  th:each="item: ${mainPageDto.popularItem.content}">
                 <div class="gcard d-flex flex-column flex-grow-1">
@@ -114,7 +114,7 @@
                             <p class="flex-grow-1" th:text="${item.description.substring(0, 50) + '...'}">
                                 DESCRIPTION
                             </p>
-                            <a th:href="@{'cart/' + ${item.id}}" class="btn btn-primary btn-sm w-100">
+                            <a href="#" th:attr="data-item-id=${item.id}" class="btn btn-primary btn-sm w-100">
                                 В корзину
                             </a>
                         </a>
