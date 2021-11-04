@@ -19,8 +19,6 @@ public class UserPageRestController {
 
     private final UserMapper userMapper;
     private final ReadWriteService<User,Long> rwUser;
-    private final ReadWriteService<Image,Long> rwImage;
-    private final UserRepository userRepository;
     private final UserProfileUtil userProfileUtil;
 
     @GetMapping("/users/principal")
@@ -33,9 +31,7 @@ public class UserPageRestController {
 
     @PutMapping("/users")
     public UserDto updateUser(@RequestBody UserDto userDto) {
-        User user = userMapper.toModel(userDto);
-        rwUser.update(userProfileUtil.prepareUser(user));
-        return userMapper.toDto(user);
+        return userProfileUtil.prepareUser(userDto);
     }
 }
 

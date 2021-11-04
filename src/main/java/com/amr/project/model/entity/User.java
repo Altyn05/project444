@@ -166,3 +166,5 @@ public class User implements UserDetails {
         return Objects.hash(email, username, password, activate, phone, firstName, lastName, age);
     }
 }
+
+

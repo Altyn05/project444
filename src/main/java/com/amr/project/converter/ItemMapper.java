@@ -14,4 +14,7 @@ public interface ItemMapper {
     List<ItemMainPageDTO> itemListToListItemMainPageDTO(List<Item> list);
     List<AdminItemDto> itemListToListAdminItemDto(List<Item> list);
     AdminItemDto itemToAdminItemDto(Item item);
+
+    ItemDto toDto(Item item);
+    Item toModel(ItemDto itemDto);
 }
