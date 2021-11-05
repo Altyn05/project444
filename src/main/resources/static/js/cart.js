@@ -1,5 +1,4 @@
 let cart;
-let amountInputs;
 let cartEmpty;
 let cartPriceLabel;
 let cartItems;
@@ -16,8 +15,6 @@ window.onload = async function () {
 }
 
 function updateCartModal() {
-    console.log(cart)
-
     let price = 0;
     cartEmpty.hidden = cart.length > 0
     cartPriceLabel.hidden = cart.length === 0;
@@ -26,35 +23,43 @@ function updateCartModal() {
     for (let i = 0; i < cart.length; ++i) {
         price += cart[i]['itemDto']['price'] * cart[i]['quantity'];
         cartItems.innerHTML +=
-            '<div class="d-flex justify-content-between mb-3">' +
-                '<div class="col-6">' + cart[i]['itemDto']['name'] + '</div>' +
-                '<div class="col-3 p-0 row justify-content-center">' +
-                    '<div class="p-0">' + '<button onclick="" class="btn btn-outline-warning btn-sm cart-amount-control">&#8722;</button>' + '</div>' +
-                    '<div class="cart-amount" id="cart-id-' + cart[i]['id'] + '" type="number" min="0" max="100" data-initial-value="1">' + cart[i]['quantity'] + '</div>' +
-                    '<div class="p-0">' + '<button onclick="" class="btn btn-outline-warning btn-sm cart-amount-control">&#43;</button>' + '</div>' +
-                '</div>' +
-                '<div class="col-2 text-right">' + cart[i]['itemDto']['price'] + '</div>' +
-                '<div class="p-0 col-1">' + '<button onclick="delItem(' + cart[i]['id'] + ')" class="btn btn-outline-danger btn-sm cart-amount-control">&times;</button>' + '</div>' +
-            '</div>'
+            `<div class="d-flex justify-content-between mb-3">
+                <div class="col-6">${cart[i]['itemDto']['name']}</div>
+                <div class="col-3 p-0 row justify-content-center">
+                    <div class="p-0"><button onclick="changeAmount(${cart[i]['id']}, false)" class="btn btn-outline-warning btn-sm cart-amount-control">&#8722;</button></div>
+                    <div class="cart-amount" id="cart-id-${cart[i]['id']}" type="number" data-initial-value="1">${cart[i]['quantity']}</div>
+                    <div class="p-0"><button onclick="changeAmount(${cart[i]['id']}, true)" class="btn btn-outline-warning btn-sm cart-amount-control">&#43;</button></div>
+                </div>
+                <div class="col-2 text-right">${cart[i]['itemDto']['price'] * cart[i]['quantity']}</div>
+                <div class="p-0 col-1"><button onclick="delItem(${cart[i]['id']})" class="btn btn-outline-danger btn-sm cart-amount-control">&times;</button></div>
+            </div>`
     }
     $('#cart-price').html(price);
 }
 
-async function changeAmount(id) {
-    let item = cart.find(item => item['id'] == id)
+async function changeAmount(id, increment) {
+    let item = cart.find(item => item['id'] === id)
+
     if (item !== undefined) {
-        let amount = $('#cart-id-' + id).val();
-        if (amount <= 0) {
-            await delItem(id);
-        } else {
-            let data = {
-                id: id,
-                amount: amount,
-                pre_amount: item['quantity']
-            }
-            cart = await sendResponse('PUT', data);
-            updateCartModal();
+        let amount = item.quantity
+        const max = item.itemDto.count
+
+        if (amount >= 1 && increment && amount < max) {
+            amount++
         }
+
+        if (amount > 1 && !increment && amount <= max) {
+            amount--
+        }
+
+        let data = {
+            id: id,
+            amount: amount,
+            pre_amount: item['quantity']
+        }
+
+        cart = await sendResponse('PUT', data);
+        updateCartModal();
     }
 }
 
