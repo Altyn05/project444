@@ -83,7 +83,7 @@
                 th:each="i : ${itemPageSizes}"
                 th:classappend="${mainPageDto.popularItem.size == i} ? 'active'">
                 <a class="page-link"
-                   th:href="@{../../../../../../Desktop(searchName = ${searchName},
+                   th:href="@{./(searchName = ${searchName},
                                  itemPage = ${mainPageDto.popularItem.number},
                                  itemSize = ${i},
                                  shopPage = ${mainPageDto.popularShop.number},
@@ -129,7 +129,7 @@
                 <li class="page-item"
                     th:classappend="${!mainPageDto.popularItem.hasPrevious()} ? 'disabled'">
                     <a class="page-link"
-                        th:href="@{../../../../../../Desktop(searchName = ${searchName},
+                        th:href="@{./(searchName = ${searchName},
                                       itemPage = ${mainPageDto.popularItem.number - 1},
                                       itemSize = ${mainPageDto.popularItem.size},
                                       shopPage = ${mainPageDto.popularShop.number},
@@ -142,7 +142,7 @@
                     th:each="i : ${#numbers.sequence(0, mainPageDto.popularItem.totalPages - 1)}"
                     th:classappend="${mainPageDto.popularItem.number == i} ? 'active'">
                     <a class="page-link"
-                       th:href="@{../../../../../../Desktop(searchName = ${searchName},
+                       th:href="@{./(searchName = ${searchName},
                                      itemPage = ${i},
                                      itemSize = ${mainPageDto.popularItem.size},
                                      shopPage = ${mainPageDto.popularShop.number},
@@ -152,7 +152,7 @@
                 <li class="page-item"
                     th:classappend="${!mainPageDto.popularItem.hasNext()} ? 'disabled'">
                     <a class="page-link"
-                       th:href="@{../../../../../../Desktop(searchName = ${searchName},
+                       th:href="@{./(searchName = ${searchName},
                                      itemPage = ${mainPageDto.popularItem.number + 1},
                                      itemSize = ${mainPageDto.popularItem.size},
                                      shopPage = ${mainPageDto.popularShop.number},
@@ -175,7 +175,7 @@
                 th:each="i : ${shopPageSizes}"
                 th:classappend="${mainPageDto.popularShop.size == i} ? 'active'">
                 <a class="page-link"
-                   th:href="@{../../../../../../Desktop(searchName = ${searchName},
+                   th:href="@{./(searchName = ${searchName},
                                  itemPage = ${mainPageDto.popularItem.number},
                                  itemSize = ${mainPageDto.popularItem.size},
                                  shopPage = ${mainPageDto.popularShop.number},
@@ -213,7 +213,7 @@
                 <li class="page-item"
                     th:classappend="${!mainPageDto.popularShop.hasPrevious()} ? 'disabled'">
                     <a class="page-link"
-                       th:href="@{../../../../../../Desktop(searchName = ${searchName},
+                       th:href="@{./(searchName = ${searchName},
                                      itemPage = ${mainPageDto.popularItem.number},
                                      itemSize = ${mainPageDto.popularItem.size},
                                      shopPage = ${mainPageDto.popularShop.number - 1},
@@ -226,7 +226,7 @@
                     th:each="i : ${#numbers.sequence(0, mainPageDto.popularShop.totalPages - 1)}"
                     th:classappend="${mainPageDto.popularShop.number == i} ? 'active'">
                     <a class="page-link"
-                       th:href="@{../../../../../../Desktop(searchName = ${searchName},
+                       th:href="@{./(searchName = ${searchName},
                                      itemPage = ${mainPageDto.popularItem.number},
                                      itemSize = ${mainPageDto.popularItem.size},
                                      shopPage = ${i},
@@ -236,7 +236,7 @@
                 <li class="page-item"
                     th:classappend="${!mainPageDto.popularShop.hasNext()} ? 'disabled'">
                     <a class="page-link"
-                       th:href="@{../../../../../../Desktop(searchName = ${searchName},
+                       th:href="@{./(searchName = ${searchName},
                                      itemPage = ${mainPageDto.popularItem.number},
                                      itemSize = ${mainPageDto.popularItem.size},
                                      shopPage = ${mainPageDto.popularShop.number} + 1,
