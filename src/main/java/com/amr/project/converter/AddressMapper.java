@@ -15,7 +15,4 @@ public interface AddressMapper {
     @Mapping(target = "city.name", source = "city")
     @Mapping(target = "country.name", source = "country")
     Address toModel(AddressDto addressDto);
-
-    List<AdminAddressDto> addressListToListAdminAddressDto(List<Address> addresses);
-    AdminAddressDto addressToAdminAddressDto(Address address);
 }
