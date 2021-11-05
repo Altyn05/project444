@@ -16,6 +16,8 @@ window.onload = async function () {
 }
 
 function updateCartModal() {
+    console.log(cart)
+
     let price = 0;
     cartEmpty.hidden = cart.length > 0
     cartPriceLabel.hidden = cart.length === 0;
@@ -24,16 +26,16 @@ function updateCartModal() {
     for (let i = 0; i < cart.length; ++i) {
         price += cart[i]['itemDto']['price'] * cart[i]['quantity'];
         cartItems.innerHTML +=
-            '<div class="cart-item row">' +
-            '<div class="col-9">' +
-            cart[i]['itemDto']['name'] +
-            '</div>' +
-            '<div class="col-3">' +
-            '<input onchange="changeAmount(' + cart[i]['id'] + ')" class="cart-amount" id="cart-id-' + cart[i]['id'] + '" type="number" min="0" max="100" data-initial-value="1" value="' + cart[i]['quantity'] + '">' +
-            '<button onclick="delItem(' + cart[i]['id'] + ')" class="btn btn-outline-warning btn-sm cart-amount-control">&times;</button>' +
-            '</div>' +
-            '</div>' +
-            '<hr class="cart-item-row">';
+            '<div class="d-flex justify-content-between mb-3">' +
+                '<div class="col-6">' + cart[i]['itemDto']['name'] + '</div>' +
+                '<div class="col-3 p-0 row justify-content-center">' +
+                    '<div class="p-0">' + '<button onclick="" class="btn btn-outline-warning btn-sm cart-amount-control">&#8722;</button>' + '</div>' +
+                    '<div class="cart-amount" id="cart-id-' + cart[i]['id'] + '" type="number" min="0" max="100" data-initial-value="1">' + cart[i]['quantity'] + '</div>' +
+                    '<div class="p-0">' + '<button onclick="" class="btn btn-outline-warning btn-sm cart-amount-control">&#43;</button>' + '</div>' +
+                '</div>' +
+                '<div class="col-2 text-right">' + cart[i]['itemDto']['price'] + '</div>' +
+                '<div class="p-0 col-1">' + '<button onclick="delItem(' + cart[i]['id'] + ')" class="btn btn-outline-danger btn-sm cart-amount-control">&times;</button>' + '</div>' +
+            '</div>'
     }
     $('#cart-price').html(price);
 }
