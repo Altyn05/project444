@@ -23,7 +23,8 @@ function updateCartModal() {
     for (let i = 0; i < cart.length; ++i) {
         price += cart[i]['itemDto']['price'] * cart[i]['quantity'];
         cartItems.innerHTML +=
-            `<div class="d-flex justify-content-between mb-3">
+            `<small class="d-block ml-auto col-6 ${cart[i]['quantity'] === cart[i]['itemDto']['count'] ? 'text-danger' : 'text-secondary'}">В наличии: ${cart[i]['itemDto']['count']}</small>
+            <div class="d-flex justify-content-between mb-2">
                 <div class="col-6">${cart[i]['itemDto']['name']}</div>
                 <div class="col-3 p-0 row justify-content-center">
                     <div class="p-0"><button onclick="changeAmount(${cart[i]['id']}, false)" class="btn btn-outline-warning btn-sm cart-amount-control">&#8722;</button></div>
@@ -92,6 +93,7 @@ async function addToCart(id) {
         cart = await sendResponse('PUT', data);
     }
     updateCartModal();
+    $('#cart-modal').modal('show');
 }
 
 async function getCart() {
