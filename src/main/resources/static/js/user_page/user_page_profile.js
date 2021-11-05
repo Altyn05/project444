@@ -10,6 +10,7 @@ function userProfile() {
     userProfile[5].value = user.birthday;
     if(user.gender === "MALE") userProfile[6].setAttribute("selected", "selected")
         else userProfile[7].setAttribute("selected", "selected")
+    userProfile[8].value = user.password;
     editAddresses()
 }
 
@@ -30,6 +31,7 @@ function extractUser(form) {
     tempUser.phone =  form[3].value
     tempUser.age =  form[4].value
     tempUser.birthday =  form[5].value
+    tempUser.password = form[8].value
 }
 
 /////////// Load new Foto
