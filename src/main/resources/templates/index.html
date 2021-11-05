@@ -51,8 +51,8 @@
                 </button>
                 <div sec:authorize="isAuthenticated()" class="d-flex">
                     <div class="dropdown mr-1">
-                        <button type="button" class="btn btn-outline-warning dropdown-toggle" id="dropdownMenuProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-offset="10,20">
-                            Профиль
+                        <button type="button" class="btn btn-outline-primary dropdown-toggle" id="dropdownMenuProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-offset="10,20">
+                            <th:block sec:authentication="name" ></th:block>
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuProfile">
                             <a class="dropdown-item" href="/user">Мой профиль</a>
@@ -155,11 +155,11 @@
             </div>
             <div class="modal-body p-3">
                 <p>или войдите с помощью:</p>
-                <div class="d-flex flex-wrap justify-content-around">
-                    <a class="mx-3 p-2" href="#"><img th:src="@{/img/logo-vk.svg}" width="40" alt="vk"></a>
-                    <a class="mx-3 p-2" href="#"><img th:src="@{/img/logo-google.svg}" width="40" alt="google"></a>
-                    <a class="mx-3 p-2" href="#"><img th:src="@{/img/logo-ok.svg}" width="40" alt="ok"></a>
-                    <a class="mx-3 p-2" href="#"><img th:src="@{/img/logo-fb.svg}" width="40" alt="fb"></a>
+                <div class="d-flex flex-wrap justify-content-around" id="oauth">
+                    <a class="mx-3 p-2" th:href="@{/oauth2/vk}"><img th:src="@{/img/logo-vk.svg}" width="40" alt="vk"></a>
+                    <a class="mx-3 p-2" th:href="@{/oauth2/authorization/google}"><img th:src="@{/img/logo-google.svg}" width="40" alt="google"></a>
+                    <a class="mx-3 p-2" th:href="@{/oauth2/ok}"><img th:src="@{/img/logo-ok.svg}" width="40" alt="ok"></a>
+                    <a class="mx-3 p-2" th:href="@{/oauth2/authorization/facebook}"><img th:src="@{/img/logo-fb.svg}" width="40" alt="fb"></a>
                 </div>
             </div>
             <div class="modal-footer flex-column p-3">

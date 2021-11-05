@@ -1,21 +1,22 @@
 package com.amr.project.service.impl;
 
 import com.amr.project.dao.abstracts.ReadWriteDao;
-import com.amr.project.dao.abstracts.RoleDao;
 import com.amr.project.dao.abstracts.UserDao;
 import com.amr.project.model.entity.Role;
 import com.amr.project.model.entity.User;
 import com.amr.project.service.abstracts.RoleService;
 import com.amr.project.service.abstracts.UserService;
 import com.amr.project.util.EmailUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
 @Service
+@Transactional
 public class UserServiceImpl extends ReadWriteServiceImpl<User, Long> implements UserService {
     private final UserDao userDao;
     private final RoleService roleService;
@@ -46,6 +47,15 @@ public class UserServiceImpl extends ReadWriteServiceImpl<User, Long> implements
     }
 
     @Override
+    public Optional<User> findUserByEmail(String email) {
+        return userDao.findUserByEmail(email);
+    }
+
+    @Override
+    public Optional<User> findUserByIdProvider(String id) {
+        return userDao.findUserByIdProvider(id);
+    }
+
     public User findUserByActivationCode(String activationCode) {
         return userDao.findUserByActivationCode(activationCode);
     }
