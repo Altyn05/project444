@@ -13,5 +13,6 @@ public interface ShopDao extends ReadWriteDao<Shop,Long> {
     List<Shop> searchShops(String search);
 
     Page<Shop> findPagedPopularShops(Pageable pageable);
+    Page<Shop> findPagedShopsByCategoryId(Long categoryId, Pageable pageable);
     Page<Shop> searchPagedShops(String search, Pageable pageable);
 }
