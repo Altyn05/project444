@@ -3,6 +3,7 @@ var tempUser
 
 async function initUserPage() {
     user = await getUserPrincipal()
+    console.log(user)
     writeUserData()
     showUserShops()
 }

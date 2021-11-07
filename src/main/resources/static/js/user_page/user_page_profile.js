@@ -11,9 +11,10 @@ function userProfile() {
     userProfile[2].value = user.email;
     userProfile[3].value = user.phone;
     userProfile[4].value = user.age;
-    userProfile[5].value = user.birthday;
+    userProfile[5].value = user.birthday.slice(0,10);
     if (user.gender === "MALE") userProfile[6].setAttribute("selected", "selected")
     else userProfile[7].setAttribute("selected", "selected")
+
     editAddresses()
 }
 
@@ -33,7 +34,7 @@ function extractUser(form) {
     tempUser.email = form[2].value
     tempUser.phone = form[3].value
     tempUser.age = form[4].value
-    tempUser.birthday = form[5].value
+    tempUser.birthday = form[5].value +"T21:00:00.001+00:00"
 }
 
 /////////// Load new Foto
@@ -109,7 +110,6 @@ function saveFoto() {
         if (isDelete.checked === true) { tempUser.images.splice(i, 1); i-- }
         i++
     }
-    console.log(tempUser)
 }
 
 function editAddresses() {
@@ -170,7 +170,7 @@ function saveAddresses() {
         if (city !== "") tempUser.address[i].city = city
         if (street !== "") tempUser.address[i].street = street
         if (building !== "") tempUser.address[i].house = building
-        if (isDelete === true) { tempUser.address.splice(j, 1); j--; console.log("удалил " + i) }
+        if (isDelete === true) { tempUser.address.splice(j, 1); j--}
         i++
         j++
     }
@@ -187,5 +187,4 @@ function saveAddresses() {
         tempUser.address[j].street = street
         tempUser.address[j].house = building
     }
-    console.log(tempUser.address)
 }

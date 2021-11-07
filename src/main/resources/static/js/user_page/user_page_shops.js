@@ -2,8 +2,6 @@ function showUserShops() {
     const rowsToDelete = document.querySelectorAll('.DELSHOP')
     rowsToDelete.forEach(row => row.remove())
 
-    console.log(user.shops)
-    console.log(user)
     for(let shop of user.shops) {
 
         let tr = document.createElement('tr')
