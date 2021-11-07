@@ -12,7 +12,7 @@ import java.util.List;
 public class ShowMainPageDTO {
     Page<ShopMainPageDTO> popularShop;
     Page<ItemMainPageDTO> popularItem;
-    List<CategoryDto> category;
+    List<CategoryDto> categories;
     String items;
     String shops;
 }
