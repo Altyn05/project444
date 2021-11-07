@@ -13,11 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class MainPageController {
-    private static final int[] ITEM_PAGE_SIZE = new int[]
-            {4, 12, 24, 48, Integer.MAX_VALUE};
-    private static final int[] SHOP_PAGE_SIZE = new int[]
-            {6, 12, 24, 48, Integer.MAX_VALUE};
-
     private final ShowMainPageService showMainPageService;
 
     @Autowired
@@ -46,9 +41,7 @@ public class MainPageController {
                     .showSearch(searchName, itemPageable, shopPageable);
         }
         model.addAttribute("mainPageDto", showMainPageDTO)
-                .addAttribute("searchName", searchName)
-                .addAttribute("itemPageSizes", ITEM_PAGE_SIZE)
-                .addAttribute("shopPageSizes", SHOP_PAGE_SIZE);
+                .addAttribute("searchName", searchName);
         return "index";
     }
 
@@ -64,9 +57,7 @@ public class MainPageController {
         Pageable itemPageable = PageRequest.of(itemPage, itemSize);
         Pageable shopPageable = PageRequest.of(shopPage, shopSize);
 
-        model.addAttribute("mainPageDto", showMainPageService.findItemsByCategory(id, itemPageable, shopPageable))
-                .addAttribute("itemPageSizes", ITEM_PAGE_SIZE)
-                .addAttribute("shopPageSizes", SHOP_PAGE_SIZE);
+        model.addAttribute("mainPageDto", showMainPageService.findItemsByCategory(id, itemPageable, shopPageable));
         return "index";
     }
 }

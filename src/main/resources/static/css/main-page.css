@@ -1,9 +1,17 @@
 
-.size .page-link {
+a {
+    text-decoration: none !important;
+}
+
+button {
+    cursor: pointer;
+}
+
+.size-block .page-link {
     color: grey;
 }
 
-.size > .page-item.active > .page-link {
+.size-block > .page-item.active > .page-link {
     border-color: grey;
     background-color: grey;
 }
@@ -22,3 +30,7 @@
     height: 2.3em;
     overflow: hidden;
 }
+
+/*.page-link:focus {*/
+/*    box-shadow: none;*/
+/*}*/
