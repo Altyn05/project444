@@ -45,6 +45,33 @@ public class ItemServiceImpl
         return itemPageConverter(itemDao.findPagedPopularItems(pageable));
     }
 
+    @Override
+    public Page<ItemMainPageDTO> findPagedItemsByCategoryId(
+            Long categoryId,
+            Pageable pageable
+    ) {
+        return itemPageConverter(itemDao
+                .findPagedItemsByCategoryId(categoryId, pageable));
+    }
+
+    @Override
+    public Page<ItemMainPageDTO> searchPagedItems(
+            String search,
+            Pageable pageable
+    ) {
+        return itemPageConverter(itemDao.searchPagedItems(search, pageable));
+    }
+
+    @Override
+    public Page<ItemMainPageDTO> searchPagedItemsByCategoryId(
+            String search,
+            Long categoryId,
+            Pageable pageable
+    ) {
+        return itemPageConverter(itemDao
+                .searchPagedItemsByCategoryId(search, categoryId, pageable));
+    }
+
     private Page<ItemMainPageDTO> itemPageConverter(Page<Item> page) {
         return page.map(itemMapper::itemToItemMainPageDTO);
     }

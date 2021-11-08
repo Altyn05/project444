@@ -11,7 +11,7 @@
           integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
     <link th:href="@{/img/favicon.ico}" rel="shortcut icon" type="image/x-icon">
     <link th:href="@{/css/sticky-footer-navbar.css}" rel="stylesheet">
-    <link href="../static/css/main-page.css" th:href="@{/css/main-page.css}" rel="stylesheet">
+    <link th:href="@{/css/main-page.css}" rel="stylesheet">
 </head>
 
 <body class="d-flex flex-column h-100">
@@ -25,24 +25,28 @@
             </button>
             <div class="collapse navbar-collapse justify-content-between mt-2" id="navbarCollapse">
                 <div class="dropdown mr-3">
-                    <button class="btn btn-warning dropdown-toggle" type="button" id="dropdownMenuButton"
+                    <button class="btn btn-warning dropdown-toggle" type="button" id="dropdownCategoryButton"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Каталог
                     </button>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="/">Все товары</a>
+                        <a class="dropdown-item" id="category-reset" href="/">
+                            Все товары
+                        </a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" th:href="@{/category/{categoryId}/(categoryId=${category.id})}"
-                           th:each="category: ${mainPageDto.categories}" th:text="${category.name}">
+                        <a class="dropdown-item category-link" href="#"
+                           th:each="category: ${categories}"
+                           th:data-cat-id="${category.id}"
+                           th:text="${category.name}">
                         </a>
                     </div>
                 </div>
                 <form class="block mr-3 w-100">
                     <div class="input-group">
                         <label for="search-input"></label>
-                        <input class="form-control" id="search-input" type="text" th:name="searchName" aria-describedby="button-2" placeholder="Введите запрос" pattern="^[^\s]+(\s.*)?$">
+                        <input class="form-control" id="search-input" type="text" aria-describedby="button-2" placeholder="Введите запрос" pattern="^[^\s]+(\s.*)?$">
                         <div class="input-group-append">
-                            <button class="btn btn-warning" type="submit" id="button-2">Найти</button>
+                            <button class="btn btn-warning" type="submit" id="search-button">Найти</button>
                         </div>
                     </div>
                 </form>
@@ -72,40 +76,47 @@
 <!-- Begin main content -->
 <main role="main" class="flex-shrink-0">
     <div class="container py-2">
-        <h4 class="pt-4">Подборка популярных товаров</h4>
+        <h4 class="pt-4" id="item-header">Подборка популярных товаров</h4>
         
 <!-- Number of items per page -->
         <ul class="pagination pagination-sm justify-content-end mb-0 size-block"
-            id="item-size"></ul>
+            id="item-size">
+            <!-- the block is generated in main-page/pagination.js -->
+        </ul>
     
 <!-- Popular Items -->
         <div class="card-deck row row-cols-1 row-cols-sm-2 row-cols-lg-4 d-flex"
              id="item-block">
+            <!-- the block is generated in main-page/data.js -->
         </div>
         
 <!-- Items Pagination -->
         <nav aria-label="Popular items page navigation">
             <ul class="pagination justify-content-center mt-2"
                 id="item-pages">
+                <!-- the block is generated in main-page/pagination.js -->
             </ul>
         </nav>
 
-        <h4 class="pt-4">Подборка популярных магазинов</h4>
+        <h4 class="pt-4" id="shop-header">Подборка популярных магазинов</h4>
     
 <!-- Number of shops per page -->
         <ul class="pagination pagination-sm justify-content-end mb-0 size-block"
             id="shop-size">
+            <!-- the block is generated in main-page/pagination.js -->
         </ul>
     
 <!-- Popular Shops -->
         <div class="card-deck row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-6"
              id="shop-block">
+            <!-- the block is generated in main-page/data.js -->
         </div>
     
 <!-- Shops Pagination -->
         <nav aria-label="Popular shops page navigation">
             <ul class="pagination justify-content-center mt-2"
                 id="shop-pages">
+                <!-- the block is generated in main-page/pagination.js -->
             </ul>
         </nav>
     </div>
@@ -223,8 +234,8 @@
         crossorigin="anonymous"></script>
 <script th:src="@{/js/cart.js}"></script>
 <script th:src="@{/js/main-page/add-to-cart.js}"></script>
-<script src="../static/js/main-page/page-size.js" th:src="@{/js/main-page/page-size.js}"></script>
-<script src="../static/js/main-page/pagination.js" th:src="@{/js/main-page/pagination.js}"></script>
-<script src="../static/js/main-page/data.js" th:src="@{/js/main-page/data.js}"></script>
+<script th:src="@{/js/main-page/pagination.js}"></script>
+<script th:src="@{/js/main-page/data.js}"></script>
+<script th:src="@{/js/main-page/vars.js}"></script>
 </body>
 </html>

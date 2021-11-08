@@ -12,7 +12,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ShopServiceImpl extends ReadWriteServiceImpl<Shop, Long> implements ShopService {
+public class ShopServiceImpl
+        extends ReadWriteServiceImpl<Shop, Long>
+        implements ShopService {
 
     private final ShopDao shopDao;
     private final ShopMapper shopMapper;
@@ -41,6 +43,33 @@ public class ShopServiceImpl extends ReadWriteServiceImpl<Shop, Long> implements
     @Override
     public Page<ShopMainPageDTO> findPagedPopularShops(Pageable pageable) {
         return shopPageConverter(shopDao.findPagedPopularShops(pageable));
+    }
+
+    @Override
+    public Page<ShopMainPageDTO> findPagedShopsByCategoryId(
+            Long categoryId,
+            Pageable pageable
+    ) {
+        return shopPageConverter(shopDao
+                .findPagedShopsByCategoryId(categoryId, pageable));
+    }
+
+    @Override
+    public Page<ShopMainPageDTO> searchPagedShops(
+            String search,
+            Pageable pageable
+    ) {
+        return shopPageConverter(shopDao.searchPagedShops(search, pageable));
+    }
+
+    @Override
+    public Page<ShopMainPageDTO> searchPagedShopsByCategoryId(
+            String search,
+            Long categoryId,
+            Pageable pageable
+    ) {
+        return shopPageConverter(shopDao
+                .searchPagedShopsByCategoryId(search, categoryId, pageable));
     }
 
     private Page<ShopMainPageDTO> shopPageConverter(Page<Shop> page) {

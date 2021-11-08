@@ -18,29 +18,25 @@ public class ItemDaoImpl extends ReadWriteDaoImpl<Item,Long> implements ItemDao 
 
     @Override
     public Item findByName(String name) {
-        return em.createQuery("select i from Item i where i.name=:name", Item.class)
-                .setParameter("name", name).getSingleResult();
+        return em.createQuery("SELECT i FROM Item i WHERE i.name = :name", Item.class)
+                .setParameter("name", name)
+                .getSingleResult();
     }
 
     @Override
-    public List<Item> findItemsByCategoryId(Long categoryId) {
-        return em.createQuery("SELECT u FROM Item u JOIN u.categories i where i.id = :id", Item.class)
-                .setParameter("id", categoryId).getResultList();
+    public List<Item> findPopularItems() {
+        return em.createQuery("SELECT i FROM Item i ORDER BY i.rating DESC", Item.class)
+                .getResultList();
     }
 
     @Override
-    public Page<Item> findPagedItemsByCategoryId(Long categoryId, Pageable pageable) {
-        long size = (long) em.createQuery(
-                        "SELECT COUNT(i.id) FROM Item i JOIN i.categories c where c.id = :id")
-                .setParameter("id", categoryId)
+    public Page<Item> findPagedPopularItems(Pageable pageable) {
+        long size = (long) em.createQuery("SELECT COUNT(i) FROM Item i")
                 .getSingleResult();
 
         pageable = pageCheck(size, pageable);
 
-        List<Item> list = em.createQuery(
-                        "SELECT i FROM Item i JOIN i.categories c where c.id = :id"
-                        , Item.class)
-                .setParameter("id", categoryId)
+        List<Item> list = em.createQuery("SELECT i FROM Item i ORDER BY i.rating DESC", Item.class)
                 .setFirstResult((int) pageable.getOffset())
                 .setMaxResults(pageable.getPageSize())
                 .getResultList();
@@ -48,21 +44,22 @@ public class ItemDaoImpl extends ReadWriteDaoImpl<Item,Long> implements ItemDao 
     }
 
     @Override
-    public List<Item> findPopularItems() {
-        return em.createQuery("Select u from Item u order by u.rating DESC", Item.class)
-                .setMaxResults(4)
+    public List<Item> findItemsByCategoryId(Long categoryId) {
+        return em.createQuery("SELECT i FROM Item i JOIN i.categories c WHERE c.id = :id", Item.class)
+                .setParameter("id", categoryId)
                 .getResultList();
     }
 
     @Override
-    public Page<Item> findPagedPopularItems(Pageable pageable) {
-        long size = (long) em.createQuery("SELECT COUNT(i.id) FROM Item i")
+    public Page<Item> findPagedItemsByCategoryId(Long categoryId, Pageable pageable) {
+        long size = (long) em.createQuery("SELECT COUNT(i) FROM Item i JOIN i.categories c where c.id = :id")
+                .setParameter("id", categoryId)
                 .getSingleResult();
 
         pageable = pageCheck(size, pageable);
 
-        List<Item> list = em.createQuery(
-                        "Select i from Item i order by i.rating DESC", Item.class)
+        List<Item> list = em.createQuery("SELECT i FROM Item i JOIN i.categories c where c.id = :id", Item.class)
+                .setParameter("id", categoryId)
                 .setFirstResult((int) pageable.getOffset())
                 .setMaxResults(pageable.getPageSize())
                 .getResultList();
@@ -71,22 +68,44 @@ public class ItemDaoImpl extends ReadWriteDaoImpl<Item,Long> implements ItemDao 
 
     @Override
     public List<Item> searchItems(String search) {
-        return em.createQuery("Select u from Item u where u.name LIKE :param", Item.class)
+        List<Item> list = em.createQuery("SELECT i FROM Item i WHERE i.name LIKE :param", Item.class)
                 .setParameter("param", "%" + search + "%")
                 .getResultList();
+        return list;
     }
 
     @Override
     public Page<Item> searchPagedItems(String search, Pageable pageable) {
-        long size = (long) em.createQuery(
-                        "Select COUNT(i.id) from Item i where i.name LIKE :param")
+        long size = (long) em.createQuery("SELECT COUNT(i) FROM Item i WHERE i.name LIKE :param")
                 .setParameter("param", "%" + search + "%")
                 .getSingleResult();
 
         pageable = pageCheck(size, pageable);
 
-        List<Item> list = em.createQuery(
-                        "Select i from Item i where i.name LIKE :param", Item.class)
+        List<Item> list = em.createQuery("SELECT i FROM Item i WHERE i.name LIKE :param", Item.class)
+                .setParameter("param", "%" + search + "%")
+                .setFirstResult((int) pageable.getOffset())
+                .setMaxResults(pageable.getPageSize())
+                .getResultList();
+
+        return new PageImpl<>(list, pageable, size);
+    }
+
+    @Override
+    public Page<Item> searchPagedItemsByCategoryId(
+            String search,
+            Long categoryId,
+            Pageable pageable
+    ) {
+        long size = (long) em.createQuery("SELECT COUNT(i) FROM Item i JOIN i.categories c WHERE c.id = :id AND i.name LIKE :param")
+                .setParameter("id", categoryId)
+                .setParameter("param", "%" + search + "%")
+                .getSingleResult();
+
+        pageable = pageCheck(size, pageable);
+
+        List<Item> list =  em.createQuery("SELECT i FROM Item i JOIN i.categories c WHERE c.id = :id AND i.name LIKE :param", Item.class)
+                .setParameter("id", categoryId)
                 .setParameter("param", "%" + search + "%")
                 .setFirstResult((int) pageable.getOffset())
                 .setMaxResults(pageable.getPageSize())

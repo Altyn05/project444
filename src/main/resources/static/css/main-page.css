@@ -31,6 +31,15 @@ button {
     overflow: hidden;
 }
 
+.shop-card > .gcard {
+    transition: 0.1s;
+}
+
+.shop-card > .gcard:hover {
+    transform: scale(1.02);
+    box-shadow: #aaa 2px 3px 7px 0;
+}
+
 /*.page-link:focus {*/
 /*    box-shadow: none;*/
 /*}*/
