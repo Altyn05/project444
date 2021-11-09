@@ -30,7 +30,7 @@ function renderItems() {
         const url = item.images[0].url
         str += `
             <div class="d-flex">
-                <div class="gcard d-flex flex-column flex-grow-1">
+                <div class="gcard d-flex flex-column flex-grow-1 w-100">
                     <div>
                         <a href="item/${item.id}">
                             <img src="${url.substring(url.indexOf('/img'))}"
@@ -68,7 +68,7 @@ function renderShops() {
         const url = shop['logo'].url
         str += `
             <div class="shop-card d-flex">
-                <div class="gcard d-flex">
+                <div class="gcard d-flex w-100">
                     <a href="/market/${shop.id}" class="text-reset">
                         <div class="d-flex justify-content-center">
                             <img src="${url.substring(url.indexOf('/img/'))}"
