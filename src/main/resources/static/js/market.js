@@ -1,5 +1,9 @@
+var shopData
+
 window.onload = async function () {
-    let shopData = await loadMarketInfo();
+    $('.addItems').hide();
+    shopData = await loadMarketInfo();
+    console.log(shopData)
     showMarketInfo(shopData);
     $('#market-list-popular').html(function() {return getProductsTop(shopData, 4) + $(this).html()});
     $('#market-list-all').html(function() {return getProductsTop(shopData) + $(this).html()});
@@ -14,6 +18,7 @@ function showInfoPage() {
 function showItemsPage() {
     $('.market-info-page').hide();
     $('.market-items-page').show();
+    showItems()
 }
 
 async function loadMarketInfo() {
