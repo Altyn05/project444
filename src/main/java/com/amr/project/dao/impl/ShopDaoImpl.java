@@ -46,6 +46,22 @@ public class ShopDaoImpl extends ReadWriteDaoImpl<Shop,Long> implements ShopDao 
     }
 
     @Override
+    public Page<Shop> findPagedShopsByCategoryId(Long categoryId, Pageable pageable) {
+        long size = (long) em.createQuery("SELECT COUNT(s) FROM Shop s JOIN s.items i JOIN i.categories c WHERE c.id = :id")
+                .setParameter("id", categoryId)
+                .getSingleResult();
+
+        pageable = pageCheck(size, pageable);
+
+        List<Shop> list = em.createQuery("SELECT s FROM Shop s JOIN s.items i JOIN i.categories c WHERE c.id = :id", Shop.class)
+                .setParameter("id", categoryId)
+                .setFirstResult((int) pageable.getOffset())
+                .setMaxResults(pageable.getPageSize())
+                .getResultList();
+        return new PageImpl<>(list, pageable, size);
+    }
+
+    @Override
     public List<Shop> searchShops(String search) {
         return em.createQuery("select sh from Shop sh where sh.name LIKE :param", Shop.class)
                 .setParameter("param", "%" + search + "%")

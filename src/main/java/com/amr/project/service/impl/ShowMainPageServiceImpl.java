@@ -62,7 +62,7 @@ public class ShowMainPageServiceImpl implements ShowMainPageService {
     ) {
         return new ShowMainPageDTO(
                 shopPageConverter(
-                        shopDao.findPagedPopularShops(shopPages)),
+                        shopDao.findPagedShopsByCategoryId(categoryId, shopPages)),
                 itemPageConverter(itemDao
                         .findPagedItemsByCategoryId(categoryId, itemPages)),
                 categoryMapper.categoryListToListCategoryDTO(

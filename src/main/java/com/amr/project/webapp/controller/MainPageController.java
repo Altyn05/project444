@@ -1,6 +1,7 @@
 package com.amr.project.webapp.controller;
 
 import com.amr.project.model.dto.ShowMainPageDTO;
+import com.amr.project.service.abstracts.CategoryService;
 import com.amr.project.service.abstracts.ShowMainPageService;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +20,17 @@ public class MainPageController {
     private static final int[] SHOP_PAGE_SIZE = new int[]
             {6, 12, 24, 48, Integer.MAX_VALUE};
 
+    private final CategoryService categoryService;
     private final ShowMainPageService showMainPageService;
 
+
     @Autowired
-    public MainPageController(ShowMainPageService showMainPageService) {
+    public MainPageController(CategoryService categoryService, ShowMainPageService showMainPageService) {
+        this.categoryService = categoryService;
         this.showMainPageService = showMainPageService;
     }
+
+
 
     @GetMapping
     public String showMainPage(
@@ -48,6 +54,7 @@ public class MainPageController {
             showMainPageDTO = showMainPageService
                     .showSearch(searchName, itemPageable, shopPageable);
         }
+        model.addAttribute("categoryId", "Категории");
         model.addAttribute("mainPageDto", showMainPageDTO)
                 .addAttribute("searchName", searchName)
                 .addAttribute("itemPageSizes", ITEM_PAGE_SIZE)
@@ -68,7 +75,9 @@ public class MainPageController {
     ) {
         Pageable itemPageable = PageRequest.of(itemPage, itemSize);
         Pageable shopPageable = PageRequest.of(shopPage, shopSize);
-
+        String category = categoryService.findById(id).getName();
+        System.out.println(category);
+        model.addAttribute("categoryId", category);
         model.addAttribute("mainPageDto", showMainPageService.findItemsByCategory(id, itemPageable, shopPageable))
                 .addAttribute("itemPageSizes", ITEM_PAGE_SIZE)
                 .addAttribute("shopPageSizes", SHOP_PAGE_SIZE);
