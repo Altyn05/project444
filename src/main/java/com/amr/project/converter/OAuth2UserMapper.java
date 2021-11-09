@@ -41,8 +41,8 @@ public interface OAuth2UserMapper {
 
     @Mapping(expression = "java(jsonUser.getString(\"first_name\"))", target = "firstName")
     @Mapping(expression = "java(jsonUser.getString(\"last_name\"))", target = "lastName")
-    @Mapping(expression = "java(jsonUser.getString(\"uid\"))", target = "username")
-    @Mapping(expression = "java(jsonUser.getString(\"uid\"))", target = "email")
+    @Mapping(expression = "java(jsonUser.getString(\"email\"))", target = "username")
+    @Mapping(expression = "java(jsonUser.getString(\"email\"))", target = "email")
     @Mapping(expression = "java(jsonUser.getInt(\"age\"))", target = "age")
     @Mapping(source = "provider", target = "authProvider")
     @Mapping(expression = "java(jsonUser.getString(\"uid\"))", target = "idProvider")
