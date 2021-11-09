@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+<th:block th:fragment="copy">
+  <div class="modal fade" id="cart-modal" tabindex="-1" aria-labelledby="cart-modal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Ваша корзина</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p id="cart-empty" hidden>Добавьте товары в корзину, чтобы сделать заказ</p>
+          <div class="cart-items m-0" id="cart-items"></div>
+        </div>
+        <div class="modal-footer">
+          <p class="mr-auto" id="cart-price-label">Сумма заказа: <span class="text-danger" id="cart-price"></span></p>
+          <button sec:authorize="isAuthenticated()" type="button" id="cart-purchase" class="btn btn-warning">
+            Оформить
+          </button>
+          <button sec:authorize="!isAuthenticated()" type="button" id="cart-purchase" class="btn btn-warning"
+                  data-toggle="modal" data-target="#loginModal" data-dismiss="modal">Войти и оформить
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script th:src="@{/js/cart.js}"></script>
+</th:block>
+
+</body>
+</html>
