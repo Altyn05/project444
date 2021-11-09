@@ -5,6 +5,5 @@ items.addEventListener('click', evt => {
         evt.preventDefault();
         const itemId = evt.target.getAttribute('data-item-id');
         addToCart(itemId);
-        $('#cart-modal').modal('show');
     }
 })
