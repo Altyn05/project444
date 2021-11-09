@@ -17,8 +17,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
 
     @Autowired
-    public CustomOAuth2UserService(UserServiceImpl userService,
-                                   OAuth2UserMapper userMapper,
+    public CustomOAuth2UserService(UserServiceImpl userService, OAuth2UserMapper userMapper,
                                    UserProcessingService processingService) {
         this.userService = userService;
         this.userMapper = userMapper;

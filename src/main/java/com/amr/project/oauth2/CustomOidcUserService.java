@@ -17,8 +17,7 @@ public class CustomOidcUserService extends OidcUserService {
 
 
     @Autowired
-    public CustomOidcUserService(UserServiceImpl userService,
-                                 OAuth2UserMapper userMapper,
+    public CustomOidcUserService(UserServiceImpl userService, OAuth2UserMapper userMapper,
                                  UserProcessingService processingService) {
         this.userService = userService;
         this.userMapper = userMapper;

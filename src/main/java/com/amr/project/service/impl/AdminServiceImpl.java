@@ -32,7 +32,7 @@ public class AdminServiceImpl implements AdminService {
 
     private final CountryMapper countryMapper = Mappers.getMapper(CountryMapper.class);
     private final CityMapper cityMapper = Mappers.getMapper(CityMapper.class);
-    private final AddressMapper addressMapper = Mappers.getMapper(AddressMapper.class);
+    private final AdminAddressMapper addressMapper = Mappers.getMapper(AdminAddressMapper.class);
     private final CategoryMapper categoryMapper = Mappers.getMapper(CategoryMapper.class);
     private final ShopMapper shopMapper = Mappers.getMapper(ShopMapper.class);
     private final ItemMapper itemMapper = Mappers.getMapper(ItemMapper.class);
