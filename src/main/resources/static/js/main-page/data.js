@@ -77,7 +77,7 @@ function renderShops() {
                         </div>
                         <div class="card-body">
                             <h5 class="card-title">${shop.name}</h5>
-                            <p>${shop.description}</p>
+                            <p class="m-0">${shop.description}</p>
                         </div>
                     </a>
                 </div>
