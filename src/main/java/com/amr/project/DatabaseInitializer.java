@@ -1,4 +1,4 @@
-    package com.amr.project;
+package com.amr.project;
 
 import com.amr.project.dao.abstracts.*;
 import com.amr.project.model.entity.*;
@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
 import java.util.*;
-import java.util.concurrent.ThreadLocalRandom;
 
 @Component
 public class DatabaseInitializer {
@@ -95,11 +94,11 @@ public class DatabaseInitializer {
         reviews = getReviews();
         reviews.forEach(reviewDao::persist);
 
-        User userAlexander = new User("kooppex@gmail.com", "root228", "root228",
-                "Alexander", "Baranov");
-        Set<Role> adminRole = new HashSet<>();
-        adminRole.add(roleDao.getRoleById(2L));
-        userService.registerNewUser(userAlexander);
+        // User userAlexander = new User("kooppex@gmail.com", "root228", "root228",
+        //         "Alexander", "Baranov");
+        // Set<Role> adminRole = new HashSet<>();
+        // adminRole.add(roleDao.getRoleById(2L));
+        // userService.registerNewUser(userAlexander);
 
     }
 
