@@ -8,6 +8,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -18,10 +20,11 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@RunWith(SpringRunner.class)
+
 @SpringBootTest
 @AutoConfigureMockMvc
-@WithUserDetails("kiril60")
+@WithUserDetails("admin")
+@TestPropertySource("/application-test.properties")
 public class AdminTest {
 
     private AdminController adminController;
@@ -34,12 +37,14 @@ public class AdminTest {
         this.mockMvc = mockMvc;
     }
 
-    @Test
-    public void tupTest() throws Exception {
-        this.mockMvc.perform(get("/admin"))
-                .andDo(print()).andExpect(status().isOk())
-                .andExpect(content().string(containsString("адреса")));
-    }
+
+
+//    @Test
+//    public void tupTest() throws Exception {
+//        this.mockMvc.perform(get("/admin"))
+//                .andDo(print()).andExpect(status().isOk())
+//                .andExpect(content().string(containsString("адреса")));
+//    }
 
 //    @Test
 //    public void accessDeniedTest() throws Exception {
