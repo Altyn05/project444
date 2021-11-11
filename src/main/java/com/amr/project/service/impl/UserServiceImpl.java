@@ -34,6 +34,7 @@ public class UserServiceImpl extends ReadWriteServiceImpl<User, Long> implements
         Set<Role> role = new HashSet<>();
         role.add(roleService.findById(2L));
         user.setRoles(role);
+//        user.setActivate(false);
         user.setActivationCode(UUID.randomUUID().toString());
         emailUtil.sendMessage(user.getEmail(), "Это активация",
                 "Для активации перейдите по ссылке \n" +
