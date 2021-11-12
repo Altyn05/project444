@@ -21,16 +21,36 @@
                 <table class="market-info-head-elem" id="market-info-data">
                 </table>
             </div>
-        </div>
-        <div class="p-2 market-list">
-            <h3 class="market-list-title">Самые популярные товары</h3>
-            <div class="market-list-popular d-flex flex-row flex-wrap" id="market-list-popular">
-                <div class="card m-2" style="width: 15rem; border: 0;">
-                    <a href="#" class="btn btn-primary" id="market-item-page-btn" onclick="showItemsPage()">Посмотреть все товары</a>
-                    <a href="/" class="btn btn-primary mt-2">Вернуться на главную</a>
+
+            <h6>Поиск товара в магазине:</h6>
+            <form action="" class="" id="search_form">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control form-control-sm" placeholder="Введите наименование" id="search_item">
+                    <button type="button" class="btn-sm" id="search_item_start" > Поиск</button>
                 </div>
+            </form>
+            <button type="button" class="btn-sm" id="search_reset" > Сбросить поиск</button>
+            <div class="card m-2" style="width: 17rem; border: 0;">
+                <a href="#" class="btn btn-primary" id="market-item-page-btn" onclick="showItemsPage()">Посмотреть все товары</a>
+                <a href="/" class="btn btn-primary mt-2">Вернуться на главную</a>
             </div>
+
         </div>
+
+        <div class="p-2 market-list"  id="market-list-section">
+
+        </div>
+
+        <nav aria-label="Page navigation example">
+            <ul class="pagination" id="items-pagination-wrapper">
+<!--                <li class="page-item"><a class="page-link" href="#">Previous</a></li>-->
+<!--                <li class="page-item"><a class="page-link" href="#">1</a></li>-->
+<!--                <li class="page-item"><a class="page-link" href="#">2</a></li>-->
+<!--                <li class="page-item"><a class="page-link" href="#">3</a></li>-->
+<!--                <li class="page-item"><a class="page-link" href="#">Next</a></li>-->
+            </ul>
+        </nav>
+
     </div>
 </div>
 
@@ -38,6 +58,7 @@
     <button class="btn btn-primary" onclick="showInfoPage()">Страница магазина</button>
     <div class="d-flex flex-row flex-wrap" id="market-list-all"></div>
 </div>
+
 
 
 <script th:src="@{/js/market.js}"></script>
