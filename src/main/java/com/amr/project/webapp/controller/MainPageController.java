@@ -3,6 +3,7 @@ package com.amr.project.webapp.controller;
 import com.amr.project.model.dto.ShowMainPageDTO;
 import com.amr.project.service.abstracts.CategoryService;
 import com.amr.project.service.abstracts.ShowMainPageService;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -38,7 +39,9 @@ public class MainPageController {
             @RequestParam(value = "itemPage", defaultValue = "0") int itemPage,
             @RequestParam(value = "itemSize", defaultValue = "4") int itemSize,
             @RequestParam(value = "shopPage", defaultValue = "0") int shopPage,
-            @RequestParam(value = "shopSize", defaultValue = "6") int shopSize
+            @RequestParam(value = "shopSize", defaultValue = "6") int shopSize,
+            @RequestParam(value = "openCart", defaultValue = "NO") String openCart
+
     ) {
         Pageable itemPageable = PageRequest.of(itemPage, itemSize);
         Pageable shopPageable = PageRequest.of(shopPage, shopSize);
@@ -55,7 +58,9 @@ public class MainPageController {
         model.addAttribute("mainPageDto", showMainPageDTO)
                 .addAttribute("searchName", searchName)
                 .addAttribute("itemPageSizes", ITEM_PAGE_SIZE)
-                .addAttribute("shopPageSizes", SHOP_PAGE_SIZE);
+                .addAttribute("shopPageSizes", SHOP_PAGE_SIZE)
+                .addAttribute("openCart", openCart);
+
         return "index";
     }
 
