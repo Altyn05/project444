@@ -46,7 +46,7 @@
                         </div>
                     </div>
                 </form>
-                <button class="btn btn-outline-warning mr-3" data-toggle="modal" data-target="#cart-modal">Корзина</button>
+                <button class="btn btn-outline-warning mr-3 nav-link" data-toggle="modal" data-target="#cart-modal">Корзина</button>
                 <button sec:authorize="isAnonymous()" type="button" class="btn btn-outline-primary"
                         data-toggle="modal" data-target="#loginModal">Войти</button>
                 <div sec:authorize="isAuthenticated()" class="d-flex">
@@ -197,6 +197,10 @@
 
 <div th:replace="~{inc/cart :: copy}"></div>
 
+<!-- to call Cart window -->
+<span id="openCart" style="display: none;" th:text="${openCart}"></span>
+
+
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>
@@ -210,5 +214,6 @@
 <script th:src="@{/js/main-page/pagination.js}"></script>
 <script th:src="@{/js/main-page/data.js}"></script>
 <script th:src="@{/js/main-page/vars.js}"></script>
+<script th:src="@{/js/user_page/user_page_cart.js}"></script>
 </body>
 </html>
