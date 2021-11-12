@@ -17,20 +17,27 @@ class RoleServiceImplTest {
     private RoleService service;
 
     @Test
+    public void getByKey() {
+        assertEquals("ADMIN", service.getByKey(Role.class, 1L).get().getName());
+        assertFalse(service.getByKey(Role.class, 5L).isPresent());
+    }
+
+    @Test
+    public void findByName() {
+        assertEquals("ADMIN", service.findByName("ADMIN").getName());
+    }
+
+    @Test
     public void persist() {
-        service.persist(new Role("NONE"));
+        Role role = new Role("NONE");
+        service.persist(role);
+        assertNotNull(role.getId());
         assertNotNull(service.findByName("NONE"));
     }
 
     @Test
-    public void getByKey() {
-        assertFalse(service.getByKey(Role.class, 5L).isPresent());
-        assertEquals("ADMIN", service.getByKey(Role.class, 1L).get().getName());
-    }
-
-    @Test
     public void delete() {
-        service.delete(service.getRoleByName("USER"));
+        service.delete(service.findByName("USER"));
         assertNull(service.findByName("USER"));
     }
 }

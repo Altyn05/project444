@@ -37,7 +37,7 @@ button {
 
 .shop-card > .gcard:hover {
     transform: scale(1.02);
-    box-shadow: #aaa 2px 3px 7px 0;
+    box-shadow: #aaa 0 0 7px 0;
 }
 
 /*.page-link:focus {*/
