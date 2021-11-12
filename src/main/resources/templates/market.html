@@ -54,14 +54,32 @@
     </div>
 </div>
 
-<div class="market-items-page">
+<div class="market-items-page" style="margin-left: 20px">
     <button class="btn btn-primary" onclick="showInfoPage()">Страница магазина</button>
+    <p>
+        <h1>Товары магазина</h1>
+            <a class="addItem centertext-secondary btn btn-outline-warning text-primary" onclick="addItems()" style="margin-right: 50px ">Добавить новый товар</a>
+            <a class="saveItem btn btn-info text-light" onclick="saveItems()" style="margin-right: 50px">Сохранить изменения</a>
+    </p>
+    <table class="market-items table">
+        <!-- Items from script market_items.js  -->
+    </table>
+
     <div class="d-flex flex-row flex-wrap" id="market-list-all"></div>
+</div>
+
+<div class="addItems">
+    <h1>Доступные товары в базе данных</h1>
+    <div id="ch4" class="container overflow-hidden">
+        <div th:insert="~{admin/blocks/items :: itemsPage}"></div>
+    </div>
 </div>
 
 
 
 <script th:src="@{/js/market.js}"></script>
+<script src="/js/market_items.js"></script>
+<script src="/js/adminItems.js"></script>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

@@ -1,9 +1,13 @@
+var shopData
+
 let currentPageNumber=1;
 let filteredItemList
 const foundHeader = 'Найденные товары'
 const popHeader = 'Самые популярные товары'
 window.onload = async function () {
-    let shopData = await loadMarketInfo();
+    $('.addItems').hide();
+    shopData = await loadMarketInfo();
+    console.log(shopData)
     showMarketInfo(shopData);
     $('#market-list-section').html(function () {
         return getProductsTop(shopData, 4) + $(this).html()
@@ -15,13 +19,14 @@ window.onload = async function () {
 }
 
 function showInfoPage() {
-    $('.market-items-page').hide();
     $('.market-info-page').show();
+    $('.market-items-page').hide();
 }
 
 function showItemsPage() {
     $('.market-info-page').hide();
     $('.market-items-page').show();
+    showItems()
 }
 
 async function loadMarketInfo() {

@@ -83,8 +83,8 @@ const displayItems = (list) => {
                 <td>${JSON.stringify(item.rating).substring(0, 5)}</td>
                 <td>Des</td>
                 <td>${item.shop.name}</td>
-                <td><button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#editModalItem">Редактировать</button></td>
-                <td><button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModalItem">Удалить</button></td>
+                <td id="editItemTD"><button id="editItemBTN" type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#editModalItem">Редактировать</button></td>
+                <td id="deleteItemTD"><button id="deleteItemBTN" type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModalItem">Удалить</button></td>
             </tr>
         `;
         })

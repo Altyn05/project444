@@ -41,4 +41,12 @@ public class Image {
         return this;
     }
 
+    @Override
+    public String toString() {
+        return "Image{" +
+                "id=" + id +
+                ", url='" + url + '\'' +
+                ", isMain=" + isMain +
+                '}';
+    }
 }
