@@ -28,7 +28,7 @@ public class LoginTests {
     }
 
     @Test
-    @WithUserDetails("user")
+    @WithUserDetails
     public void accessDeniedTest() throws Exception {
         mockMvc.perform(get("/admin"))
                 .andDo(print())
