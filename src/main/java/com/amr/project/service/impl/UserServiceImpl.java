@@ -32,13 +32,33 @@ public class UserServiceImpl extends ReadWriteServiceImpl<User, Long> implements
     @Override
     public void registerNewUser(User user) {
         Set<Role> role = new HashSet<>();
-        role.add(roleService.findById(1L));
+        role.add(roleService.findById(2L));
         user.setRoles(role);
         user.setActivationCode(UUID.randomUUID().toString());
         emailUtil.sendMessage(user.getEmail(), "Это активация",
                 "Для активации перейдите по ссылке \n" +
                         "http://localhost:8888/activate/" + user.getActivationCode());
         userDao.persist(user);
+    }
+
+    @Override
+    public void update(User user) {
+        userDao.update(user);
+        emailUtil.sendMessage(
+                user.getEmail(),
+                "Редактирование профиля",
+                "Ваш профиль " + user.getUsername() + " был изменён."
+        );
+    }
+
+    @Override
+    public void delete(User user) {
+        userDao.delete(user);
+        emailUtil.sendMessage(
+                user.getEmail(),
+                "Удаление профиля",
+                "Ваш профиль " + user.getUsername() + " был удалён."
+        );
     }
 
     @Override

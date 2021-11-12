@@ -18,4 +18,12 @@ public class ImageDto {
         return ImgUtil.toBase64img(url, picture);
     }
 
+    @Override
+    public String toString() {
+        return "ImageDto{" +
+                "id=" + id +
+                ", url='" + url + '\'' +
+                ", isMain=" + isMain +
+                '}';
+    }
 }
