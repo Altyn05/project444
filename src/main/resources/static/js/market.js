@@ -1,6 +1,8 @@
 var shopData
 
 let currentPageNumber=1;
+const pagesDisplay=3;
+let numberOfPages;
 let filteredItemList
 const foundHeader = 'Найденные товары'
 const popHeader = 'Самые популярные товары'
@@ -106,26 +108,27 @@ function getFilteredProducts(itemData) {
     itemList.innerHTML = htmlData
 }
 
-searchFormSubmit.addEventListener('click',  (ev) => {
-    ev.preventDefault()
-     filterFunc().then()
-});
-
 async function filterFunc(){
-    let shopData = await loadMarketInfo();
     let itemList = shopData["items"]
     filteredItemList = itemList.filter(a => {
         return a.name.toLowerCase().includes(searchItemString.value.toLowerCase())
     })
+    console.log("strolka:----:" + searchItemString.value)
     let pageData = paginator(2, currentPageNumber, filteredItemList)
     let pageView = pageData.trimmedItems
     pageButtons(pageData.numberOfPages)
     getFilteredProducts(pageView)
 }
 
+searchFormSubmit.addEventListener('click',  (ev) => {
+    ev.preventDefault()
+    filterFunc()
+});
+
 searchReset.addEventListener('click', async ev => {
     ev.preventDefault()
-    let shopData = await loadMarketInfo();
+    searchItemString.value = ''
+    pageButtons(0)
     $('#market-list-section').html(function () {
         return getProductsTop(shopData, 4)
     });
@@ -135,7 +138,7 @@ function paginator(numberItemsPerPage, page, itemList) {
     let trimStart = (page - 1) * numberItemsPerPage;
     let trimEnd = trimStart + numberItemsPerPage;
     let trimmedItems = itemList.slice(trimStart, trimEnd);
-    let numberOfPages = Math.ceil(itemList.length / numberItemsPerPage);
+    numberOfPages = Math.ceil(itemList.length / numberItemsPerPage);
     return {
         trimmedItems: trimmedItems,
         numberOfPages: numberOfPages
@@ -144,15 +147,45 @@ function paginator(numberItemsPerPage, page, itemList) {
 
 function pageButtons(numOfPages) {
     let wrapper = document.getElementById("items-pagination-wrapper")
-    wrapper.innerHTML = '';
-    for (let i = 1; i <= numOfPages; i++) {
-        wrapper.innerHTML += '<li class="page-item"><a class="page-link" href="#">'+i+'</a></li>'
+    wrapper.innerHTML = ''
+    console.log("chislo stranic:_____ " + numOfPages)
+    console.log("TEK STRANICA:_____ " + currentPageNumber)
+    let leftPageNum = (currentPageNumber - Math.floor(pagesDisplay/2));
+    let rightPageNum = (currentPageNumber + Math.floor(pagesDisplay/2));
+    console.log("otobr chislo stranic: " + pagesDisplay)
+    console.log("leftpage init: " + leftPageNum)
+    console.log("rigthpage init: " + rightPageNum)
+    if (leftPageNum < 1){
+        leftPageNum = 1;
+        rightPageNum = pagesDisplay;
     }
+    if (rightPageNum > numOfPages){
+        leftPageNum = numOfPages - (pagesDisplay - 1);
+        rightPageNum = numOfPages;
+        if (leftPageNum < 1){
+            leftPageNum = 1;
+        }
+    }
+    console.log("leftpage: " + leftPageNum)
+    console.log("rigthpage: " + rightPageNum)
+    if (numOfPages!==1){
+        for (let i = leftPageNum; i <= rightPageNum; i++) {
+            wrapper.innerHTML += '<li class="page-item" value=' + i + '><a class="page-link" href="#">'+i+'</a></li>'
+        }
+    }
+
+    if (currentPageNumber !== 1){
+        wrapper.innerHTML = '<li class="page-item" value=' + 1 + '><a class="page-link" aria-valuetext="1" href="#">&#171;</a></li>' + wrapper.innerHTML
+    }
+    if (currentPageNumber !== numOfPages){
+        wrapper.innerHTML += '<li class="page-item" value=' + numOfPages + '><a class="page-link" href="#">&#187;</a></li>'
+    }
+
     let pn = document.getElementsByClassName('page-item')
     for (let i = 0; i < pn.length; i++) {
         pn[i].addEventListener('click', function (){
-            currentPageNumber = pn[i].textContent
-            console.log(currentPageNumber)
+            currentPageNumber = Number(pn[i].value)
+            console.log("chislo stranic: " + numberOfPages)
             filterFunc()
         })
     }
