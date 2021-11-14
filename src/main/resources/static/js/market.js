@@ -1,7 +1,6 @@
 var shopData
-
-let currentPageNumber=1;
-const pagesDisplay=3;
+let currentPageNumber = 1;
+const pagesDisplay = 3;
 let numberOfPages;
 let filteredItemList
 const foundHeader = 'Найденные товары'
@@ -84,6 +83,10 @@ const searchItemString = document.getElementById("search_item");
 const searchFormSubmit = document.getElementById("search_item_start");
 const searchReset = document.getElementById("search_reset");
 const itemList = document.getElementById('market-list-section')
+const itemSizeSection = document.getElementById('item-size-view')
+const ITEM_SIZE = [4, 12, 24, 48, 2_147_483_647]
+let currentItemSize = ITEM_SIZE[0]
+
 
 function getFilteredProducts(itemData) {
     console.log("enter to builder: " + currentPageNumber)
@@ -108,7 +111,7 @@ function getFilteredProducts(itemData) {
     itemList.innerHTML = htmlData
 }
 
-async function filterFunc(){
+async function filterFunc() {
     let itemList = shopData["items"]
     filteredItemList = itemList.filter(a => {
         return a.name.toLowerCase().includes(searchItemString.value.toLowerCase())
@@ -120,7 +123,7 @@ async function filterFunc(){
     getFilteredProducts(pageView)
 }
 
-searchFormSubmit.addEventListener('click',  (ev) => {
+searchFormSubmit.addEventListener('click', (ev) => {
     ev.preventDefault()
     filterFunc()
 });
@@ -147,50 +150,80 @@ function paginator(numberItemsPerPage, page, itemList) {
 
 function pageButtons(numOfPages) {
     let wrapper = document.getElementById("items-pagination-wrapper")
+    generateSizeViewBlock()
     wrapper.innerHTML = ''
     console.log("chislo stranic:_____ " + numOfPages)
     console.log("TEK STRANICA:_____ " + currentPageNumber)
-    let leftPageNum = (currentPageNumber - Math.floor(pagesDisplay/2));
-    let rightPageNum = (currentPageNumber + Math.floor(pagesDisplay/2));
+    let leftPageNum = (currentPageNumber - Math.floor(pagesDisplay / 2));
+    let rightPageNum = (currentPageNumber + Math.floor(pagesDisplay / 2));
     console.log("otobr chislo stranic: " + pagesDisplay)
     console.log("leftpage init: " + leftPageNum)
     console.log("rigthpage init: " + rightPageNum)
-    if (leftPageNum < 1){
+    if (leftPageNum < 1) {
         leftPageNum = 1;
         rightPageNum = pagesDisplay;
     }
-    if (rightPageNum > numOfPages){
+    if (rightPageNum > numOfPages) {
         leftPageNum = numOfPages - (pagesDisplay - 1);
         rightPageNum = numOfPages;
-        if (leftPageNum < 1){
+        if (leftPageNum < 1) {
             leftPageNum = 1;
         }
     }
     console.log("leftpage: " + leftPageNum)
     console.log("rigthpage: " + rightPageNum)
-    if (numOfPages!==1){
+    if (numOfPages !== 1) {
         for (let i = leftPageNum; i <= rightPageNum; i++) {
-            wrapper.innerHTML += '<li class="page-item" value=' + i + '><a class="page-link" href="#">'+i+'</a></li>'
+            wrapper.innerHTML += '<li class="page-item" value=' + i + '><a class="page-link" href="#">' + i + '</a></li>'
         }
     }
 
-    if (currentPageNumber !== 1){
+    if (currentPageNumber !== 1) {
         wrapper.innerHTML = '<li class="page-item" value=' + 1 + '><a class="page-link" aria-valuetext="1" href="#">&#171;</a></li>' + wrapper.innerHTML
     }
-    if (currentPageNumber !== numOfPages){
+    if (currentPageNumber !== numOfPages) {
         wrapper.innerHTML += '<li class="page-item" value=' + numOfPages + '><a class="page-link" href="#">&#187;</a></li>'
     }
 
     let pn = document.getElementsByClassName('page-item')
     for (let i = 0; i < pn.length; i++) {
-        pn[i].addEventListener('click', function (){
+        pn[i].addEventListener('click', function () {
             currentPageNumber = Number(pn[i].value)
             console.log("chislo stranic: " + numberOfPages)
             filterFunc()
         })
     }
+    const pageItemSelector = document.getElementsByClassName('page-item-selector')
+    for (let i = 0; i < pageItemSelector.length; i++) {
+        pageItemSelector[i].addEventListener('click', e => {
+            const text = e.target.innerText
+            const size = isNaN(+text) ? ITEM_SIZE[ITEM_SIZE.length - 1] : +text
+            currentItemSize = size
+            console.log(currentItemSize)
+            setActiveSize()
+        })
+    }
 }
 
+
+function setActiveSize(target) {
+
+    // for (let i = 1; i < arr.length; i++) {
+    //     arr[i].value === current
+    //         ? arr[i].classList.add('active')
+    //         : arr[i].classList.remove('active')
+    // }
+}
+
+function generateSizeViewBlock() {
+    let htmlString = `<li class="page-item disabled"><span class="page-link">Показывать:</span></li>`
+
+    ITEM_SIZE.forEach(n => {
+        htmlString += `<li class="page-item-selector" value="${n}"><button class="page-link">${n > 64 ? 'Все' : n}</button></li>`
+    })
+    itemSizeSection.innerHTML = htmlString;
+
+}
 
 
 
