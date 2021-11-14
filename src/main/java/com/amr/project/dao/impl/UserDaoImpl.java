@@ -13,12 +13,6 @@ import java.util.Optional;
 public class UserDaoImpl extends ReadWriteDaoImpl<User, Long> implements UserDao {
 
     @Override
-    public User findUserByActivationCode(String activationCode) {
-        return (User) em.createQuery("Select e FROM User e WHERE e.activationCode = :activationCode")
-                .setParameter("activationCode", activationCode)
-                .getSingleResult();
-    }
-    @Override
     public boolean getByUsername(String username) {
         List<User> listUser = (List<User>) em.createQuery("select uf from User uf where uf.username like :username", User.class).
                 setParameter("username", username).getResultList();
@@ -39,6 +33,7 @@ public class UserDaoImpl extends ReadWriteDaoImpl<User, Long> implements UserDao
                 .setParameter("username", username).getSingleResult();
 
     }
+
     @Override
     public Optional<User> findUserByEmail(String email) {
         return SingleResultUtil.getSingleResultOrNull(
@@ -55,6 +50,8 @@ public class UserDaoImpl extends ReadWriteDaoImpl<User, Long> implements UserDao
         return (User) em.createQuery("Select e FROM User e WHERE e.activationCode = :activationCode")
                 .setParameter("activationCode", activationCode)
                 .getSingleResult();
+    }
+
     public void update(User user) {
         User userDb = findUserByUsername(user.getUsername());
 
@@ -71,3 +68,5 @@ public class UserDaoImpl extends ReadWriteDaoImpl<User, Long> implements UserDao
 
 
 }
+
+

@@ -27,30 +27,24 @@ public class UserServiceImpl extends ReadWriteServiceImpl<User, Long> implements
     private AddressDao addressDao;
    private final RoleService roleService;
    private final EmailUtil emailUtil;
-//public UserServiceImpl(ReadWriteDao<User, Long> readWriteDao, UserDao userDao, RoleService roleService, EmailUtil emailUtil) {
-//    super(readWriteDao);
-//    this.userDao = userDao;
-//    this.roleService = roleService;
-//    this.emailUtil = emailUtil;
-//}
-//@Override
-//public void registerNewUser(User user) {
-//    Set<Role> role = new HashSet<>();
-//    role.add(roleService.findById(1L));
-//    user.setRoles(role);
-//    user.setActivationCode(UUID.randomUUID().toString());
-//    emailUtil.sendMessage(user.getEmail(), "Это активация",
-//            "Для активации перейдите по ссылке \n" +
-//                    "http://localhost:8888/activate/" + user.getActivationCode());
-//    userDao.persist(user);
-//}
+@Override
+public void registerNewUser(User user) {
+    Set<Role> role = new HashSet<>();
+    role.add(roleService.findById(1L));
+    user.setRoles(role);
+    user.setActivationCode(UUID.randomUUID().toString());
+    emailUtil.sendMessage(user.getEmail(), "Это активация",
+            "Для активации перейдите по ссылке \n" +
+                    "http://localhost:8888/activate/" + user.getActivationCode());
+    userDao.persist(user);
+}
 
-    public UserServiceImpl(RoleService roleService, EmailUtil emailUtil, ReadWriteDao<User, Long> readWriteDao, UserDao userDao, RoleService roleService, EmailUtil emailUtil) {
+    public UserServiceImpl(RoleService roleService, RoleDao roleDao, AddressDao addressDao, EmailUtil emailUtil, ReadWriteDao<User, Long> readWriteDao, UserDao userDao) {
         super(readWriteDao);
         this.userDao = userDao;
         this.roleDao = roleDao;
         this.addressDao = addressDao;
-        this.roleService = roleService;
+       this.roleService = roleService;
         this.emailUtil = emailUtil;
 
     }
@@ -82,7 +76,8 @@ public class UserServiceImpl extends ReadWriteServiceImpl<User, Long> implements
     }
 
     @Override
-    public boolean registerNewUser(User user) {
+    public boolean createNewUser(User user) {
+        System.out.println(user);
         if (userDao.getByUsername(user.getUsername())) {
             user.addRole(roleDao.getRoleById(2L));
             user.setActivate(true);

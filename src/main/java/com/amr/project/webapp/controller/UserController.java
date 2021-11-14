@@ -49,7 +49,7 @@ public class UserController {
     @PostMapping("/signup")
     public ModelAndView createNewUser(@ModelAttribute UserDto userDto) {
 User user = mapper.toModel(userDto);
-        if (userService.registerNewUser(user)) {
+        if (userService.createNewUser(user)) {
             ModelAndView modelAndView = new ModelAndView();
             modelAndView.setViewName("signup");
             modelAndView.addObject("date", new Date());
