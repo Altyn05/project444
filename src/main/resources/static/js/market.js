@@ -84,7 +84,7 @@ const searchFormSubmit = document.getElementById("search_item_start");
 const searchReset = document.getElementById("search_reset");
 const itemList = document.getElementById('market-list-section')
 const itemSizeSection = document.getElementById('item-size-view')
-const ITEM_SIZE = [4, 12, 24, 48, 2_147_483_647]
+const ITEM_SIZE = [2, 4, 8, 16, 2_147_483_647]
 let currentItemSize = ITEM_SIZE[0]
 
 
@@ -117,7 +117,7 @@ async function filterFunc() {
         return a.name.toLowerCase().includes(searchItemString.value.toLowerCase())
     })
     console.log("strolka:----:" + searchItemString.value)
-    let pageData = paginator(2, currentPageNumber, filteredItemList)
+    let pageData = paginator(currentItemSize, currentPageNumber, filteredItemList)
     let pageView = pageData.trimmedItems
     pageButtons(pageData.numberOfPages)
     getFilteredProducts(pageView)
@@ -200,29 +200,17 @@ function pageButtons(numOfPages) {
             const size = isNaN(+text) ? ITEM_SIZE[ITEM_SIZE.length - 1] : +text
             currentItemSize = size
             console.log(currentItemSize)
-            setActiveSize()
+            filterFunc()
         })
     }
 }
 
-
-function setActiveSize(target) {
-
-    // for (let i = 1; i < arr.length; i++) {
-    //     arr[i].value === current
-    //         ? arr[i].classList.add('active')
-    //         : arr[i].classList.remove('active')
-    // }
-}
-
 function generateSizeViewBlock() {
     let htmlString = `<li class="page-item disabled"><span class="page-link">Показывать:</span></li>`
-
     ITEM_SIZE.forEach(n => {
         htmlString += `<li class="page-item-selector" value="${n}"><button class="page-link">${n > 64 ? 'Все' : n}</button></li>`
     })
     itemSizeSection.innerHTML = htmlString;
-
 }
 
 
