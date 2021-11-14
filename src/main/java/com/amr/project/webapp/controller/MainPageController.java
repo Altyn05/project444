@@ -1,11 +1,11 @@
 package com.amr.project.webapp.controller;
 
-
 import com.amr.project.model.dto.ShowMainPageDTO;
-import com.amr.project.model.entity.User;
+import com.amr.project.service.abstracts.CategoryService;
 import com.amr.project.service.abstracts.ShowMainPageService;
-import com.amr.project.service.abstracts.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,42 +14,68 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class MainPageController {
+    private static final int[] ITEM_PAGE_SIZE = new int[]
+            {4, 12, 24, 48, Integer.MAX_VALUE};
+    private static final int[] SHOP_PAGE_SIZE = new int[]
+            {6, 12, 24, 48, Integer.MAX_VALUE};
 
+    private final CategoryService categoryService;
     private final ShowMainPageService showMainPageService;
-    private final UserService userService;
 
 
     @Autowired
-    public MainPageController(ShowMainPageService showMainPageService, UserService userService) {
+    public MainPageController(CategoryService categoryService, ShowMainPageService showMainPageService) {
+        this.categoryService = categoryService;
         this.showMainPageService = showMainPageService;
-        this.userService = userService;
-
     }
 
 
+
     @GetMapping
-    public String showMainPage(@RequestParam(value = "searchName", required = false) String searchName, Model model) {
+    public String showMainPage(
+            Model model,
+            @RequestParam(value = "searchName", defaultValue = "") String searchName,
+            @RequestParam(value = "itemPage", defaultValue = "0") int itemPage,
+            @RequestParam(value = "itemSize", defaultValue = "4") int itemSize,
+            @RequestParam(value = "shopPage", defaultValue = "0") int shopPage,
+            @RequestParam(value = "shopSize", defaultValue = "6") int shopSize
+    ) {
+        Pageable itemPageable = PageRequest.of(itemPage, itemSize);
+        Pageable shopPageable = PageRequest.of(shopPage, shopSize);
+
         ShowMainPageDTO showMainPageDTO;
-        if (searchName != null){
-            showMainPageDTO = showMainPageService.showSearch(searchName);
+        if (searchName.isBlank()){
+            showMainPageDTO = showMainPageService
+                    .show(itemPageable, shopPageable);
         } else {
-            showMainPageDTO = showMainPageService.show();
+            showMainPageDTO = showMainPageService
+                    .showSearch(searchName, itemPageable, shopPageable);
         }
-        model.addAttribute("mainPageDto", showMainPageDTO);
+        model.addAttribute("categoryId", "Категории");
+        model.addAttribute("mainPageDto", showMainPageDTO)
+                .addAttribute("searchName", searchName)
+                .addAttribute("itemPageSizes", ITEM_PAGE_SIZE)
+                .addAttribute("shopPageSizes", SHOP_PAGE_SIZE);
         return "index";
     }
 
     @GetMapping("/category/{id}")
-    public String showMainCategory(Model model, @PathVariable Long id) {
-        model.addAttribute("mainPageDto", showMainPageService.findItemsByCategory(id));
+    public String showMainCategory(
+            Model model,
+            @PathVariable Long id,
+            @RequestParam(value = "itemPage", defaultValue = "0") int itemPage,
+            @RequestParam(value = "itemSize", defaultValue = "4") int itemSize,
+            @RequestParam(value = "shopPage", defaultValue = "0") int shopPage,
+            @RequestParam(value = "shopSize", defaultValue = "6") int shopSize
+    ) {
+        Pageable itemPageable = PageRequest.of(itemPage, itemSize);
+        Pageable shopPageable = PageRequest.of(shopPage, shopSize);
+        String category = categoryService.findById(id).getName();
+        System.out.println(category);
+        model.addAttribute("categoryId", category);
+        model.addAttribute("mainPageDto", showMainPageService.findItemsByCategory(id, itemPageable, shopPageable))
+                .addAttribute("itemPageSizes", ITEM_PAGE_SIZE)
+                .addAttribute("shopPageSizes", SHOP_PAGE_SIZE);
         return "index";
     }
-
-//    @GetMapping("/activate/{code}")
-//    public String active(@PathVariable String code){
-//        User user = userService.findUserByActivationCode(code);
-//        user.setActivate(true);
-//        userService.update(user);
-//        return "redirect:/";
-//    }
 }

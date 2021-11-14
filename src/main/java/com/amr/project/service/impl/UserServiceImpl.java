@@ -13,17 +13,20 @@ import com.amr.project.util.EmailUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
 @Service
+@Transactional
 public class UserServiceImpl extends ReadWriteServiceImpl<User, Long> implements UserService {
     private UserDao userDao;
     private RoleDao roleDao;
     private AddressDao addressDao;
-//    private final RoleService roleService;
-//    private final EmailUtil emailUtil;
+   private final RoleService roleService;
+   private final EmailUtil emailUtil;
 //public UserServiceImpl(ReadWriteDao<User, Long> readWriteDao, UserDao userDao, RoleService roleService, EmailUtil emailUtil) {
 //    super(readWriteDao);
 //    this.userDao = userDao;
@@ -42,12 +45,14 @@ public class UserServiceImpl extends ReadWriteServiceImpl<User, Long> implements
 //    userDao.persist(user);
 //}
 
-
-    protected UserServiceImpl(ReadWriteDao<User, Long> readWriteDao, UserDao userDao, RoleDao roleDao, AddressDao addressDao) {
+    public UserServiceImpl(RoleService roleService, EmailUtil emailUtil, ReadWriteDao<User, Long> readWriteDao, UserDao userDao, RoleService roleService, EmailUtil emailUtil) {
         super(readWriteDao);
         this.userDao = userDao;
         this.roleDao = roleDao;
         this.addressDao = addressDao;
+        this.roleService = roleService;
+        this.emailUtil = emailUtil;
+
     }
 
     @Override
@@ -56,10 +61,25 @@ public class UserServiceImpl extends ReadWriteServiceImpl<User, Long> implements
         userDao.update(user);
     }
 
-//    @Override
-//    public Address findById(Long id) {
-//        return addressDao.findById(id);
-//    }
+    @Override
+    public void update(User user) {
+        userDao.update(user);
+        emailUtil.sendMessage(
+                user.getEmail(),
+                "Редактирование профиля",
+                "Ваш профиль " + user.getUsername() + " был изменён."
+        );
+    }
+
+    @Override
+    public void delete(User user) {
+        userDao.delete(user);
+        emailUtil.sendMessage(
+                user.getEmail(),
+                "Удаление профиля",
+                "Ваш профиль " + user.getUsername() + " был удалён."
+        );
+    }
 
     @Override
     public boolean registerNewUser(User user) {
@@ -75,6 +95,15 @@ public User findUserByUsername(String username) {
 }
 
     @Override
+    public Optional<User> findUserByEmail(String email) {
+        return userDao.findUserByEmail(email);
+    }
+
+    @Override
+    public Optional<User> findUserByIdProvider(String id) {
+        return userDao.findUserByIdProvider(id);
+    }
+
     public User findUserByActivationCode(String activationCode) {
         return userDao.findUserByActivationCode(activationCode);
     }

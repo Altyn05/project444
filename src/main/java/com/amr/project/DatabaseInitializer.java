@@ -1,4 +1,4 @@
-    package com.amr.project;
+package com.amr.project;
 
 import com.amr.project.dao.abstracts.*;
 import com.amr.project.model.entity.*;
@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
 import java.util.*;
-import java.util.concurrent.ThreadLocalRandom;
 
 @Component
 public class DatabaseInitializer {
@@ -70,12 +69,10 @@ public class DatabaseInitializer {
         categories.forEach(categoryDao::persist);
 
         users = getUsers();
-        //USER Можно пока одного юзера сделать фискированным чтобы время сэкономить?
         users.get(0).setUsername("user");
         users.get(0).setPassword("user");
         users.get(0).setRoles(null);
         users.get(0).addRole(roles.stream().filter(r -> r.getName() == "USER").findFirst().orElse(null));
-        //USER Можно пока одного юзера сделать фискированным чтобы время сэкономить?
         users.forEach(user -> {
             user.getAddress().forEach(addressDao::persist);
             user.getImages().forEach(imageDao::persist);
@@ -97,11 +94,11 @@ public class DatabaseInitializer {
         reviews = getReviews();
         reviews.forEach(reviewDao::persist);
 
-        User userAlexander = new User("kooppex@gmail.com", "root228", "root228",
-                "Alexander", "Baranov");
-        Set<Role> adminRole = new HashSet<>();
-        adminRole.add(roleDao.getRoleById(2L));
-        userService.registerNewUser(userAlexander);
+        // User userAlexander = new User("kooppex@gmail.com", "root228", "root228",
+        //         "Alexander", "Baranov");
+        // Set<Role> adminRole = new HashSet<>();
+        // adminRole.add(roleDao.getRoleById(2L));
+        // userService.registerNewUser(userAlexander);
 
     }
 
@@ -121,13 +118,13 @@ public class DatabaseInitializer {
         users.add(getUser("Ivan", "Ivanov", Gender.MALE, path + "0.jpg"));
         users.add(getUser("Vasily", "Vasiliev", Gender.MALE, path + "1.jpg"));
         users.add(getUser("Piter", "Petrov", Gender.MALE, path + "2.jpg"));
-//        users.add(getUser("Irina", "Irinova", Gender.FEMALE, path + "3.jpg"));
-//        users.add(getUser("Sveta", "Svetova", Gender.FEMALE, path + "4.jpg"));
-//        users.add(getUser("Alex", "Alexeev", Gender.MALE, path + "5.jpg"));
-//        users.add(getUser("Kira", "Kireeva", Gender.FEMALE, path + "6.jpg"));
-//        users.add(getUser("Dmitry", "Dmitrov", Gender.MALE, path + "7.jpg"));
-//        users.add(getUser("Kiril", "Kirilov", Gender.MALE, path + "8.jpg"));
-//        users.add(getUser("Pavel", "Pavlov", Gender.MALE, path + "9.jpg"));
+        users.add(getUser("Irina", "Irinova", Gender.FEMALE, path + "3.jpg"));
+        users.add(getUser("Sveta", "Svetova", Gender.FEMALE, path + "4.jpg"));
+        users.add(getUser("Alex", "Alexeev", Gender.MALE, path + "5.jpg"));
+        users.add(getUser("Kira", "Kireeva", Gender.FEMALE, path + "6.jpg"));
+        users.add(getUser("Dmitry", "Dmitrov", Gender.MALE, path + "7.jpg"));
+        users.add(getUser("Kiril", "Kirilov", Gender.MALE, path + "8.jpg"));
+        users.add(getUser("Pavel", "Pavlov", Gender.MALE, path + "9.jpg"));
         return users;
     }
 
