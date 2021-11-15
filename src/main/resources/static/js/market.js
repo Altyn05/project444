@@ -3,14 +3,25 @@ let currentPageNumber = 1;
 const pagesDisplay = 3;
 let numberOfPages;
 let filteredItemList
+const ITEM_SIZE = [2, 4, 8, 16, 2_147_483_647]
+let currentItemSize = ITEM_SIZE[0]
 const foundHeader = 'Найденные товары'
 const popHeader = 'Самые популярные товары'
+const searchItemString = document.getElementById("search_item");
+const searchFormSubmit = document.getElementById("search_item_start");
+const searchReset = document.getElementById("search_reset");
+const itemList = document.getElementById('market-list-section')
+const itemSizeSection = document.getElementById('item-size-view')
+let pageNumberField = document.getElementById("items-pagination-wrapper")
+const headerText = document.getElementById('market-header-text')
+
 window.onload = async function () {
     $('.addItems').hide();
     shopData = await loadMarketInfo();
     console.log(shopData)
     showMarketInfo(shopData);
     $('#market-list-section').html(function () {
+        headerText.innerHTML = '<h3 class="market-list-title">' + popHeader + '</h3>'
         return getProductsTop(shopData, 4) + $(this).html()
     });
     $('#market-list-all').html(function () {
@@ -59,7 +70,6 @@ function getProductsTop(data, amount = -1) {
     }
     amount = Math.min(itemList.length, amount);
     let htmlData = "";
-    htmlData += '<h3 className="market-list-title">' + popHeader + '</h3>'
     htmlData += '<div class="d-flex flex-row flex-wrap">'
     for (let i = 0; i < amount; ++i) {
         try {
@@ -73,25 +83,14 @@ function getProductsTop(data, amount = -1) {
                 '</div>' +
                 '</div>'
         } catch (e) {
-            console.error("Can't show an item card");
+            console.error("Can't show an item list");
         }
     }
     return htmlData;
 }
 
-const searchItemString = document.getElementById("search_item");
-const searchFormSubmit = document.getElementById("search_item_start");
-const searchReset = document.getElementById("search_reset");
-const itemList = document.getElementById('market-list-section')
-const itemSizeSection = document.getElementById('item-size-view')
-const ITEM_SIZE = [2, 4, 8, 16, 2_147_483_647]
-let currentItemSize = ITEM_SIZE[0]
-
-
 function getFilteredProducts(itemData) {
-    console.log("enter to builder: " + currentPageNumber)
     let htmlData = "";
-    htmlData += '<h3 className="market-list-title">' + foundHeader + '</h3>'
     htmlData += '<div class="d-flex flex-row flex-wrap">'
     for (let i = 0; i < itemData.length; ++i) {
         try {
@@ -105,7 +104,7 @@ function getFilteredProducts(itemData) {
                 '</div>' +
                 '</div>'
         } catch (e) {
-            console.error("Can't show item list");
+            console.error("Can't show an item list");
         }
     }
     itemList.innerHTML = htmlData
@@ -116,28 +115,17 @@ async function filterFunc() {
     filteredItemList = itemList.filter(a => {
         return a.name.toLowerCase().includes(searchItemString.value.toLowerCase())
     })
-    console.log("strolka:----:" + searchItemString.value)
-    let pageData = paginator(currentItemSize, currentPageNumber, filteredItemList)
+
+    let pageData = paginateProcessor(currentItemSize, currentPageNumber, filteredItemList)
     let pageView = pageData.trimmedItems
-    pageButtons(pageData.numberOfPages)
+    generatePageButtons(pageData.numberOfPages)
+    activePage()
+    headerText.innerHTML = '<h3 class="market-list-title">' + foundHeader + '</h3>'
     getFilteredProducts(pageView)
+
 }
 
-searchFormSubmit.addEventListener('click', (ev) => {
-    ev.preventDefault()
-    filterFunc()
-});
-
-searchReset.addEventListener('click', async ev => {
-    ev.preventDefault()
-    searchItemString.value = ''
-    pageButtons(0)
-    $('#market-list-section').html(function () {
-        return getProductsTop(shopData, 4)
-    });
-})
-
-function paginator(numberItemsPerPage, page, itemList) {
+function paginateProcessor(numberItemsPerPage, page, itemList) {
     let trimStart = (page - 1) * numberItemsPerPage;
     let trimEnd = trimStart + numberItemsPerPage;
     let trimmedItems = itemList.slice(trimStart, trimEnd);
@@ -148,17 +136,11 @@ function paginator(numberItemsPerPage, page, itemList) {
     }
 }
 
-function pageButtons(numOfPages) {
-    let wrapper = document.getElementById("items-pagination-wrapper")
+function generatePageButtons(numOfPages) {
     generateSizeViewBlock()
-    wrapper.innerHTML = ''
-    console.log("chislo stranic:_____ " + numOfPages)
-    console.log("TEK STRANICA:_____ " + currentPageNumber)
+    pageNumberField.innerHTML = ''
     let leftPageNum = (currentPageNumber - Math.floor(pagesDisplay / 2));
     let rightPageNum = (currentPageNumber + Math.floor(pagesDisplay / 2));
-    console.log("otobr chislo stranic: " + pagesDisplay)
-    console.log("leftpage init: " + leftPageNum)
-    console.log("rigthpage init: " + rightPageNum)
     if (leftPageNum < 1) {
         leftPageNum = 1;
         rightPageNum = pagesDisplay;
@@ -170,27 +152,24 @@ function pageButtons(numOfPages) {
             leftPageNum = 1;
         }
     }
-    console.log("leftpage: " + leftPageNum)
-    console.log("rigthpage: " + rightPageNum)
     if (numOfPages !== 1) {
         for (let i = leftPageNum; i <= rightPageNum; i++) {
-            wrapper.innerHTML += '<li class="page-item" value=' + i + '><a class="page-link" href="#">' + i + '</a></li>'
+            pageNumberField.innerHTML += '<li class="page-item" value=' + i + '><a class="page-link" href="#">' + i + '</a></li>'
         }
     }
 
     if (currentPageNumber !== 1) {
-        wrapper.innerHTML = '<li class="page-item" value=' + 1 + '><a class="page-link" aria-valuetext="1" href="#">&#171;</a></li>' + wrapper.innerHTML
+        pageNumberField.innerHTML = '<li class="page-item" value=' + 1 + '><a class="page-link" aria-valuetext="1" href="#">&#171;</a></li>' + pageNumberField.innerHTML
     }
     if (currentPageNumber !== numOfPages) {
-        wrapper.innerHTML += '<li class="page-item" value=' + numOfPages + '><a class="page-link" href="#">&#187;</a></li>'
+        pageNumberField.innerHTML += '<li class="page-item" value=' + numOfPages + '><a class="page-link" href="#">&#187;</a></li>'
     }
 
     let pn = document.getElementsByClassName('page-item')
     for (let i = 0; i < pn.length; i++) {
         pn[i].addEventListener('click', function () {
             currentPageNumber = Number(pn[i].value)
-            console.log("chislo stranic: " + numberOfPages)
-            filterFunc()
+            filterFunc().then()
         })
     }
     const pageItemSelector = document.getElementsByClassName('page-item-selector')
@@ -199,19 +178,57 @@ function pageButtons(numOfPages) {
             const text = e.target.innerText
             const size = isNaN(+text) ? ITEM_SIZE[ITEM_SIZE.length - 1] : +text
             currentItemSize = size
-            console.log(currentItemSize)
-            filterFunc()
+
+            filterFunc().then()
         })
     }
 }
 
 function generateSizeViewBlock() {
-    let htmlString = `<li class="page-item disabled"><span class="page-link">Показывать:</span></li>`
+    let htmlString = '<li class="page-item disabled"><span class="page-link">Показывать:</span></li>'
     ITEM_SIZE.forEach(n => {
-        htmlString += `<li class="page-item-selector" value="${n}"><button class="page-link">${n > 64 ? 'Все' : n}</button></li>`
+        htmlString += '<li class="page-item-selector" value=' + `${n}` + '><button class="page-link">' + `${n > 64 ? 'Все' : n}` + '</button></li>'
     })
     itemSizeSection.innerHTML = htmlString;
 }
+
+function activePage() {
+    const arr = pageNumberField.children
+    for (let i = 0; i < arr.length; i++) {
+        arr[i].value.toString() === currentPageNumber.toString()
+            ? arr[i].classList.add('active')
+            : arr[i].classList.remove('active')
+    }
+}
+
+function activeItemsNumber() {
+    const arr = itemSizeSection.children
+    for (let i = 0; i < arr.length; i++) {
+        console.log("perebor " + arr[i].value.toString())
+        console.log("tekstra to string " + currentItemSize.toString())
+        arr[i].value.toString() === currentItemSize.toString()
+            ?  arr[i].classList.add('active')
+            : arr[i].classList.remove('active')
+    }
+}
+
+searchFormSubmit.addEventListener('click', (ev) => {
+    ev.preventDefault()
+    filterFunc().then()
+});
+
+searchReset.addEventListener('click', async ev => {
+    ev.preventDefault()
+    generatePageButtons(0)
+    searchItemString.value = ''
+    itemSizeSection.innerHTML = ''
+    pageNumberField.innerHTML = ''
+    headerText.innerHTML = ''
+    headerText.innerHTML = '<h3 class="market-list-title">' + popHeader + '</h3>'
+    $('#market-list-section').html(function () {
+        return getProductsTop(shopData, 4)
+    });
+})
 
 
 
