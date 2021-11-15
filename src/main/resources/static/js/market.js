@@ -120,6 +120,7 @@ async function filterFunc() {
     let pageView = pageData.trimmedItems
     generatePageButtons(pageData.numberOfPages)
     activePage()
+    activeItemsNumber()
     headerText.innerHTML = '<h3 class="market-list-title">' + foundHeader + '</h3>'
     getFilteredProducts(pageView)
 
@@ -172,22 +173,21 @@ function generatePageButtons(numOfPages) {
             filterFunc().then()
         })
     }
-    const pageItemSelector = document.getElementsByClassName('page-item-selector')
-    for (let i = 0; i < pageItemSelector.length; i++) {
-        pageItemSelector[i].addEventListener('click', e => {
+    const pageItemSelector = document.getElementById('item-size-view')
+    for (let i = 0; i < pageItemSelector.children.length; i++) {
+        pageItemSelector.children[i].addEventListener('click', e => {
             const text = e.target.innerText
             const size = isNaN(+text) ? ITEM_SIZE[ITEM_SIZE.length - 1] : +text
             currentItemSize = size
-
             filterFunc().then()
         })
     }
 }
 
 function generateSizeViewBlock() {
-    let htmlString = '<li class="page-item disabled"><span class="page-link">Показывать:</span></li>'
+    let htmlString = '<li class="page-item disabled" id="page-item-sel"><span class="page-link">Показывать:</span></li>'
     ITEM_SIZE.forEach(n => {
-        htmlString += '<li class="page-item-selector" value=' + `${n}` + '><button class="page-link">' + `${n > 64 ? 'Все' : n}` + '</button></li>'
+        htmlString += '<li class="page-item active" value=' + `${n}` + '><button class="page-link">' + `${n > 64 ? 'Все' : n}` + '</button></li>'
     })
     itemSizeSection.innerHTML = htmlString;
 }
