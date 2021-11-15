@@ -179,6 +179,7 @@ function generatePageButtons(numOfPages) {
             const text = e.target.innerText
             const size = isNaN(+text) ? ITEM_SIZE[ITEM_SIZE.length - 1] : +text
             currentItemSize = size
+            currentPageNumber = 1
             filterFunc().then()
         })
     }
