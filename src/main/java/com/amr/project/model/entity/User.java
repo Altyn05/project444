@@ -155,6 +155,12 @@ public class User implements UserDetails {
         }
         images.add(image);
     }
+    public void addShop(Shop shop) {
+        if (this.shops == null) {
+            this.shops = new ArrayList<>();
+        }
+        this.shops.add(shop);
+    }
 
     @Override
     public boolean equals(Object o) {

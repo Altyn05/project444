@@ -267,6 +267,7 @@ public class DatabaseInitializer {
         shop.setPhone(randomPhone());
         shop.setRating(randomRating());
         shop.setLocation(randomListElement(countries));
+        shop.setCity(randomListElement(cities));
         shop.setUser(randomListElement(users));
 
         return shop;

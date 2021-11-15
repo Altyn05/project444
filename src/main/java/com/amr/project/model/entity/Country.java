@@ -44,4 +44,29 @@ public class Country {
     public int hashCode() {
         return Objects.hash(name, cities);
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<City> getCities() {
+        return cities;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCities(List<City> cities) {
+        this.cities = cities;
+    }
+
 }

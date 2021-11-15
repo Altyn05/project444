@@ -7,6 +7,8 @@ import com.amr.project.model.entity.Country;
 import com.amr.project.model.entity.Role;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public class CountryDaoImpl extends ReadWriteDaoImpl<Country,Long> implements CountryDao {
 
@@ -19,5 +21,15 @@ public class CountryDaoImpl extends ReadWriteDaoImpl<Country,Long> implements Co
     public Country findByName(String name) {
         return em.createQuery("select c from Country c where c.name=:name", Country.class)
                 .setParameter("name", name).getSingleResult();
+    }
+    @Override
+    public boolean getByName(String name) {
+        List<Country> listCountry =
+                (List<Country>) em.createQuery("select uf from Country uf where uf.name like :name", Country.class).
+                        setParameter("name", name).getResultList();
+        if (listCountry.size() > 0) {
+            return false;
+        } else return true;
+
     }
 }

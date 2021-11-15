@@ -1,6 +1,8 @@
 package com.amr.project.dao.impl;
 
 import com.amr.project.dao.abstracts.ShopDao;
+import com.amr.project.model.entity.City;
+import com.amr.project.model.entity.Country;
 import com.amr.project.model.entity.Shop;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -23,6 +25,29 @@ public class ShopDaoImpl extends ReadWriteDaoImpl<Shop,Long> implements ShopDao 
                 .getSingleResult();
     }
 
+    @Override
+    public boolean findByDataShop(Shop shop) {
+        Country country = shop.getLocation();
+        City city = shop.getCity();
+        String phone = shop.getPhone();
+        String email = shop.getEmail();
+        String name = shop.getName();
+        List<Shop> shopList = (List<Shop>) em.createQuery("select c from Shop c where c.location = :country" +
+                " and c.city = :city and c.phone =:phone " +
+                "and c.email = :email and c.name =:name", Shop.class)
+                .setParameter("country", country)
+                .setParameter("city", city)
+                .setParameter("phone", phone)
+                .setParameter("email", email)
+                .setParameter("name", name).getResultList();
+        if (shopList.size() > 0) {
+            return false;
+
+        } else {
+            return true;
+        }
+
+    }
     @Override
     public List<Shop> findPopularShops() {
         return em.createQuery("SELECT s FROM Shop s ORDER BY s.rating DESC", Shop.class)
