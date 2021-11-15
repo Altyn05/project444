@@ -118,7 +118,10 @@ async function filterFunc() {
 
     let pageData = paginateProcessor(currentItemSize, currentPageNumber, filteredItemList)
     let pageView = pageData.trimmedItems
-    generatePageButtons(pageData.numberOfPages)
+    if (pageView.length !== 0){
+        generateSizeViewBlock()
+        generatePageButtons(pageData.numberOfPages)
+    }
     activePage()
     activeItemsNumber()
     headerText.innerHTML = '<h3 class="market-list-title">' + foundHeader + '</h3>'
@@ -138,7 +141,7 @@ function paginateProcessor(numberItemsPerPage, page, itemList) {
 }
 
 function generatePageButtons(numOfPages) {
-    generateSizeViewBlock()
+
     pageNumberField.innerHTML = ''
     let leftPageNum = (currentPageNumber - Math.floor(pagesDisplay / 2));
     let rightPageNum = (currentPageNumber + Math.floor(pagesDisplay / 2));
@@ -177,6 +180,7 @@ function generatePageButtons(numOfPages) {
     for (let i = 0; i < pageItemSelector.children.length; i++) {
         pageItemSelector.children[i].addEventListener('click', e => {
             const text = e.target.innerText
+            console.log(text)
             const size = isNaN(+text) ? ITEM_SIZE[ITEM_SIZE.length - 1] : +text
             currentItemSize = size
             currentPageNumber = 1
