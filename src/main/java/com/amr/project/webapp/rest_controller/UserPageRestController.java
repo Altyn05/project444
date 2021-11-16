@@ -20,10 +20,6 @@ public class UserPageRestController {
 
     @GetMapping("/users/principal")
     public UserDto getUserPrincipal() {
-        User user = userService.findUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
-        System.out.println(user.getOrders());
-        UserDto userDto = userMapper.toDto(user);
-        System.out.println(userDto);
         return userMapper.toDto(userService.findUserByUsername(
                 SecurityContextHolder.getContext().getAuthentication().getName()));
     }
