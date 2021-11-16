@@ -57,6 +57,7 @@ public class DatabaseInitializer {
 
     @PostConstruct
     public void init() {
+        /*
         roles = getRoles();
         roles.forEach(roleDao::persist);
 
@@ -102,7 +103,7 @@ public class DatabaseInitializer {
         Set<Role> adminRole = new HashSet<>();
         adminRole.add(roleDao.getRoleById(2L));
         userService.registerNewUser(userAlexander);
-
+*/
     }
 
     private Set<Role> getRoles() {

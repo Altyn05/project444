@@ -35,4 +35,11 @@ public class ShopDaoImpl extends ReadWriteDaoImpl<Shop,Long> implements ShopDao 
                 .setParameter("param", "%" + search + "%")
                 .getResultList();
     }
+
+    @Override
+    public List<Shop> getNotModeratedShops() {
+        return em.createQuery("select sh from Shop sh where sh.isModerated = false", Shop.class)
+                .getResultList();
+    }
+
 }
