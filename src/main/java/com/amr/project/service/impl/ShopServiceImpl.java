@@ -1,27 +1,37 @@
 package com.amr.project.service.impl;
 
+import com.amr.project.converter.ShopMapper;
 import com.amr.project.dao.abstracts.ReadWriteDao;
 import com.amr.project.dao.abstracts.ShopDao;
+import com.amr.project.model.dto.ShopMainPageDTO;
 import com.amr.project.model.entity.Shop;
+import com.amr.project.model.entity.User;
 import com.amr.project.service.abstracts.ShopService;
 import com.amr.project.util.EmailUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ShopServiceImpl extends ReadWriteServiceImpl<Shop, Long> implements ShopService {
+public class ShopServiceImpl
+        extends ReadWriteServiceImpl<Shop, Long>
+        implements ShopService {
 
     private final ShopDao shopDao;
     private final EmailUtil emailUtil;
+    private final ShopMapper shopMapper;
 
     @Autowired
     public ShopServiceImpl(
             ReadWriteDao<Shop, Long> readWriteDao,
             ShopDao shopDao,
+            ShopMapper shopMapper,
             EmailUtil emailUtil
     ) {
         super(readWriteDao);
         this.shopDao = shopDao;
+        this.shopMapper = shopMapper;
         this.emailUtil = emailUtil;
     }
 
@@ -85,5 +95,55 @@ public class ShopServiceImpl extends ReadWriteServiceImpl<Shop, Long> implements
     @Override
     public Shop findByName(String name) {
         return shopDao.findByName(name);
+    }
+
+
+    @Override
+    public Page<ShopMainPageDTO> findPagedPopularShops(Pageable pageable) {
+        return shopPageConverter(shopDao.findPagedPopularShops(pageable));
+    }
+
+    @Override
+    public Page<ShopMainPageDTO> findPagedShopsByCategoryId(
+            Long categoryId,
+            Pageable pageable
+    ) {
+        return shopPageConverter(shopDao
+                .findPagedShopsByCategoryId(categoryId, pageable));
+    }
+
+    @Override
+    public Page<ShopMainPageDTO> searchPagedShops(
+            String search,
+            Pageable pageable
+    ) {
+        return shopPageConverter(shopDao.searchPagedShops(search, pageable));
+    }
+    @Override
+    public void addNewShop(Shop shop) {
+        if (shopDao.findByDataShop(shop)) {
+            shop.setModerateAccept(true);
+            shopDao.persist(shop);
+        }
+    }
+    @Override
+    public Page<ShopMainPageDTO> searchPagedShopsByCategoryId(
+            String search,
+            Long categoryId,
+            Pageable pageable
+    ) {
+        return shopPageConverter(shopDao
+                .searchPagedShopsByCategoryId(search, categoryId, pageable));
+    }
+
+    private Page<ShopMainPageDTO> shopPageConverter(Page<Shop> page) {
+        return page.map(shopMapper::shopToShopMainPageDTO);
+    }
+    @Override
+    public void deleteUserShop(Shop shopDb) {
+        User user = shopDb.getUser();
+        shopDb.setUser(null);
+        shopDb.setModerateAccept(false);
+        shopDao.update(shopDb);
     }
 }

@@ -18,4 +18,5 @@ public interface ItemDao extends ReadWriteDao<Item, Long> {
     Page<Item> findPagedItemsByCategoryId(Long categoryId, Pageable pageable);
     Page<Item> findPagedPopularItems(Pageable pageable);
     Page<Item> searchPagedItems(String search, Pageable pageable);
+    Page<Item> searchPagedItemsByCategoryId(String search, Long categoryId, Pageable pageable);
 }

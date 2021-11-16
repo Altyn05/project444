@@ -1,19 +1,17 @@
 package com.amr.project.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-import org.hibernate.Hibernate;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
 
 
+@ToString
 @Getter
 @Setter
-@ToString
+@NoArgsConstructor
 @Entity
 @Table(name = "cities")
 public class City {
@@ -42,52 +40,57 @@ public class City {
         this.country = country;
     }
 
-    public City() {
-
-    }
-    public City(String name){
+    public City(String name) {
         this.name = name;
     }
 
     public City(City byName) {
     }
 
-    public Long getId() {
-        return id;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        City city = (City) o;
+        return Objects.equals(name, city.name) && Objects.equals(country, city.country);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, country);
     }
 
     public String getName() {
         return name;
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public Country getCountry() {
         return country;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        City city = (City) o;
-
-        return Objects.equals(id, city.id);
+    public List<Address> getAddresses() {
+        return addresses;
     }
 
-//    @Override
-//    public int hashCode() {
-//        return 39525063;
-//    }
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || getClass() != o.getClass()) return false;
-//        City city = (City) o;
-//        return Objects.equals(name, city.name) && Objects.equals(country, city.country);
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(name, country);
-//    }
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCountry(Country country) {
+        this.country = country;
+    }
+
+    public void setAddresses(List<Address> addresses) {
+        this.addresses = addresses;
+    }
+
 
 }

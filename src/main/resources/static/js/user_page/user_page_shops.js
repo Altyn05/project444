@@ -1,20 +1,29 @@
 function showUserShops() {
-
+    const rowsToDelete = document.querySelectorAll('.DELSHOP')
+    rowsToDelete.forEach(row => row.remove())
 
     for(let shop of user.shops) {
-        console.log(shop)
 
-        let Shop = document.createElement('iframe')
-        Shop.className = "DELSHOP"
-        // Shop.src = "/market/" + shop.id
-        Shop.src = "https://yandex.ru"
-        Shop.height = "500px"
-        Shop.width = "500px"
-        // let newLi = document.createElement('li')
-        // newLi.className = "DELSHOP"
-        // newLi.href = "/market/" +
+        let tr = document.createElement('tr')
+        tr.className = "DELSHOP"
 
-        document.querySelector('.usershops').appendChild(Shop)
+        let varHTML =
+                "<td>\n" +
+                    "<img src = 'data:image/png;base64," + shop.logo.picture + "'/>\n" +
+                "</td>\n" +
+                "<td>\n" +
+                    "<a href='/market/" + shop.id + "'>" + shop.name + "</a>\n" +
+                "</td>\n" +
+                "<td>\n" +
+                    "<span>Рейтинг: " + shop.rating + "</span>\n" +
+                "</td>\n" +
+                "<td>\n" +
+                    "<span>" + shop.email + "</span>\n" +
+                "</td>\n"
+
+
+        document.querySelector('.usershops').appendChild(tr).insertAdjacentHTML('beforeend', varHTML);
     }
-
 }
+
+

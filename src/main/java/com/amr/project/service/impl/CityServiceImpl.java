@@ -7,7 +7,7 @@ import com.amr.project.service.abstracts.CityService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CityServiceImpl extends ReadWriteServiceImpl<City, Long> implements CityService {
+public class CityServiceImpl extends ReadWriteServiceImpl<City,Long> implements CityService {
 
     private final CityDao cityDao;
 
@@ -15,21 +15,27 @@ public class CityServiceImpl extends ReadWriteServiceImpl<City, Long> implements
         super(readWriteDao);
         this.cityDao = cityDao;
     }
-
     @Override
     public void addNewCity(City city) {
-        if (cityDao.getByName(city.getName())) {
+        if (cityDao.checkByName(city.getName())) {
             cityDao.persist(city);
         }
+    }
+    @Override
+    public City findById(Long id) {
+        return cityDao.findById(id);
     }
 
     @Override
     public City findByName(String name) {
         return cityDao.findByName(name);
     }
-
     @Override
-    public City findById(Long id) {
-        return cityDao.findById(id);
+    public City checkByName(String name){
+        if(cityDao.checkByName(name)){
+            addNewCity(new City(name));
+        }
+        return cityDao.findByName(name);
     }
+
 }

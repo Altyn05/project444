@@ -1,6 +1,6 @@
+
 <!DOCTYPE html>
-<html lang="ru"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="ru" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <!-- служебная часть -->
 
 <head>
@@ -8,17 +8,17 @@
     <title>Мой профиль</title>
     <!-- настраиваем служебную информацию для браузеров -->
     <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Bootstrap шаблон</title>
-    <meta name="description" content="">
-    <meta name="keywords" content="">
+    <meta name="description" content=""/>
+    <meta name="keywords" content=""/>
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"/>
     <!-- кастомный css -->
-    <link rel="stylesheet" href="/css/user.css">
+    <link rel="stylesheet" href="/css/user.css"/>
     <!-- закрываем служебную часть страницы -->
 
 </head>
@@ -32,15 +32,16 @@
             <div class="navbar-nav">
                 <img class="nav-link" style="max-height: 40px"
                      src="https://seeklogo.com/images/S/shop-direct-logo-D86EF9FED5-seeklogo.com.png" alt="logo" />
-                <a class="nav-link" href="#">Магазины</a>
-                <a class="nav-link" href="#">Товары</a>
+                <a class="nav-link" href="#" onclick="openShops()">Магазины</a>
+                <a class="nav-link" href="/">Товары</a>
                 <a class="nav-link" href="#">Избранное</a>
                 <a class="nav-link" href="#">еще...</a>
             </div>
         </div>
         <div>
-        <a class="centertext-secondary btn btn-outline-warning text-primary" style = "margin-right: 50px " href="/">На главную страницу для покупок</a>
-    </div>
+            <a class="centertext-secondary btn btn-outline-warning text-primary" style="margin-right: 50px "
+               href="/">На главную страницу для покупок</a>
+        </div>
 
 
         <div class="text-secondary">
@@ -49,22 +50,22 @@
                     <li>
 
                         <img class="avatar" style="border-radius: 50%; max-width: 40px" name="avatar_foto"
-                             src="https://www.avito.st/stub_avatars/А/10_256x256.png" alt="Аватар">
+                             src="https://www.avito.st/stub_avatars/А/10_256x256.png" alt="Аватар"/>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="avatar_name nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" name="avatar_name"
-                           data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="avatar_name nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink"
+                           role="button" name="avatar_name" data-bs-toggle="dropdown" aria-expanded="false">
                             Name Surname
                         </a>
                         <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarDarkDropdownMenuLink">
-                            <li><a class="dropdown-item" href="#">Корзина</a></li>
+                            <li><a class="dropdown-item" href="/?openCart=YES">Корзина</a></li>
                             <li><a class="dropdown-item" href="#">Избранное</a></li>
                             <li class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">История заказов</a></li>
-                            <li><a class="dropdown-item" href="#">Мои Магазины</a></li>
-                            <li><a class="dropdown-item" href="#">Мои Заказы</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="openShops()">Мои Магазины</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="openOrders()">Мои Заказы</a></li>
                             <li class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#" onclick="return openSettings();">Настройки</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="return openSettings();">Настройки</a>
+                            </li>
                             <li class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="/logout">Выйти</a></li>
                         </ul>
@@ -100,16 +101,17 @@
                     </div>
                     <a class="carousel-control-prev" href="#carouselIndicators" role="button" data-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="sr-only"><<<</span>
+                        <span class="sr-only">
+                                </span>
                     </a>
                     <a class="carousel-control-next" href="#carouselIndicators" role="button" data-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="sr-only">>>></span>
                     </a>
                 </div>
-<!--                <img style="border-radius: 50%; border: solid black; max-width: 255px" name="user_foto"-->
-<!--                     src="https://mirnivoin.ru/wp-content/uploads/2018/12/Prosvetlenie-za-1-chas.jpg"-->
-<!--                     class="round img-fluid" alt="фото" />-->
+                <!--                <img style="border-radius: 50%; border: solid black; max-width: 255px" name="user_foto"-->
+                <!--                     src="https://mirnivoin.ru/wp-content/uploads/2018/12/Prosvetlenie-za-1-chas.jpg"-->
+                <!--                     class="round img-fluid" alt="фото" />-->
                 <ul class="list-unstyled ps-0">
                     <li class="mb-1">
                         <h3 class="user_data">Имя Фамилия</h3>
@@ -117,9 +119,11 @@
                     <li class="user_data link-dark rounded">Возраст:</li>
                     <li class="user_data link-dark rounded">Пол:</li>
 
+
+
                     <!-- TABS -->
                     <li>
-                        <ul class="addr11 address-tab nav nav-tabs" >
+                        <ul class="addr11 address-tab nav nav-tabs">
 
                         </ul>
 
@@ -128,17 +132,20 @@
                         </div>
                     </li>
 
-                    <li hidden class="user_data link-dark rounded">Страна:</li>
-                    <li hidden class="user_data link-dark rounded">Город:</li>
-                    <li hidden class="user_data link-dark rounded">Улица:</li>
+                    <li hidden="" class="user_data link-dark rounded">Страна:</li>
+                    <li hidden="" class="user_data link-dark rounded">Город:</li>
+                    <li hidden="" class="user_data link-dark rounded">Улица:</li>
                     <li class="user_data link-dark rounded">Почта:</li>
                     <li class="user_data link-dark rounded">Телефон:</li>
+                   <div id="test"> <li class="user_data link-dark rounded"></li></div>
                     <li class="border-top my-3"></li>
                     </li>
                     <li class="mb-1">
-                    <li><a href="#">Корзина</a></li>
-                    <li><a href="#">История заказов</a></li>
+                    <li><a href="/?openCart=YES">Корзина</a></li>
+                    <li><a href="#" onclick="openOrders()">История заказов</a></li>
                     <li><a href="#">Проданные товары</a></li>
+                    <li><a href="#newShopModal" data-toggle="modal" data-target="#newShopModal"> Новый магазин</a></li>
+
                     </li>
                 </ul>
             </div>
@@ -149,36 +156,37 @@
 
             <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="pills-shops-tab" data-bs-toggle="pill" onclick = "showUserShops()"
+                    <button class="nav-link" id="pills-shops-tab" data-bs-toggle="pill" onclick="showUserShops()"
                             data-bs-target="#pills-shops" type="button" role="tab" aria-controls="pills-shops"
                             aria-selected="true">Мои Магазины</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="pills-orders-tab" data-bs-toggle="pill"
+                    <button class="nav-link" id="pills-orders-tab" data-bs-toggle="pill" onclick="showUserOrders()"
                             data-bs-target="#pills-orders" type="button" role="tab" aria-controls="pills-orders"
                             aria-selected="false">Мои Заказы</button>
                 </li>
-                <li hidden class="nav-item" role="presentation">
+                <li hidden="" class="nav-item" role="presentation">
                     <button class="nav-link" id="pills-settings-tab" data-bs-toggle="pill"
                             data-bs-target="#pills-settings" type="button" role="tab" aria-controls="pills-settings"
                             aria-selected="false">Настройки профиля</button>
                 </li>
             </ul>
             <div class="tab-content" id="pills-tabContent">
-                <div class="tab-pane fade show active" id="pills-shops" role="tabpanel"
-                     aria-labelledby="pills-shops-tab">
-                    Магазины здесь
-
-                        <frame src="http://www.kakprosto.ru" />
-                        <frame src="http://www.sapato.ru" />
-
-                    <p>блабла</p>
-                    <ul class = "usershops">
-                        <!-- Shops -->
-                    </ul>
+                <div class="tab-pane fade show active" id="pills-shops" role="tabpanel" aria-labelledby="pills-shops-tab">
+                    <table class="usershops table">
+                        <!-- Shops from script user_page_shops.js  -->
+                    </table>
                 </div>
                 <div class="tab-pane fade" id="pills-orders" role="tabpanel" aria-labelledby="pills-orders-tab">
-                    Заказы здесь</div>
+                    ТЕКУЩИЕ ЗАКАЗЫ
+                    <table class="userOrdersOpen table">
+                        <!-- Orders from script user_page_shops.js  -->
+                    </table>
+                    ЗАВЕРШЕННЫЕ ЗАКАЗЫ
+                    <table class="userOrdersClose table">
+                        <!-- Orders from script user_page_shops.js  -->
+                    </table>
+                </div>
                 <div class="tab-pane fade" id="pills-settings" role="tabpanel" aria-labelledby="pills-settings-tab">
                     <!-- шаблон профиля https://bbbootstrap.com/snippets/bootstrap-edit-profile-accounts-setting-template-80240656 -->
 
@@ -187,46 +195,65 @@
                     <div class="wrapper bg-white mt-sm-5">
                         <h4 class="pb-4 border-bottom">Настройки профиля</h4>
                         <div class="d-flex align-items-start py-3 border-bottom">
-                            <img style="border-radius: 50%; max-width: 100px" src="https://www.avito.st/stub_avatars/А/10_256x256.png" name="loadfoto" class="img mx-2" alt="">
+                            <img style="border-radius: 50%; max-width: 100px"
+                                 src="https://www.avito.st/stub_avatars/А/10_256x256.png" name="loadfoto"
+                                 class="img mx-2" alt=""/>
                             <div class="pl-sm-4 pl-2" id="img-section"> <b>Фото профиля</b>
                                 <p>Добавить файл не более 1MB</p>
                                 <div class="btn btn-mdb-color btn-rounded float-left">
-                                    <input type="file" accept = "image/jpeg,image/png" class="newfoto">
-                                    <button type="button" data-toggle="modal" data-target="#editFoto" onclick = "fotoEdit()" >Редактировать</button>
+                                    <input type="file" accept="image/jpeg,image/png" class="newfoto"
+                                           onchange="loadFoto()"/>
+                                    <button type="button" data-toggle="modal" data-target="#editFoto"
+                                            onclick="fotoEdit()">Редактировать</button>
                                 </div>
                             </div>
                         </div>
                         <!-- Edit Profile -->
                         <div class="py-2">
                             <div class="row py-2">
-                                <div class="col-md-6"> <label for="firstname">Имя</label> <input type="text" class="profile bg-light form-control" placeholder="Имя"> </div>
-                                <div class="col-md-6 pt-md-0 pt-3"> <label for="lastname">Фамилия</label> <input type="text" class="profile bg-light form-control" placeholder="Фамилия"> </div>
+                                <div class="col-md-6"> <label for="firstname">Имя</label>
+                                    <input type="text" class="profile bg-light form-control" placeholder="Имя"/> </div>
+                                <div class="col-md-6 pt-md-0 pt-3"> <label for="lastname">Фамилия</label>
+                                    <input
+                                        type="text" class="profile bg-light form-control" placeholder="Фамилия"/>
+                                </div>
                             </div>
                             <div class="row py-2">
-                                <div class="col-md-6"> <label for="email">Почта</label> <input type="text" class="profile bg-light form-control" placeholder="email@email.com"> </div>
-                                <div class="col-md-6 pt-md-0 pt-3"> <label for="phone">Телефон</label> <input type="tel" class="profile bg-light form-control" placeholder="+7 000 000 0000"> </div>
+                                <div class="col-md-6"> <label for="email">Почта</label>
+                                    <input type="text" class="profile bg-light form-control" placeholder="email@email.com"/> </div>
+                                <div class="col-md-6 pt-md-0 pt-3"> <label for="phone">Телефон</label>
+                                    <input
+                                        type="tel" class="profile bg-light form-control"
+                                        placeholder="+7 000 000 0000"/> </div>
                             </div>
                             <div class="row py-2">
-                                <div class="col-md-6"> <label for="age">Возраст</label> <input type="number" class="profile bg-light form-control" placeholder="100"> </div>
-                                <div class="col-md-6 pt-md-0 pt-3"> <label for="birthday">Дата рождения</label> <input type="date" class="profile bg-light form-control" placeholder="01.01.2001"> </div>
+                                <div class="col-md-6"> <label for="age">Возраст</label>
+                                    <input type="number" class="profile bg-light form-control" placeholder="100"/> </div>
+                                <div class="col-md-6 pt-md-0 pt-3"> <label for="birthday">Дата рождения</label>
+                                    <input type="date" class="profile bg-light form-control"
+                                           placeholder="01.01.2001"/> </div>
                             </div>
                             <div class="row py-2">
-                                <div class="col-md-6"> <label for="gender">Пол</label> <select name="gender" id="gender" class="bg-light">
+                                <div class="col-md-6"> <label for="gender">Пол</label> <select name="gender"
+                                                                                               id="gender" class="bg-light">
                                     <option class="profile" value="male">MALE</option>
                                     <option class="profile" value="female">FEMALE</option>
                                 </select> </div>
                             </div>
                             <div class="addresses row py-2">
-                                    <ul class="addr21 address-tab nav nav-tabs" >
+                                <ul class="addr21 address-tab nav nav-tabs">
 
-                                    </ul>
-                                    <!-- Addresses -->
-                                    <div class="addr22 address-content tab-content">
+                                </ul>
+                                <!-- Addresses -->
+                                <div class="addr22 address-content tab-content">
 
-                                    </div>
-                                <button type="button" class="btn btn-info"  onclick="saveAddresses()">Изменить адреса</button>
+                                </div>
+                                <button type="button" class="btn btn-info" onclick="saveAddresses()">Изменить
+                                    адреса</button>
                             </div>
-                            <div class="py-3 pb-4 border-bottom"> <button class="save btn btn-primary mr-3" onclick="handleClickSubmitProfile()">Сохранить</button> <button class="btn border button" onclick="openShops();">Закрыть</button> </div>
+                            <div class="py-3 pb-4 border-bottom"> <button class="save btn btn-primary mr-3"
+                                                                          onclick="handleClickSubmitProfile()">Сохранить</button> <button
+                                    class="btn border button" onclick="openShops();">Закрыть</button> </div>
                             <div class="d-sm-flex align-items-center pt-3" id="deactivate">
                                 <div> <b>Deactivate your account</b>
                                     <p>Details about your company account and password</p>
@@ -236,24 +263,27 @@
                         </div>
                     </div>
                     <!-- Modal Delete Foto -->
-                    <div class="modal fade" id="editFoto" tabindex="-1" aria-labelledby="editFotoModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="editFoto" tabindex="-1" aria-labelledby="editFotoModalLabel"
+                         aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="editFotoModalLabel">Поменять картинки</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
+                                        <span aria-hidden="true">x</span>
                                     </button>
                                 </div>
                                 <!-- Modal windows -->
                                 <div class="modal-body">
-                                    <table class = "editFotoModal">
+                                    <table class="editFotoModal">
                                         <!-- from scrip fotoEdit()  -->
                                     </table>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
-                                    <button type="button" class="btn btn-primary"  data-dismiss="modal" onclick = "saveFoto()">Изменить</button>
+                                    <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Закрыть</button>
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal"
+                                            onclick="saveFoto()">Изменить</button>
                                 </div>
                             </div>
                         </div>
@@ -271,8 +301,58 @@
 
     </div>
 </div>
+<div class="modal fade" id="newShopModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content text-center text-muted">
+            <div class="modal-header flex-column p-4">
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">x</span>
+                </button>
+                <div class="m-auto">
+                    <img th:src="@{/img/logo.png}" alt="logo"/>
+                </div>
+            </div>
+            <div class="modal-body p-4 pb-3 border-bottom">
+                <form class="form-shop mx-auto font-weight-bold text-center p-3" content="application/json"
+                      action="/user/newShop" method="post" style="width: 300px;">
 
+                    <h1 class="h3 mb-3 font-weight-normal">Введите данные для создания магазина</h1>
 
+                    <label for="inputName" class="sr-only">name</label>
+                    <input type="text" name="name" id="inputName"
+                           class="form-control" placeholder="Название"
+                           required=""/>
+
+                    <label for="inputCountry" class="sr-only">Country</label>
+                    <input type="text" name="country" id="inputCountry"
+                           class="form-control"
+                           placeholder="Страна" required=""/>
+
+                    <label for="inputCity" class="sr-only">City</label>
+                    <input type="text" name="cityLocation" id="inputCity" class="form-control"
+                           placeholder="Город" required=""/>
+
+                    <label for="inputEmail" class="sr-only">Email</label>
+                    <input type="email" name="email" id="inputEmail"
+                           class="form-control"
+                           placeholder="Email" required=""/>
+
+                    <label for="inputPhone" class="sr-only">Phone</label>
+                    <input type="text" name="phone" id="inputPhone" class="form-control"
+                           placeholder="Телефон" required=""/>
+
+                    <label for="inputDescription" class="sr-only">Description</label>
+                    <input type="text" name="description" id="inputDescription" class="form-control"
+                           placeholder="Описание" required=""/>
+
+                    <br/>
+                    <button class="btn btn-lg btn-primary btn-block mt--5" type="submit">Сохранить данные</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- custom scripts -->
 <script src="/js/user_page/user_page_rest.js"></script>
@@ -280,12 +360,20 @@
 <script src="/js/user_page/user_page_tabs.js"></script>
 <script src="/js/user_page/user_page_profile.js"></script>
 <script src="/js/user_page/user_page_shops.js"></script>
+<script src="/js/user_page/user_page_orders.js"></script>
+
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 
 <!-- Optional JavaScript; choose one of the two! -->
 <!-- Option 1: Bootstrap Bundle with Popper -->
@@ -294,8 +382,6 @@
         crossorigin="anonymous"></script>
 </body>
 
-
-</body>
 <!-- конец всей страницы -->
 
 </html>

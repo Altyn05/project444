@@ -1,19 +1,17 @@
 package com.amr.project.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-import org.hibernate.Hibernate;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@ToString
 @Getter
 @Setter
-@ToString
+@NoArgsConstructor
 @Entity
 @Table(name = "countries")
 public class Country {
@@ -25,7 +23,7 @@ public class Country {
 
     @OneToMany(
             mappedBy = "country",
-            cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REMOVE}
+            cascade = CascadeType.ALL
     )
     @JsonIgnore
     @ToString.Exclude
@@ -35,8 +33,6 @@ public class Country {
         this.name = name;
     }
 
-    public Country() {
-    }
 
     public void addCity(City city) {
         if (this.cities == null) {
@@ -45,43 +41,20 @@ public class Country {
         this.cities.add(city);
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public List<City> getCities() {
+     public List<City> getCities() {
         return cities;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         Country country = (Country) o;
-
-        return Objects.equals(id, country.id);
+        return Objects.equals(name, country.name) && Objects.equals(cities, country.cities);
     }
 
     @Override
     public int hashCode() {
-        return 752506755;
+        return Objects.hash(name, cities);
     }
-
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || getClass() != o.getClass()) return false;
-//        Country country = (Country) o;
-//        return Objects.equals(name, country.name) && Objects.equals(cities, country.cities);
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(name, cities);
-//    }
-
 }

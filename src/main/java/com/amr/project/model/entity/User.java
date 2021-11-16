@@ -38,7 +38,6 @@ public class User implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "address_id")
     )
-    @ToString.Exclude
     private List<Address> address;
 
     @ManyToMany(cascade = CascadeType.REFRESH)
@@ -68,7 +67,6 @@ public class User implements UserDetails {
     private List<CartItem> cart;
 
     @OneToMany(mappedBy = "user")
-    @ToString.Exclude
     private List<Order> orders;
 
     @OneToMany(mappedBy = "user")
@@ -160,6 +158,12 @@ public class User implements UserDetails {
             images = new ArrayList<>();
         }
         images.add(image);
+    }
+    public void addShop(Shop shop) {
+        if (this.shops == null) {
+            this.shops = new ArrayList<>();
+        }
+        this.shops.add(shop);
     }
 
     public Long getId() {
@@ -322,3 +326,5 @@ public class User implements UserDetails {
         this.discounts = discounts;
     }
 }
+
+

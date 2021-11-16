@@ -31,4 +31,12 @@ public class CountryDaoImpl extends ReadWriteDaoImpl<Country, Long> implements C
     public Country findById(Long id){
         return em.find(Country.class, id);
     }
+    @Override
+    public boolean checkByName(String name) {
+        List<Country> listCountry =
+                (List<Country>) em.createQuery("select uf from Country uf where uf.name like :name", Country.class).
+                        setParameter("name", name).getResultList();
+        return listCountry.size() ==0;
+
+    }
 }
