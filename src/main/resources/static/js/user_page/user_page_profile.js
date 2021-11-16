@@ -11,10 +11,10 @@ function userProfile() {
     userProfile[2].value = user.email;
     userProfile[3].value = user.phone;
     userProfile[4].value = user.age;
-    userProfile[5].value = user.birthday.slice(0,10);
-    if (user.gender === "MALE") userProfile[6].setAttribute("selected", "selected")
-    else userProfile[7].setAttribute("selected", "selected")
-
+    userProfile[5].value = user.birthday;
+    if(user.gender === "MALE") userProfile[6].setAttribute("selected", "selected")
+        else userProfile[7].setAttribute("selected", "selected")
+    userProfile[8].value = user.password;
     editAddresses()
 }
 
@@ -30,11 +30,12 @@ function extractUser(form) {
     tempUser.gender = "FEMALE"
     if (form[6].selected) tempUser.gender = "MALE"
     tempUser.firstName = form[0].value
-    tempUser.lastName = form[1].value
-    tempUser.email = form[2].value
-    tempUser.phone = form[3].value
-    tempUser.age = form[4].value
-    tempUser.birthday = form[5].value +"T21:00:00.001+00:00"
+    tempUser.lastName =  form[1].value
+    tempUser.email =  form[2].value
+    tempUser.phone =  form[3].value
+    tempUser.age =  form[4].value
+    tempUser.birthday =  form[5].value
+    tempUser.password = form[8].value
 }
 
 /////////// Load new Foto
