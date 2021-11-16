@@ -13,6 +13,13 @@ public interface ItemDao extends ReadWriteDao<Item, Long> {
     List<Item> findPopularItems();
     List<Item> searchItems(String search);
 
+    Page<Item> findPagedItemsByCategoryId(Long categoryId, Pageable pageable);
+    Page<Item> findPagedPopularItems(Pageable pageable);
+    Page<Item> searchPagedItems(String search, Pageable pageable);
+    Page<Item> searchPagedItemsByCategoryId(String search, Long categoryId, Pageable pageable);
+
     List<Item> getNotModeratedItems();
+
+
 
 }

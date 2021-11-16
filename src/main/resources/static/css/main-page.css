@@ -1,0 +1,45 @@
+
+a {
+    text-decoration: none !important;
+}
+
+button {
+    cursor: pointer;
+}
+
+.size-block .page-link {
+    color: grey;
+}
+
+.size-block > .page-item.active > .page-link {
+    border-color: grey;
+    background-color: grey;
+}
+
+.item-img {
+    height: 200px;
+    object-fit: cover;
+}
+
+.shop-img {
+    height: 100px;
+    object-fit: contain;
+}
+
+.item-title {
+    height: 2.3em;
+    overflow: hidden;
+}
+
+.shop-card > .gcard {
+    transition: 0.1s;
+}
+
+.shop-card > .gcard:hover {
+    transform: scale(1.02);
+    box-shadow: #aaa 0 0 7px 0;
+}
+
+/*.page-link:focus {*/
+/*    box-shadow: none;*/
+/*}*/

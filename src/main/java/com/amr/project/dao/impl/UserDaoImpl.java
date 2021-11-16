@@ -1,12 +1,10 @@
 package com.amr.project.dao.impl;
 
 import com.amr.project.dao.abstracts.UserDao;
-import com.amr.project.model.entity.Role;
 import com.amr.project.model.entity.User;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-import java.util.Set;
+import java.util.Optional;
 
 @Repository
 public class UserDaoImpl extends ReadWriteDaoImpl<User, Long> implements UserDao {
@@ -17,20 +15,21 @@ public class UserDaoImpl extends ReadWriteDaoImpl<User, Long> implements UserDao
 
     @Override
     public User findUserByUsername(String username) {
-        List<User> arr = em.createQuery("select c from User c where c.username like :username", User.class).setParameter("username", username).getResultList();// getSingleResult();
-          for (User u : arr) {
-              System.out.println(u.getId() + " " + u.getUsername());
-              Set<Role> roleSet= u.getRoles();
-              for (Role role : roleSet){
-                  System.out.println(role.getName());
-              }
-
-          }
-       // return em.createQuery("select c from User c where c.username like :username", User.class).setParameter("username", username). getSingleResult();
-       return arr.get(0);
+        return em.createQuery("select c from User c where c.username like :username", User.class).setParameter("username", username).getSingleResult();
     }
 
     @Override
+    public Optional<User> findUserByEmail(String email) {
+        return SingleResultUtil.getSingleResultOrNull(
+                em.createQuery("select u from User u where u.email = :email", User.class).setParameter("email", email));
+    }
+
+    @Override
+    public Optional<User> findUserByIdProvider(String id) {
+        return SingleResultUtil.getSingleResultOrNull(
+                em.createQuery("select u from User u where u.idProvider = :id", User.class).setParameter("id", id));
+    }
+
     public User findUserByActivationCode(String activationCode) {
         return (User) em.createQuery("Select e FROM User e WHERE e.activationCode = :activationCode")
                 .setParameter("activationCode", activationCode)
