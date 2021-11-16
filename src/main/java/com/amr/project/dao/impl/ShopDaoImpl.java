@@ -40,14 +40,7 @@ public class ShopDaoImpl extends ReadWriteDaoImpl<Shop,Long> implements ShopDao 
                 .setParameter("phone", phone)
                 .setParameter("email", email)
                 .setParameter("name", name).getResultList();
-        if (shopList.size() > 0) {
-            return false;
-
-        } else {
-            return true;
-        }
-
-    }
+        return shopList.size() > 0;}
     @Override
     public List<Shop> findPopularShops() {
         return em.createQuery("SELECT s FROM Shop s ORDER BY s.rating DESC", Shop.class)

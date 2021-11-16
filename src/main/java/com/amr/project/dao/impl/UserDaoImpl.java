@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public class UserDaoImpl extends ReadWriteDaoImpl<User, Long> implements UserDao {
+public class UserDaoImpl extends ReadWriteDaoImpl <User, Long> implements UserDao {
     @Override
     public User findById(Long id) {
         return em.find(User.class, id);

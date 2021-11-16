@@ -30,13 +30,13 @@ public class CountryServiceImpl extends ReadWriteServiceImpl<Country, Long> impl
     }
     @Override
     public void addNewCountry(Country country) {
-        if (countryDao.getByName(country.getName())) {
+        if (countryDao.checkByName(country.getName())) {
             countryDao.persist(country);
         }
     }
     @Override
-    public Country getByName(String name){
-        if(countryDao.getByName(name)){
+    public Country checkByName(String name){
+        if(countryDao.checkByName(name)){
             addNewCountry(new Country(name));
         }
         return countryDao.findByName(name);

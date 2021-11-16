@@ -9,5 +9,5 @@ public interface CityService extends ReadWriteService<City, Long> {
     City findById(Long id);
     City findByName(String name);
 
-    City getByName(String name);
+    City checkByName(String name);
 }

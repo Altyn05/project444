@@ -69,9 +69,9 @@ public class NewShopController {
                                    @ModelAttribute("id") Long id) {
 
         Shop shop = shopService.findById(id);
-        Country country = countryService.getByName(location);
+        Country country = countryService.checkByName(location);
         shop.setLocation(country);
-        City city = cityService.getByName(cityLocation);
+        City city = cityService.checkByName(cityLocation);
         shop.setCity(city);
         shop.setName(name);
         shop.setPhone(phone);
@@ -85,7 +85,6 @@ public class NewShopController {
     }
     @GetMapping( "/getOneNew/{id}")
     public String getOneNew(@PathVariable("id") Long id) {
-       // System.out.println("work method GETONE");
         Shop shop = shopService.findById(id);
         System.out.println("getOne " + shop.toString());
 

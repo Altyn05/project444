@@ -20,12 +20,9 @@ public class CityDaoImpl extends ReadWriteDaoImpl<City, Long> implements CityDao
                 .setParameter("name", name).getSingleResult();
     }
     @Override
-    public boolean getByName(String name) {
+    public boolean checkByName(String name) {
         List<City> listCity = (List<City>) em.createQuery("select uf from City uf where uf.name like :name", City.class).
                 setParameter("name", name).getResultList();
-        if (listCity.size() > 0) {
-            return false;
-        } else return true;
-
+        return listCity.size() == 0;
     }
 }

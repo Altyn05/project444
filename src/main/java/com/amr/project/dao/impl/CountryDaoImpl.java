@@ -23,13 +23,11 @@ public class CountryDaoImpl extends ReadWriteDaoImpl<Country,Long> implements Co
                 .setParameter("name", name).getSingleResult();
     }
     @Override
-    public boolean getByName(String name) {
+    public boolean checkByName(String name) {
         List<Country> listCountry =
                 (List<Country>) em.createQuery("select uf from Country uf where uf.name like :name", Country.class).
                         setParameter("name", name).getResultList();
-        if (listCountry.size() > 0) {
-            return false;
-        } else return true;
+        return listCountry.size() ==0;
 
     }
 }

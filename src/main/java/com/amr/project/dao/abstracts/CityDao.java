@@ -7,5 +7,5 @@ public interface CityDao extends ReadWriteDao<City, Long> {
     City findById(Long id);
     City findByName(String name);
 
-    boolean getByName(String name);
+    boolean checkByName(String name);
 }

@@ -7,5 +7,5 @@ public interface CountryDao extends ReadWriteDao<Country, Long> {
     Country findById(Long id);
     Country findByName(String name);
 
-    boolean getByName(String name);
+    boolean checkByName(String name);
 }

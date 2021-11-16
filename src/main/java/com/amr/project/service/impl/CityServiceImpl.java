@@ -17,7 +17,7 @@ public class CityServiceImpl extends ReadWriteServiceImpl<City,Long> implements 
     }
     @Override
     public void addNewCity(City city) {
-        if (cityDao.getByName(city.getName())) {
+        if (cityDao.checkByName(city.getName())) {
             cityDao.persist(city);
         }
     }
@@ -31,8 +31,8 @@ public class CityServiceImpl extends ReadWriteServiceImpl<City,Long> implements 
         return cityDao.findByName(name);
     }
     @Override
-    public City getByName(String name){
-        if(cityDao.getByName(name)){
+    public City checkByName(String name){
+        if(cityDao.checkByName(name)){
             addNewCity(new City(name));
         }
         return cityDao.findByName(name);

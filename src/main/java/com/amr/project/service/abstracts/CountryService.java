@@ -8,5 +8,5 @@ public interface CountryService extends ReadWriteService<Country, Long>{
 
     void addNewCountry(Country country);
 
-    Country getByName(String name);
+    Country checkByName(String name);
 }
