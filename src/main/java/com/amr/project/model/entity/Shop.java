@@ -73,4 +73,18 @@ public class Shop {
     public int hashCode() {
         return Objects.hash(name, email, phone, description, location);
     }
+
+    public void addItem (Item item) {
+        if(item != null) {
+            item.setShop(this);
+            this.items.add(item);
+        }
+    }
+
+    public void clearItems () {
+        if(items != null) {
+            this.getItems().forEach(item -> item.setShop(null));
+            this.items = new ArrayList<>();
+        }
+    }
 }
