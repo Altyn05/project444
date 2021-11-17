@@ -1,5 +1,7 @@
 package com.amr.project.service.abstracts;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -17,6 +19,7 @@ public interface ReadWriteService<T, ID> {
 
     boolean existsById(Class<T> clazz, ID id);
 
+//    @Transactional
     Optional<T> getByKey(Class<T> clazz, ID id);
 
     List<T> getAll(Class<T> clazz);

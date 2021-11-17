@@ -18,7 +18,8 @@ public interface ItemPageMapper {
     @Mapping(source = "shop.location", target = "shopLocation")
     @Mapping(source = "shop.id", target = "shopId")
     ItemDto itemToItemDto(Item item);
-
+    @Mapping(source = "review.picture", target = "picture")
+    @Mapping(source = "review.url", target = "url")
     @Mapping(source = "user.firstName", target = "userFirstName")
     @Mapping(source = "user.lastName", target = "userLastName")
     @Mapping(source = "user.images", target = "userImages")

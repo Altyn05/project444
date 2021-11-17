@@ -6,12 +6,17 @@ import com.amr.project.converter.ShopMapper;
 import com.amr.project.dao.abstracts.CategoryDao;
 import com.amr.project.dao.abstracts.ItemDao;
 import com.amr.project.dao.abstracts.ShopDao;
+import com.amr.project.model.dto.ItemDto;
+import com.amr.project.model.dto.ShopDto;
 import com.amr.project.model.dto.ShowMainPageDTO;
 import com.amr.project.model.entity.Category;
+import com.amr.project.model.entity.Item;
+import com.amr.project.model.entity.Shop;
 import com.amr.project.service.abstracts.ShowMainPageService;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
@@ -68,4 +73,5 @@ public class ShowMainPageServiceImpl implements ShowMainPageService {
                 "Подборка популярных магазинов"
         );
     }
+
 }

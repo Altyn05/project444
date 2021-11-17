@@ -1,5 +1,6 @@
 package com.amr.project.model.dto;
 
+import com.amr.project.util.ImgUtil;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -19,11 +20,12 @@ public class ItemDto {
     private List<ImageDto> images;
     private Double rating;
     private String description;
-
     private String shopName;
     private String shopPhone;
     private ImageDto shopLogo;
     private CountryDto shopLocation;
+    private byte[] picture;
+    private String url;
 
     private boolean isModerateAccept;
     private boolean isModerated;
@@ -46,4 +48,5 @@ public class ItemDto {
         }
         return null;
     }
+
 }

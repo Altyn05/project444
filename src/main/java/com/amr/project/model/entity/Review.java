@@ -20,6 +20,10 @@ public class Review {
     private String text;
     private Date date;
     private Integer rating;
+    @Lob
+    @Column(length = Integer.MAX_VALUE)
+    private byte[] picture;
+    private String url;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -47,4 +51,5 @@ public class Review {
         this.user = user;
         this.shop = shop;
     }
+
 }

@@ -1,8 +1,13 @@
 window.onload = async function () {
+
     let shopData = await loadMarketInfo();
     showMarketInfo(shopData);
-    $('#market-list-popular').html(function() {return getProductsTop(shopData, 4) + $(this).html()});
-    $('#market-list-all').html(function() {return getProductsTop(shopData) + $(this).html()});
+    $('#market-list-popular').html(function () {
+        return getProductsTop(shopData, 4) + $(this).html()
+    });
+    $('#market-list-all').html(function () {
+        return getProductsTop(shopData) + $(this).html()
+    });
     showInfoPage();
 }
 
@@ -29,6 +34,7 @@ async function loadMarketInfo() {
 }
 
 function showMarketInfo(data) {
+
     $('#market-logo').attr("src", "data:image/jpg;base64," + data["logo"]["picture"]);
     $('#market-title').html(data["name"]);
     $('#market-info-data').html(
@@ -36,7 +42,17 @@ function showMarketInfo(data) {
         "<tr><td>Email:</td><td>" + data["email"] + "</td></tr>" +
         "<tr><td>Телефон:</td><td>" + data["phone"] + "</td></tr>"
     );
+
 }
+
+$.fn.stars = function () {
+    return this.each(function (i, e) {
+        $(e).html($('<span/>').width($(e).text() * 16));
+    });
+};
+
+
+$('.stars').stars();
 
 function getProductsTop(data, amount = -1) {
     let itemList = data["items"].sort((a, b) => parseFloat(b["rating"]) - parseFloat(a["rating"]));
@@ -62,3 +78,44 @@ function getProductsTop(data, amount = -1) {
     }
     return htmlData;
 }
+
+function getReviewForEdit(id) {
+
+    fetch("/market/api/info/" + id)
+        .then(response => response.json())
+        .then(shop => {
+            console.log(shop)
+            document.getElementById('id').value = shop.id;
+            document.getElementById('name').value = shop.name;
+
+        })
+}
+
+function addReview() {
+    // event.preventDefault();
+    shops = {
+        id: $('#id').val(),
+        name: $('#name').val()
+    };
+
+    let review = {
+        dignity: $('#dignity').val(),
+        flaw: $('#flaw').val(),
+        rating: $('#rating').val(),
+        text: $('#text').val(),
+        shop: shops
+    };
+    console.log(JSON.stringify(review));
+    fetch("/market/api/", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(review),
+    })
+        .then((response) => console.log(response.status))
+
+        .catch(e => console.error(e))
+
+}
+

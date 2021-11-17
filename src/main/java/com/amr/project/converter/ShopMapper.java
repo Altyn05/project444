@@ -10,8 +10,14 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface ShopMapper {
     @Mapping(target = "username", source = "user.username")
+
     ShopDto shopToDto(Shop shop);
 
+    @Mapping(source = "user.firstName", target = "userFirstName")
+    @Mapping(source = "user.lastName", target = "userLastName")
+    @Mapping(source = "user.images", target = "userImages")
+
+    ReviewDto reviewToReviewDto(Review review);
     List<ShopMainPageDTO> shopListToListShopMainPageDTO(List<Shop> list);
 
     List<ShopDto> shopListToListShopDto(List<Shop> list);
@@ -19,5 +25,6 @@ public interface ShopMapper {
     List<AdminShopDto> shopListToListAdminShopDto(List<Shop> list);
 
     AdminShopDto shopToAdminShopDto(Shop shop);
+
 
 }

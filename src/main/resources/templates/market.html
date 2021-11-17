@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link th:href="@{/css/market.css}" rel="stylesheet">
 </head>
 <body>
 <div data-include="navbar"></div>
@@ -20,8 +21,116 @@
                 <hr>
                 <table class="market-info-head-elem" id="market-info-data">
                 </table>
+<!--                Рейтинг магазина:-->
+                <table class="market-info-head-elem">
+                    <tr><td>Рейтинг:</td><td><span class="stars"><p th:text="${shop.rating}"/></span>
+                        <p th:text="${shop.rating} % 1 == 0? ${shop.rating} :${#numbers.formatDecimal(shop.rating, 0, 1)}"/> </td></tr>
+                </table>
+<!--                Ссылка на модальное окно-->
+                <a type="button" class="btn btn-primary" data-toggle="modal"
+                   th:attr="data-target='#newReview'" th:onclick="'getReviewForEdit(' + ${shop.getId()} + ')'"> Оставить отзыв</a>
+
+<!--                Панель отзывов-->
+                <div id="reviews-panel" class="d-flex align-items-center">
+
+                    <h4 class="py-2 mb-4 mr-auto">Отзывы</h4>
+                </div>
+
+                <div id="reviews" style="margin-left: auto;" th:each="review: ${shop.reviews}" th:if="${shop.reviews}">
+                    <div class="review mb-5">
+                        <div class="review-info d-flex align-items-center mb-3" >
+                            <img  class="rounded-circle" th:src="${review.userImages.get(0).toBase64()}" width="50" height="50" th:if="${!review.userImages.isEmpty()}" alt="">
+
+                            <span class="mx-3 mr-auto h5"><strong th:text="${review.userFirstName + ' ' + review.userLastName}"></strong></span>
+
+                            <span class="mx-3" th:text="${review.getDate()}"></span>
+                            <span><img class="pb-1" th:src="@{'/img/rating/' +  ${review.getRating()} + '.png'}" alt=""></span>
+                        </div>
+                        <div class="review-content ml-5 pl-3">
+                            <strong>Достоинства:</strong>
+                            <p th:text="${review.dignity}"></p>
+                            <strong>Недостатки:</strong>
+                            <p th:text="${review.flaw}"></p>
+                            <strong>Комментарий:</strong>
+                            <p th:text="${review.getText()}"></p>
+                        </div>
+                    </div>
+                </div>
+
+<!--                Модальное окно-->
+                    <div style="text-align: center;">
+                        <div class="row justify-content-center align-items-center">
+                            <form>
+                                <div class="modal fade" id="newReview" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Оставить отзыв</h5>
+                                                <button type="button" class="close" data-dismiss="modal">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="form-group font-weight-bold">
+
+                                                    <div class="mb-3">
+                                                        <label for="dignity"
+                                                               class="form-label mb-0 d-flex justify-content-center"><b>Достоинства</b></label>
+                                                        <input type="text" class="form-control"
+                                                               id="dignity" >
+                                                    </div>
+
+                                                    <div class="mb-3">
+                                                        <label for="flaw"
+                                                               class="form-label mb-0 d-flex justify-content-center"><b>Недостатки</b></label>
+                                                        <input type="text" class="form-control"
+                                                               id="flaw" >
+                                                    </div>
+
+                                                    <div class="mb-3">
+                                                        <label for="rating"
+                                                               class="form-label mb-0 d-flex justify-content-center"><b>Рейтинг от 1 до 5</b></label>
+                                                        <input type="text" class="form-control"
+                                                               id="rating" >
+                                                    </div>
+
+                                                    <div class="mb-3">
+                                                        <label for="text"
+                                                               class="form-label mb-0 d-flex justify-content-center"><b>Комментарии</b></label>
+                                                        <input type="text" class="form-control"
+                                                               id="text" >
+                                                    </div>
+
+                                                    <div class="mb-3" type="hidden">
+                                                        <label type="hidden" for="id" id="id"
+                                                               class="form-label mb-0 d-flex justify-content-center"></label>
+                                                    </div>
+
+                                                    <div class="mb-3">
+                                                        <label for="name"
+                                                               class="form-label mb-0 d-flex justify-content-center"><b>Магазин</b></label>
+                                                        <input type="text" class="form-control"
+                                                               id="name" readonly>
+                                                    </div>
+
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                                data-dismiss="modal" aria-label="Close">Close</button>
+                                                        <button id="newUserButton" type="submit" class="btn btn-success"
+                                                                aria-controls="userTable" data-bs-toggle="tab" data-bs-target="#userTable"
+                                                                role="tab" onclick="addReview()">Добавить отзыв</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
             </div>
         </div>
+
         <div class="p-2 market-list">
             <h3 class="market-list-title">Самые популярные товары</h3>
             <div class="market-list-popular d-flex flex-row flex-wrap" id="market-list-popular">
@@ -40,8 +149,7 @@
 </div>
 
 
-<script th:src="@{/js/market.js}"></script>
-
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
@@ -51,5 +159,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+<script th:src="@{/js/market.js}"></script>
+
 </body>
 </html>
