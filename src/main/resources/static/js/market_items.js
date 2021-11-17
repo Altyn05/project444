@@ -1,7 +1,25 @@
 var tempShopData
 
-function showItems() {
+async function loadItems() {
+    let response = await fetch("http://localhost:8888/api/shopItems", {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    if (response.ok) {
+        return response.json()
+    } else {
+        alert("Ошибка HTTP: " + response.status);
+    }
+}
+
+function showEditItems() {
     tempShopData = JSON.parse(JSON.stringify(shopData));
+    showItems()
+}
+
+function showItems() {
     const rowsToDelete = document.querySelectorAll('.DELITEMS')
     rowsToDelete.forEach(row => row.remove())
 
@@ -34,50 +52,50 @@ function showItems() {
     }
 }
 
-function addItems() {
+async function addItems() {
+    $('.addItemsToShop').remove();
+
+    let varHTML = '<table class="addItemsToShop"></table>'
+    document.querySelector('.addItems').insertAdjacentHTML('beforeend', varHTML);
+
+    let shopItemIds =[]
+    tempShopData.items.map(item => shopItemIds.push(item.id))
+
     $('.market-items-page').hide();
     $('.addItems').show();
-    $('#ch1').html("Количество")
-    $('#ch2').html("Добавить")
-    $('#ch3').hide();
-    const rowsToDelete1 = document.querySelectorAll('#editItemBTN')
-    rowsToDelete1.forEach(row => row.remove())
-    const rowsToDelete2 = document.querySelectorAll('#deleteItemBTN')
-    rowsToDelete2.forEach(row => row.remove())
-    let varHTML1 =
-        "<td class='DELITEMS'>\n" +
-            "<form>" +
-                "<input class='addItemCount' type='number' min='0' style='width: 80px'>" +
-            "</form>" +
-        "</td>\n"
-    let varHTML2 =
-        "<td class='DELITEMS'>\n" +
-            "<input type='checkbox' class='addItem'>" +
-        "</td>\n"
-    const rowsToAdd1 = document.querySelectorAll('#editItemTD')
-    rowsToAdd1.forEach(row => row.insertAdjacentHTML('beforeend', varHTML1))
-    const rowsToAdd2 = document.querySelectorAll('#deleteItemTD')
-    rowsToAdd2.forEach(row => row.insertAdjacentHTML('beforeend', varHTML2))
 
-    let varHTML3 =
-        "<div className='DELITEMS'>" +
-            "<a class='text-secondary btn btn-outline-warning text-primary' onclick='addNewItems()'> Добавить выбранные товары в магазин </a>" +
-        "</div><br>"
-
-    document.querySelector('#ch4').insertAdjacentHTML('afterbegin', varHTML3);
-
-    $('#searchBarItems').hide()
-
-    let varHTML4 =
-        "<input type='text' id='myInput' onKeyUp='searchable()' placeholder='Search for names..' title='Type in a name'>"
-    document.querySelector('#searchWrapperItems').insertAdjacentHTML('afterbegin', varHTML4);
+    let items = await loadItems()
+    items.map(item => {
+        if(!shopItemIds.includes(item.id)){
+            let varHTML =
+                "<td class='DELADDITEMS'>" +
+                    "<span style='margin-left: 20px'>ID: " + item.id + "</span>" +
+                "</td>" +
+                "<td class='DELADDITEMS'>" +
+                    "<a style='margin-left: 20px' href='/item/" + item.id + "'>" + item.name + "</a>" +
+                "</td>" +
+                "<td class='DELADDITEMS'>" +
+                    "<span style='margin-left: 20px'>Цена: " + item.price + "</span>" +
+                "</td>" +
+                "<td class='DELADDITEMS'>" +
+                    "<span style='margin-left: 20px'>Рейтинг: " + item.rating + "</span>" +
+                "</td>" +
+                "<td class='DELADDITEMS'>" +
+                    "<input type='checkbox' class='addItem' style='margin-left: 50px'>" +
+                "</td>" +
+                "<td class='DELADDITEMS'>" +
+                    "<p><span style='margin-left: 20px'>Добавить товар в магазин</span>" +
+                "</td>"
+            document.querySelector('.addItemsToShop').insertAdjacentHTML('beforeend', varHTML);
+        }
+    })
 }
 
 function searchable() {
     var input, filter, table, tr, td, i, txtValue;
     input = document.querySelector('#myInput')
     filter = input.value.toUpperCase();
-    table = document.querySelector('#ch5');
+    table = document.querySelector('.addItemsToShop');
     tr = table.getElementsByTagName("tr");
     for (i = 0; i < tr.length; i++) {
         td = tr[i].getElementsByTagName("td")[1];
@@ -93,40 +111,49 @@ function searchable() {
 }
 
 function addNewItems() {
-    let itemsList = document.querySelectorAll(".itemsList tr")
-    console.log(itemsList)
-    let addItemCount = document.querySelectorAll(".addItemCount")
-    console.log(addItemCount)
-    let addItem = document.querySelectorAll(('.addItem'))
-    console.log(addItem)
+    let itemsList = document.querySelectorAll('.addItemsToShop tr')
+
     let i = 0
     for(let items of itemsList) {
-        let checked = null
-   //     if (add.checked === true) {
-  //          tempShopData.items.push({id: })
+        let id = Number(items.cells[0].textContent.replace(/^.{4}/, ''))
+        let name = items.cells[1].textContent
+        let checked = items.cells[4].firstElementChild.checked
 
-
-
-
-   //         splice(i, 1); i-- }
-    //    tempShopData.items.push
+        if (checked === true) tempShopData.items.push({id: id, name: name, images: [{picture: ""}]})
     }
-
-
+        $('.addItems').hide();
+        showItems()
+        $('.market-items-page').show();
 }
 
+async function putItems() {
+    let response = await fetch("http://localhost:8888/api/shopItems", {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(tempShopData)
+    })
+    if (response.ok) {
+        return response.json()
+    } else {
+        alert("Ошибка HTTP: " + response.status);
+    }
+}
 
-function saveItems() {
+async function saveItems() {
     saveCount()
     deleteItems()
-    showItems()
+    shopData = await putItems()
+    showEditItems()
 }
 
 function saveCount() {
     let newCount = document.querySelectorAll('.newCount')
     let i = 0
     for (let count of newCount) {
-        tempShopData.items[i].count = count.value
+        if(count.value === "") tempShopData.items[i].count = 0
+            else tempShopData.items[i].count = count.value
         i++
     }
 }

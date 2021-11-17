@@ -8,7 +8,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
@@ -55,7 +56,7 @@
                         <div class="modal-header">
                             <h5 class="modal-title" id="editModalLabel">Редактирование</h5>
                             <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
+                                <span aria-hidden="true"></span>
                             </button>
                         </div>
                         <div class="modal-body">
@@ -96,7 +97,7 @@
                         <div class="modal-header">
                             <h5 class="modal-title" id="deleteModalLabel">Удаление</h5>
                             <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
+                                <span aria-hidden="true"></span>
                             </button>
                         </div>
                         <div class="modal-body">
@@ -138,7 +139,7 @@
                         <div class="modal-header">
                             <h5 class="modal-title" id="createModalLabel">Создание</h5>
                             <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
+                                <span aria-hidden="true"></span>
                             </button>
                         </div>
                         <div class="modal-body">
@@ -197,14 +198,14 @@
                 </tbody>
             </table>
             <!--    Модальные окна City-->
-                <div class="modal fade" id="createModalCity" tabindex="-1" aria-labelledby="createModalLabelCity"
+            <div class="modal fade" id="createModalCity" tabindex="-1" aria-labelledby="createModalLabelCity"
                  aria-hidden="true">
                 <div class="modal-dialog ">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="createModalLabelCity">Создание Города</h5>
                             <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
+                                <span aria-hidden="true"></span>
                             </button>
                         </div>
                         <div class="modal-body">
@@ -247,7 +248,7 @@
                         <div class="modal-header">
                             <h5 class="modal-title" id="deleteModalLabelCity">Удалить страну</h5>
                             <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
+                                <span aria-hidden="true"></span>
                             </button>
                         </div>
                         <div class="modal-body">
@@ -258,7 +259,8 @@
                                     <div class="col-6">
                                         <div class="form-group text-center">
                                             <label for="deleteIdCity" class="font-weight-bold">ID</label>
-                                            <input type="text" class="form-control" id="deleteIdCity" name="id" readonly/>
+                                            <input type="text" class="form-control" id="deleteIdCity" name="id"
+                                                   readonly/>
                                         </div>
                                         <br>
                                         <div class="form-group text-center">
@@ -268,9 +270,11 @@
                                         </div>
                                         <br>
                                         <div class="form-group text-center">
-                                            <label for="inputCountryDelete"><p class="font-weight-bold" disabled>Страна</p>
+                                            <label for="inputCountryDelete"><p class="font-weight-bold" disabled>
+                                                Страна</p>
                                             </label>
-                                            <select id="inputCountryDelete" class="form-control" name="country" disabled>
+                                            <select id="inputCountryDelete" class="form-control" name="country"
+                                                    disabled>
                                             </select>
                                         </div>
                                         <br>
@@ -296,7 +300,7 @@
                         <div class="modal-header">
                             <h5 class="modal-title" id="editModalLabelCity">Редактирование</h5>
                             <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
+                                <span aria-hidden="true"></span>
                             </button>
                         </div>
                         <div class="modal-body">
@@ -377,7 +381,7 @@
                         <div class="modal-header">
                             <h5 class="modal-title" id="createModalLabelAddress">Создать Адрес</h5>
                             <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
+                                <span aria-hidden="true"></span>
                             </button>
                         </div>
                         <div class="modal-body">
@@ -388,7 +392,8 @@
                                     <div class="col-6">
                                         <div class="form-group text-center">
                                             <label for="createIndexAddress" class="font-weight-bold">Индекс</label>
-                                            <input type="text" class="form-control" id="createIndexAddress" name="index"/>
+                                            <input type="text" class="form-control" id="createIndexAddress"
+                                                   name="index"/>
                                         </div>
                                         <br>
                                         <div class="form-group text-center">
@@ -407,12 +412,14 @@
                                         <br>
                                         <div class="form-group text-center">
                                             <label for="createStreetAddress" class="font-weight-bold">Улица</label>
-                                            <input type="text" class="form-control" id="createStreetAddress" name="street"/>
+                                            <input type="text" class="form-control" id="createStreetAddress"
+                                                   name="street"/>
                                         </div>
                                         <br>
                                         <div class="form-group text-center">
                                             <label for="createHouseAddress" class="font-weight-bold">Номер дома</label>
-                                            <input type="text" class="form-control" id="createHouseAddress" name="house"/>
+                                            <input type="text" class="form-control" id="createHouseAddress"
+                                                   name="house"/>
                                         </div>
                                         <br>
                                     </div>
@@ -420,7 +427,8 @@
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть
                                     </button>
-                                    <input type="button" class="btn btn-primary createBTNAddress" data-bs-dismiss="modal"
+                                    <input type="button" class="btn btn-primary createBTNAddress"
+                                           data-bs-dismiss="modal"
                                            value="Создать"/>
                                 </div>
                             </form>
@@ -437,7 +445,7 @@
                         <div class="modal-header">
                             <h5 class="modal-title" id="deleteModalLabelAddress">Удалить адрес</h5>
                             <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
+                                <span aria-hidden="true"></span>
                             </button>
                         </div>
                         <div class="modal-body">
@@ -449,17 +457,21 @@
 
                                         <div class="form-group text-center">
                                             <label for="deleteIdAddress" class="font-weight-bold">ID</label>
-                                            <input type="text" class="form-control" id="deleteIdAddress" name="id" readonly/>
+                                            <input type="text" class="form-control" id="deleteIdAddress" name="id"
+                                                   readonly/>
                                         </div>
                                         <div class="form-group text-center">
                                             <label for="deleteIndexAddress" class="font-weight-bold">Индекс</label>
-                                            <input type="text" class="form-control" id="deleteIndexAddress" name="index" readonly/>
+                                            <input type="text" class="form-control" id="deleteIndexAddress" name="index"
+                                                   readonly/>
                                             <br>
                                         </div>
                                         <div class="form-group text-center">
-                                            <label for="inputAddressDelete"><p class="font-weight-bold" disabled>Страна</p>
+                                            <label for="inputAddressDelete"><p class="font-weight-bold" disabled>
+                                                Страна</p>
                                             </label>
-                                            <select id="inputAddressDelete" class="form-control" name="country" disabled>
+                                            <select id="inputAddressDelete" class="form-control" name="country"
+                                                    disabled>
                                             </select>
                                         </div>
                                         <br>
@@ -472,12 +484,14 @@
                                         </div>
                                         <div class="form-group text-center">
                                             <label for="deleteStreetAddress" class="font-weight-bold">Улица</label>
-                                            <input type="text" class="form-control" id="deleteStreetAddress" name="street" readonly/>
+                                            <input type="text" class="form-control" id="deleteStreetAddress"
+                                                   name="street" readonly/>
                                             <br>
                                         </div>
                                         <div class="form-group text-center">
                                             <label for="deleteHouseAddress" class="font-weight-bold">Номер дома</label>
-                                            <input type="text" class="form-control" id="deleteHouseAddress" name="house" readonly/>
+                                            <input type="text" class="form-control" id="deleteHouseAddress" name="house"
+                                                   readonly/>
                                             <br>
                                         </div>
                                         <br>
@@ -505,7 +519,7 @@
                         <div class="modal-header">
                             <h5 class="modal-title" id="editModalLabelAddress">Редактировать</h5>
                             <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
+                                <span aria-hidden="true"></span>
                             </button>
                         </div>
                         <div class="modal-body">
@@ -516,7 +530,8 @@
                                     <div class="col-6">
                                         <div class="form-group text-center">
                                             <label for="editIdAddress" class="font-weight-bold">ID</label>
-                                            <input type="text" class="form-control" id="editIdAddress" name="id" readonly/>
+                                            <input type="text" class="form-control" id="editIdAddress" name="id"
+                                                   readonly/>
                                         </div>
                                         <div class="form-group text-center">
                                             <label for="editIndexAddress" class="font-weight-bold">Индекс</label>
@@ -539,7 +554,8 @@
                                         </div>
                                         <div class="form-group text-center">
                                             <label for="editStreetAddress" class="font-weight-bold">Улица</label>
-                                            <input type="text" class="form-control" id="editStreetAddress" name="street"/>
+                                            <input type="text" class="form-control" id="editStreetAddress"
+                                                   name="street"/>
                                             <br>
                                         </div>
                                         <div class="form-group text-center">
@@ -566,7 +582,7 @@
     </div>
 
 
-<script src="/js/adminAddresses.js"></script>
+    <script src="/js/adminAddresses.js"></script>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"

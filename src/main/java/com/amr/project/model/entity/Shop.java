@@ -65,7 +65,6 @@ public class Shop {
     private String moderatedRejectReason;
     private boolean isPretendedToBeDeleted = false;
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -77,6 +76,20 @@ public class Shop {
     @Override
     public int hashCode() {
         return Objects.hash(name, email, phone, description, location);
+    }
+
+    public void addItem (Item item) {
+        if(item != null) {
+            item.setShop(this);
+            this.items.add(item);
+        }
+    }
+
+    public void clearItems () {
+        if(items != null) {
+            this.getItems().forEach(item -> item.setShop(null));
+            this.items = new ArrayList<>();
+        }
     }
 
     public Long getId() {

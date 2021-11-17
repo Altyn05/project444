@@ -341,6 +341,27 @@ public class DatabaseInitializer {
         item6.setShop(randomListElement(shops));
         item6.setCount(Integer.parseInt(randomNumberString(1)) + 1);
 
+        Item item7 = new Item();
+        item7.setName("Новый 7");
+        item7.setPrice(BigDecimal.valueOf(5000000));
+        item7.addCategory(categories.get(8));
+        item7.setDescription("Новый 7 товар не в магазине.----------------------------------------------");
+        item7.setRating(randomRating());
+        item7.addImage(new Image(path + "btc/btc.jpeg"));
+        item7.setShop(null);
+        item7.setCount(null);
+        Item item8 = new Item();
+        item8.setName("Новый 8");
+        item8.setPrice(BigDecimal.valueOf(5000000));
+        item8.addCategory(categories.get(8));
+        item8.setDescription("Новый 7 товар не в магазине.----------------------------------------------");
+        item8.setRating(randomRating());
+        item8.addImage(new Image(path + "btc/btc.jpeg"));
+        item8.setShop(null);
+        item8.setCount(null);
+
+
+
         List<Item> items = new ArrayList<>();
         items.add(item1);
         items.add(item2);
@@ -348,6 +369,8 @@ public class DatabaseInitializer {
         items.add(item4);
         items.add(item5);
         items.add(item6);
+        items.add(item7);
+        items.add(item8);
 
         return items;
     }

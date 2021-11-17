@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="en"  xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3" xmlns="http://www.w3.org/1999/html">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -26,10 +26,9 @@
             <h3 class="market-list-title">Самые популярные товары</h3>
             <div class="market-list-popular d-flex flex-row flex-wrap" id="market-list-popular">
                 <div class="card m-2" style="width: 15rem; border: 0;">
-                    <a href="#" class="btn btn-primary" id="market-item-page-btn"
-                       onclick="showItemsPage()">Посмотреть все товары</a>
+                    <a href="#" class="btn btn-primary" id="market-item-page-btn" onclick="showItemsPage()">Посмотреть все товары</a>
                     <a href="/" class="btn btn-primary mt-2">Вернуться на главную</a>
-                                  </div>
+                </div>
             </div>
         </div>
     </div>
@@ -73,9 +72,13 @@
 
 <div class="addItems">
     <h1>Доступные товары в базе данных</h1>
-    <div id="ch4" class="container overflow-hidden">
-        <div th:insert="~{admin/blocks/items :: itemsPage}"></div>
-    </div>
+    <div>
+        <a class='text-secondary btn btn-outline-warning text-primary' onclick='addNewItems()'> Добавить выбранные товары в магазин </a>
+    </div><br>
+    <input type='text' id='myInput' onKeyUp='searchable()' placeholder='Search for names..' title='Type in a name'>
+    <table class="addItemsToShop">
+        <!-- Items from script market_items.js  -->
+    </table>
 </div>
 <div class="modal fade" id="updateShopModal" tabindex="-1"
      aria-labelledby="exampleModalLabel" aria-hidden="true">
