@@ -18,7 +18,6 @@ const headerText = document.getElementById('market-header-text')
 window.onload = async function () {
     $('.addItems').hide();
     shopData = await loadMarketInfo();
-    console.log(shopData)
     showMarketInfo(shopData);
     $('#market-list-section').html(function () {
         headerText.innerHTML = '<h3 class="market-list-title">' + popHeader + '</h3>'
@@ -38,7 +37,7 @@ function showInfoPage() {
 function showItemsPage() {
     $('.market-info-page').hide();
     $('.market-items-page').show();
-    showItems()
+    showEditItems()
 }
 
 async function loadMarketInfo() {

@@ -83,15 +83,18 @@
 
 <div class="addItems">
     <h1>Доступные товары в базе данных</h1>
-    <div id="ch4" class="container overflow-hidden">
-        <div th:insert="~{admin/blocks/items :: itemsPage}"></div>
-    </div>
+    <div>
+        <a class='text-secondary btn btn-outline-warning text-primary' onclick='addNewItems()'> Добавить выбранные товары в магазин </a>
+    </div><br>
+    <input type='text' id='myInput' onKeyUp='searchable()' placeholder='Search for names..' title='Type in a name'>
+    <table class="addItemsToShop">
+        <!-- Items from script market_items.js  -->
+    </table>
 </div>
 
 
 <script th:src="@{/js/market.js}"></script>
 <script src="/js/market_items.js"></script>
-<script src="/js/adminItems.js"></script>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

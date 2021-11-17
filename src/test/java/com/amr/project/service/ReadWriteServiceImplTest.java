@@ -1,4 +1,4 @@
-package com.amr.project.service.impl;
+package com.amr.project.service;
 
 import com.amr.project.model.entity.User;
 import com.amr.project.service.abstracts.UserService;

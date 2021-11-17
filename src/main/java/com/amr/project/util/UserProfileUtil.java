@@ -33,7 +33,6 @@ public class UserProfileUtil {
     public UserDto prepareUser(UserDto userDto) {
         User userDB = userRepository.findUserByUsername(userDto.getUsername()).orElse(null);
         User userFront = userMapper.toModel(userDto);
-        System.out.println(userFront.getImages());
 
         /////////Copy simple fields
         userMapper.updateModel(userDto,userDB);
@@ -46,7 +45,6 @@ public class UserProfileUtil {
             City city = address.getCity();
             if(cityRepository.findCityByName(city.getName()).orElse(null) == null) rwCity.persist(city);
                 else address.setCity(cityRepository.findCityByName(city.getName()).orElse(null));
-            System.out.println(address);
             if(address.getId() == null) rwAddress.persist(address);
                 else rwAddress.update(address);
         }
@@ -80,7 +78,6 @@ public class UserProfileUtil {
         }
 
         rwUser.update(userDB);
-        System.out.println(userDB.getImages()   );
         return userMapper.toDto(userDB);
     }
 }
