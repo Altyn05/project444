@@ -148,7 +148,7 @@ public class DatabaseInitializer {
         user.setAge(Integer.parseInt(randomNumberString(2)));
         user.setUsername(user.getFirstName().toLowerCase() + user.getAge());
         user.setPassword(randomNumberString(4));
-        user.setBirthday(new GregorianCalendar(1870, Calendar.APRIL,23));
+//       user.setBirthday(new GregorianCalendar(1870, Calendar.APRIL,23));
         user.addAddress(getRandomAddress());
         user.addAddress(getRandomAddress());
         user.addAddress(getRandomAddress());

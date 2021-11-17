@@ -13,14 +13,12 @@ import java.util.Optional;
 public class UserDaoImpl extends ReadWriteDaoImpl<User, Long> implements UserDao {
 
     @Override
-    public boolean getByUsername(String username) {
+    public boolean checkByUsername(String username) {
         List<User> listUser = (List<User>) em.createQuery("select uf from User uf where uf.username like :username", User.class).
                 setParameter("username", username).getResultList();
-        if (listUser.size() > 0) {
-            return false;
-        } else return true;
-
+        return listUser.size() == 0;
     }
+
 
     @Override
     public User findById(Long id) {
@@ -63,3 +61,4 @@ public class UserDaoImpl extends ReadWriteDaoImpl<User, Long> implements UserDao
         userDb.setBirthday(user.getBirthday());
         persist(userDb);
     }
+}

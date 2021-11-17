@@ -13,6 +13,6 @@ public interface UserDao extends ReadWriteDao<User, Long> {
 
     void update(User user);
 
-    boolean getByUsername(String username);
+    boolean checkByUsername(String username);
 
 }

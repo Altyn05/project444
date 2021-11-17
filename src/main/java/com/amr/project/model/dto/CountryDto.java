@@ -10,5 +10,9 @@ import lombok.*;
 public class CountryDto {
     private Long id;
     private String name;
-   // private List<CityDto> cities;
+
+    public CountryDto(String name) {
+        this.name = name;
+    }
+    // private List<CityDto> cities;
 }

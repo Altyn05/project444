@@ -78,7 +78,7 @@ public void registerNewUser(User user) {
     @Override
     public boolean createNewUser(User user) {
         System.out.println(user);
-        if (userDao.getByUsername(user.getUsername())) {
+        if (userDao.checkByUsername(user.getUsername())) {
             user.addRole(roleDao.getRoleById(2L));
             user.setActivate(true);
             userDao.persist(user);
@@ -103,9 +103,9 @@ public User findUserByUsername(String username) {
         return userDao.findUserByActivationCode(activationCode);
     }
 
-    public boolean getByUsername(String username) {
-        System.out.println("service " + username);
-        return userDao.getByUsername(username);
+    public boolean checkByUsername(String username) {
+
+        return userDao.checkByUsername(username);
     }
     @Override
     public User findById(Long id) {

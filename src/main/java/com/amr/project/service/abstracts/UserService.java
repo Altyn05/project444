@@ -18,7 +18,7 @@ public interface UserService extends ReadWriteService<User, Long> {
 
         User findUserByActivationCode(String activationCode);
 
-        boolean getByUsername(String name);
+        boolean checkByUsername(String name);
 
         void updateUser(User user);
     }

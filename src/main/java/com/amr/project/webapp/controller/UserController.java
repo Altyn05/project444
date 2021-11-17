@@ -48,12 +48,12 @@ public class UserController {
 
     @PostMapping("/signup")
     public ModelAndView createNewUser(@ModelAttribute UserDto userDto) {
-User user = mapper.toModel(userDto);
+        User user = mapper.toModel(userDto);
         if (userService.createNewUser(user)) {
             ModelAndView modelAndView = new ModelAndView();
             modelAndView.setViewName("signup");
             modelAndView.addObject("date", new Date());
-              modelAndView.addObject("addressDto", new AddressDto());
+            modelAndView.addObject("addressDto", new AddressDto());
 
             return modelAndView;
         } else {
@@ -66,15 +66,12 @@ User user = mapper.toModel(userDto);
 
     @PostMapping("/update")
     public String updateDataUser(@ModelAttribute UserDto userDto,
-                                 @ModelAttribute("country") String country,
-                                 @ModelAttribute ("city") String city,
                                  @ModelAttribute("addressDto") AddressDto addressDto,
                                  @ModelAttribute String date) {
 
-        System.out.println(addressDto);
-User user = mapper.toModel(userDto);
-Address address = addressMapper.toModel(addressDto);
-           countryService.addNewCountry(new Country(addressDto.getCountry()));
+        User user = mapper.toModel(userDto);
+        Address address = addressMapper.toModel(addressDto);
+        countryService.addNewCountry(new Country(addressDto.getCountry()));
         cityService.addNewCity(new City(addressDto.getCity(),
                 countryService.findByName(addressDto.getCountry())));
 

@@ -17,17 +17,7 @@ public class CountryDaoImpl extends ReadWriteDaoImpl<Country, Long> implements C
 
     }
 
-    @Override
-    public boolean getByName(String name) {
-        List<Country> listCountry =
-                (List<Country>) em.createQuery("select uf from Country uf where uf.name like :name", Country.class).
-                        setParameter("name", name).getResultList();
-        if (listCountry.size() > 0) {
-            return false;
-        } else return true;
-
-    }
-    @Override
+     @Override
     public Country findById(Long id){
         return em.find(Country.class, id);
     }
