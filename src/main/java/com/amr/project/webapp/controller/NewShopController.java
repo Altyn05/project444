@@ -52,8 +52,12 @@ public class NewShopController {
 
     @RequestMapping(value = "/updateShop", method = {RequestMethod.POST, RequestMethod.GET})
     public ModelAndView updateShop(Principal principal, @ModelAttribute ShopDto shopDto) {
-
+        System.out.println(shopDto);
         Shop shop = shopService.findById(shopMapper.dtoToModel(shopDto).getId());
+        shop.setEmail(shopDto.getEmail());
+        shop.setPhone(shopDto.getPhone());
+        shop.setName(shopDto.getName());
+        shop.setDescription(shopDto.getDescription());
 
         shop.setLocation(countryService.checkByName(shopDto.getLocation().getName()));
         shop.setCity(cityService.checkByName(shopDto.getCityDto().getName()));
