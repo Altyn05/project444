@@ -2,6 +2,7 @@ package com.amr.project.dao.impl;
 
 import com.amr.project.dao.abstracts.UserDao;
 import com.amr.project.model.entity.User;
+import com.amr.project.util.SingleResultUtil;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;

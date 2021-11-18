@@ -63,6 +63,7 @@ public class DatabaseInitializer {
 
     @PostConstruct
     public void init() {
+        /*
         roles = getRoles();
         roles.forEach(roleDao::persist);
 
@@ -111,6 +112,8 @@ public class DatabaseInitializer {
 
         orders = getOrders();
         orders.forEach((rwOrder::persist));
+
+         */
     }
 
     private Set<Role> getRoles() {

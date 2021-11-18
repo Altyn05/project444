@@ -1,9 +1,6 @@
 package com.amr.project.converter;
 
-import com.amr.project.model.dto.AdminItemDto;
-import com.amr.project.model.dto.AdminItemShortDto;
-import com.amr.project.model.dto.ItemDto;
-import com.amr.project.model.dto.ItemMainPageDTO;
+import com.amr.project.model.dto.*;
 import com.amr.project.model.entity.Item;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

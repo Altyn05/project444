@@ -55,7 +55,7 @@ public class ModeratorRestController {
     }
     @PutMapping("/moderatorRejectItem")
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
-    public String rejectItem(@RequestParam(value ="ItemId") Long id,
+    public String rejectItem(@RequestParam(value ="shopId") Long id,
                              @RequestParam(value ="rejectReason") String reason) {
         moderatorService.rejectItem(id,reason);
         return  "";
