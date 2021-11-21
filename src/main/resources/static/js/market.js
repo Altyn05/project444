@@ -118,4 +118,71 @@ function addReview() {
         .catch(e => console.error(e))
 
 }
+let pathArr = window.location.pathname.split("/");
+let id = pathArr[pathArr.length - 1];
+let my_shop = null;
+$.getJSON("/market/api/info/" + id, function(json) {
+    my_shop = json;
+
+    console.log(my_shop)
+});
+
+let my_user = null;
+$.getJSON("/api/users/principal", function(json) {
+    my_user = json;
+    // json.favorite.forEach(
+    //     console.log(id)
+    //
+    // )
+    //  console.log(json["orders"]);
+
+    console.log(my_user)
+});
+
+$.getJSON("/favorites/get", function(json) {
+
+    // json.favorite.forEach(
+    //     console.log(id)
+    //
+    // )
+    //  console.log(json["orders"]);
+
+    console.log(json)
+});
+
+function newInFavorite() {
+    console.log(my_shop)
+    let shop = my_shop;
+    let user = my_user;
+
+    let shops = [];
+    shops.push({
+        id: shop.id})
+    let users = {
+        username: user.username,
+        id: user.id
+    }
+
+    let favorite = null;
+    if(user != null){
+        let favorites = {
+            shops : shops,
+            user : users
+        }
+        favorite = favorites;
+    }
+
+    console.log(JSON.stringify(favorite));
+    fetch("/favorites", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(favorite),
+    })
+        .then((response) => console.log(response.status))
+
+        .catch(e => console.error(e))
+
+}
 

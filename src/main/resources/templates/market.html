@@ -21,16 +21,23 @@
                 <hr>
                 <table class="market-info-head-elem" id="market-info-data">
                 </table>
-<!--                Рейтинг магазина:-->
+                <!--                Рейтинг магазина:-->
                 <table class="market-info-head-elem">
                     <tr><td>Рейтинг:</td><td><span class="stars"><p th:text="${shop.rating}"/></span>
                         <p th:text="${shop.rating} % 1 == 0? ${shop.rating} :${#numbers.formatDecimal(shop.rating, 0, 1)}"/> </td></tr>
                 </table>
-<!--                Ссылка на модальное окно-->
+
+
+                <button id="newInFavoriteButtons" type="submit" class="btn btn-success"
+                        aria-controls="userTable" data-bs-toggle="tab"
+                        role="tab" onclick="newInFavorite()">Добавить отзыв</button>
+
+
+                <!--                Ссылка на модальное окно-->
                 <a type="button" class="btn btn-primary" data-toggle="modal"
                    th:attr="data-target='#newReview'" th:onclick="'getReviewForEdit(' + ${shop.getId()} + ')'"> Оставить отзыв</a>
 
-<!--                Панель отзывов-->
+                <!--                Панель отзывов-->
                 <div id="reviews-panel" class="d-flex align-items-center">
 
                     <h4 class="py-2 mb-4 mr-auto">Отзывы</h4>
@@ -57,77 +64,77 @@
                     </div>
                 </div>
 
-<!--                Модальное окно-->
-                    <div style="text-align: center;">
-                        <div class="row justify-content-center align-items-center">
-                            <form>
-                                <div class="modal fade" id="newReview" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Оставить отзыв</h5>
-                                                <button type="button" class="close" data-dismiss="modal">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="form-group font-weight-bold">
+                <!--                Модальное окно-->
+                <div style="text-align: center;">
+                    <div class="row justify-content-center align-items-center">
+                        <form>
+                            <div class="modal fade" id="newReview" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Оставить отзыв</h5>
+                                            <button type="button" class="close" data-dismiss="modal">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="form-group font-weight-bold">
 
-                                                    <div class="mb-3">
-                                                        <label for="dignity"
-                                                               class="form-label mb-0 d-flex justify-content-center"><b>Достоинства</b></label>
-                                                        <input type="text" class="form-control"
-                                                               id="dignity" >
-                                                    </div>
+                                                <div class="mb-3">
+                                                    <label for="dignity"
+                                                           class="form-label mb-0 d-flex justify-content-center"><b>Достоинства</b></label>
+                                                    <input type="text" class="form-control"
+                                                           id="dignity" >
+                                                </div>
 
-                                                    <div class="mb-3">
-                                                        <label for="flaw"
-                                                               class="form-label mb-0 d-flex justify-content-center"><b>Недостатки</b></label>
-                                                        <input type="text" class="form-control"
-                                                               id="flaw" >
-                                                    </div>
+                                                <div class="mb-3">
+                                                    <label for="flaw"
+                                                           class="form-label mb-0 d-flex justify-content-center"><b>Недостатки</b></label>
+                                                    <input type="text" class="form-control"
+                                                           id="flaw" >
+                                                </div>
 
-                                                    <div class="mb-3">
-                                                        <label for="rating"
-                                                               class="form-label mb-0 d-flex justify-content-center"><b>Рейтинг от 1 до 5</b></label>
-                                                        <input type="text" class="form-control"
-                                                               id="rating" >
-                                                    </div>
+                                                <div class="mb-3">
+                                                    <label for="rating"
+                                                           class="form-label mb-0 d-flex justify-content-center"><b>Рейтинг от 1 до 5</b></label>
+                                                    <input type="text" class="form-control"
+                                                           id="rating" >
+                                                </div>
 
-                                                    <div class="mb-3">
-                                                        <label for="text"
-                                                               class="form-label mb-0 d-flex justify-content-center"><b>Комментарии</b></label>
-                                                        <input type="text" class="form-control"
-                                                               id="text" >
-                                                    </div>
+                                                <div class="mb-3">
+                                                    <label for="text"
+                                                           class="form-label mb-0 d-flex justify-content-center"><b>Комментарии</b></label>
+                                                    <input type="text" class="form-control"
+                                                           id="text" >
+                                                </div>
 
-                                                    <div class="mb-3" type="hidden">
-                                                        <label type="hidden" for="id" id="id"
-                                                               class="form-label mb-0 d-flex justify-content-center"></label>
-                                                    </div>
+                                                <div class="mb-3" type="hidden">
+                                                    <label type="hidden" for="id" id="id"
+                                                           class="form-label mb-0 d-flex justify-content-center"></label>
+                                                </div>
 
-                                                    <div class="mb-3">
-                                                        <label for="name"
-                                                               class="form-label mb-0 d-flex justify-content-center"><b>Магазин</b></label>
-                                                        <input type="text" class="form-control"
-                                                               id="name" readonly>
-                                                    </div>
+                                                <div class="mb-3">
+                                                    <label for="name"
+                                                           class="form-label mb-0 d-flex justify-content-center"><b>Магазин</b></label>
+                                                    <input type="text" class="form-control"
+                                                           id="name" readonly>
+                                                </div>
 
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary"
-                                                                data-dismiss="modal" aria-label="Close">Close</button>
-                                                        <button id="newUserButton" type="submit" class="btn btn-success"
-                                                                aria-controls="userTable" data-bs-toggle="tab" data-bs-target="#userTable"
-                                                                role="tab" onclick="addReview()">Добавить отзыв</button>
-                                                    </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                            data-dismiss="modal" aria-label="Close">Close</button>
+                                                    <button id="newUserButton" type="submit" class="btn btn-success"
+                                                            aria-controls="userTable" data-bs-toggle="tab" data-bs-target="#userTable"
+                                                            role="tab" onclick="addReview()">Добавить отзыв</button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </form>
-                        </div>
+                            </div>
+                        </form>
                     </div>
+                </div>
             </div>
         </div>
 
@@ -150,8 +157,9 @@
 
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+<script
+        src="https://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
         crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
