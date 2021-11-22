@@ -67,10 +67,10 @@ public class UserController {
     @PostMapping("/update")
     public String updateDataUser(@ModelAttribute UserDto userDto,
                                  @ModelAttribute("addressDto") AddressDto addressDto,
-                                 @ModelAttribute String date) {
-
+                                @ModelAttribute String date) {
         User user = mapper.toModel(userDto);
         Address address = addressMapper.toModel(addressDto);
+
         countryService.addNewCountry(new Country(addressDto.getCountry()));
         cityService.addNewCity(new City(addressDto.getCity(),
                 countryService.findByName(addressDto.getCountry())));

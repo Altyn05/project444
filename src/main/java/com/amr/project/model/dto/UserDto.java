@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 @Data
+@AllArgsConstructor
 public class UserDto {
 
     private String email;
@@ -42,6 +43,22 @@ public class UserDto {
         this.phone = "";
         this.firstName = "";
         this.lastName = "";
+    }
+
+    public UserDto(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
+    public UserDto(String email, String username, int age, String gender, String password, String phone, String firstName, String lastName) {
+        this.email = email;
+        this.username = username;
+        this.age = age;
+        this.gender = gender;
+        this.password = password;
+        this.phone = phone;
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
     public String getPassword() {

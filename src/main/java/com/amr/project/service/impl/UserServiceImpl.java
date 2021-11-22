@@ -77,7 +77,6 @@ public void registerNewUser(User user) {
 
     @Override
     public boolean createNewUser(User user) {
-        System.out.println(user);
         if (userDao.checkByUsername(user.getUsername())) {
             user.addRole(roleDao.getRoleById(2L));
             user.setActivate(true);
