@@ -26,20 +26,42 @@
 <div class="container-fluid">
     <div class="d-flex align-items-start">
         <div class="col-2">
+
+            <style>
+                .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+                    color: #fff;
+                    background-color: #ff0000;
+                }
+                .nav-pills .nav-link{
+                    color: #ffffff;
+                    background-color: #0000ff;
+                }
+
+            </style>
+
             <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                <button class="nav-link active" id="v-pills-shops-tab" data-bs-toggle="pill"
+                <br>
+                <button class="nav-link  position-relative active" id="v-pills-shops-tab" data-bs-toggle="pill"
                         data-bs-target="#v-pills-shops" type="button" role="tab" aria-controls="v-pills-home"
                         aria-selected="true">Магазины
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="badge-shop">4</span>
                 </button>
-                <button class="nav-link" id="v-pills-items-tab" data-bs-toggle="pill" data-bs-target="#v-pills-items"
+                <br>
+                <button class="nav-link  position-relative" id="v-pills-items-tab" data-bs-toggle="pill" data-bs-target="#v-pills-items"
                         type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false">Товары
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="badge-items">5</span>
                 </button>
-                <!--
-                <button class="nav-link " id="v-pills-categories-tab" data-bs-toggle="pill"
-                        data-bs-target="#v-pills-categories" type="button" role="tab" aria-controls="v-pills-settings"
+                <br>
+                <button class="nav-link position-relative" id="v-pills-reviews-tab" data-bs-toggle="pill"
+                        data-bs-target="#v-pills-reviews" type="button" role="tab" aria-controls="v-pills-messages"
                         aria-selected="false">Отзывы
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="badge-reviews">6</span>
                 </button>
-                -->
+
+
+
+
+
             </div>
 
         </div>
@@ -48,28 +70,26 @@
             <div class="tab-content" id="v-pills-tabContent">
                 <div class="tab-pane fade show active" id="v-pills-shops" role="tabpanel"
                      aria-labelledby="v-pills-shops-tab">
-                    <h1>Магазины к одобрению</h1>
+                    <h1>Магазины</h1>
                     <div class="container overflow-hidden">
                         <div th:insert="~{moderator/blocks/shops :: shopsPage}"></div>
                     </div>
                 </div>
                 <div class="tab-pane fade " id="v-pills-items" role="tabpanel"
                      aria-labelledby="v-pills-items-tab">
-                    <h1>Товары к одобрению</h1>
+                    <h1>Товары</h1>
                     <div class="container overflow-hidden">
                         <div th:insert="~{moderator/blocks/items :: itemsPage}"></div>
                     </div>
                 </div>
-
-                <!--
-                <div class="tab-pane fade " id="v-pills-categories" role="tabpanel"
-                     aria-labelledby="v-pills-categories-tab">
-                    <h1>Доступные категории в базе данных</h1>
+                <div class="tab-pane fade " id="v-pills-reviews" role="tabpanel"
+                     aria-labelledby="v-pills-reviews-tab">
+                    <h1>Отзывы</h1>
                     <div class="container overflow-hidden">
-                        <div th:insert="~{admin/blocks/categories :: categoriesPage}"></div>
+                        <div th:insert="~{moderator/blocks/reviews :: reviewsPage}"></div>
                     </div>
                 </div>
-                -->
+
             </div>
         </div>
     </div>

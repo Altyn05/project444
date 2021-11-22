@@ -13,7 +13,7 @@ public interface ItemMapper {
     List<AdminItemDto> itemListToListAdminItemDto(List<Item> list);
     AdminItemDto itemToAdminItemDto(Item item);
 
-    @Mapping(target = "shopName", source = "shop.name")
+
     List<ModeratorItemDto>  itemListToListModeratorItemDto(List<Item> list);
     ItemMainPageDTO itemToItemMainPageDTO(Item item);
 

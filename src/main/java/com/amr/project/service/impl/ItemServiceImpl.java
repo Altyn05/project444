@@ -11,6 +11,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ItemServiceImpl
         extends ReadWriteServiceImpl<Item, Long>
@@ -74,5 +76,28 @@ public class ItemServiceImpl
 
     private Page<ItemMainPageDTO> itemPageConverter(Page<Item> page) {
         return page.map(itemMapper::itemToItemMainPageDTO);
+    }
+
+
+    @Override
+    public List<Item> getNotModeratedItems() {
+        return itemDao.getNotModeratedItems();
+    }
+
+    @Override
+    public void rejectItem(Long id, String rejectReason) {
+        Item item = itemDao.findById(id);
+        item.setModerated(true);
+        item.setModerateAccept(false);
+        item.setModeratedRejectReason(rejectReason);
+        itemDao.update(item);
+    }
+
+    @Override
+    public void approveItem(Long id) {
+        Item item = itemDao.findById(id);
+        item.setModerated(true);
+        item.setModerateAccept(true);
+        itemDao.update(item);
     }
 }

@@ -14,4 +14,9 @@ public interface ShopService extends ReadWriteService<Shop,Long> {
     Page<ShopMainPageDTO> findPagedShopsByCategoryId(Long categoryId, Pageable pageable);
     Page<ShopMainPageDTO> searchPagedShops(String search, Pageable pageable);
     Page<ShopMainPageDTO> searchPagedShopsByCategoryId(String search, Long categoryId, Pageable pageable);
+
+    List<Shop> getNotModeratedShops();
+    void rejectShop(Long id, String rejectReason);
+    void approveShop(Long id);
+
 }
