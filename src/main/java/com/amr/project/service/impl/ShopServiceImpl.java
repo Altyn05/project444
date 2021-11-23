@@ -5,6 +5,7 @@ import com.amr.project.dao.abstracts.ReadWriteDao;
 import com.amr.project.dao.abstracts.ShopDao;
 import com.amr.project.model.dto.ShopMainPageDTO;
 import com.amr.project.model.entity.Shop;
+import com.amr.project.model.entity.User;
 import com.amr.project.service.abstracts.ShopService;
 import com.amr.project.util.EmailUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,6 +97,7 @@ public class ShopServiceImpl
         return shopDao.findByName(name);
     }
 
+
     @Override
     public Page<ShopMainPageDTO> findPagedPopularShops(Pageable pageable) {
         return shopPageConverter(shopDao.findPagedPopularShops(pageable));
@@ -117,7 +119,13 @@ public class ShopServiceImpl
     ) {
         return shopPageConverter(shopDao.searchPagedShops(search, pageable));
     }
-
+    @Override
+    public void addNewShop(Shop shop) {
+        if (shopDao.findByDataShop(shop)) {
+            shop.setModerateAccept(true);
+            shopDao.persist(shop);
+        }
+    }
     @Override
     public Page<ShopMainPageDTO> searchPagedShopsByCategoryId(
             String search,
@@ -130,5 +138,12 @@ public class ShopServiceImpl
 
     private Page<ShopMainPageDTO> shopPageConverter(Page<Shop> page) {
         return page.map(shopMapper::shopToShopMainPageDTO);
+    }
+    @Override
+    public void deleteUserShop(Shop shopDb) {
+        User user = shopDb.getUser();
+        shopDb.setUser(null);
+        shopDb.setModerateAccept(false);
+        shopDao.update(shopDb);
     }
 }

@@ -1,12 +1,15 @@
 package com.amr.project.model.dto;
 
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Data
+@AllArgsConstructor
 public class UserDto {
 
     private String email;
@@ -19,7 +22,8 @@ public class UserDto {
     private String lastName;
     private List<AddressDto> address;
     private List<ImageDto> images;
-    private Calendar birthday;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date birthday;
     private List<OrderDto> orders = new ArrayList<>();
     private List<ShopDto> shops = new ArrayList<>();
 
@@ -39,6 +43,22 @@ public class UserDto {
         this.phone = "";
         this.firstName = "";
         this.lastName = "";
+    }
+
+    public UserDto(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
+    public UserDto(String email, String username, int age, String gender, String password, String phone, String firstName, String lastName) {
+        this.email = email;
+        this.username = username;
+        this.age = age;
+        this.gender = gender;
+        this.password = password;
+        this.phone = phone;
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
     public String getPassword() {

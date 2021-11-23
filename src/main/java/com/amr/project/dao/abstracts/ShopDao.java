@@ -9,6 +9,10 @@ import java.util.List;
 public interface ShopDao extends ReadWriteDao<Shop,Long> {
     Shop findById(Long id);
     Shop findByName(String name);
+
+
+    boolean findByDataShop(Shop shop);
+
     List<Shop> findPopularShops();
     List<Shop> findShopsByCategoryId(Long categoryId);
     List<Shop> searchShops(String search);

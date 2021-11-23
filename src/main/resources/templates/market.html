@@ -33,6 +33,28 @@
         </div>
     </div>
 </div>
+<div class="row display-flex mb-3 ml-1">
+    <div class="col-6">
+        <span class="col-2">
+            <a th:href="@{/deleteUserShop/{id} (id=${shop.id})}" type="button" class="btn btn-danger"
+               id="deleteButton">Закрыть магазин</a>
+        </span>
+        <span class="col-2">
+            <a th:href="@{/getOneNew/{id} (id=${shop.id})}"
+                type="button" class="btn btn-info" id="editButton" data-toggle="modal"
+                data-target="#updateShopModal">Редактировать</a>
+        </span>
+    </div>
+    <div class="col">
+
+    </div>
+</div>
+
+    <!--                    <a href="/getOne/id?=" class="btn btn-primary" id="editButton" data-toggle="modal"-->
+    <!--                          data-target="#updateShopModal">Редактировать</a>-->
+    <!--                    <a href="/deleteUserShop/id?=" class="btn btn-danger"-->
+    <!--                           id="deleteButton">Закрыть магазин</a>-->
+</div>
 
 <div class="market-items-page" style="margin-left: 20px">
     <button class="btn btn-primary" onclick="showInfoPage()">Страница магазина</button>
@@ -58,19 +80,83 @@
         <!-- Items from script market_items.js  -->
     </table>
 </div>
+<div class="modal fade" id="updateShopModal" tabindex="-1"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content text-center text-muted">
+            <div class="modal-header flex-column p-4">
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <div class="m-auto">
+                    <img th:src="@{/img/logo.png}" alt="logo">
+                </div>
+            </div>
+            <div class="modal-body p-4 pb-3 border-bottom">
+                <form class="form-shop mx-auto font-weight-bold text-center p-3" content="application/json"
+                      th:action="@{/updateShop}" th:method="put" method="post"
+                      style="width: 300px;">
+                    <h1 class="h3 mb-3 font-weight-normal">Измените необходимые данные</h1>
+                    <div class="form-group">
+
+                        <label for="inputId" class="cr-only">ID</label>
+                        <input type="text" name="id" id="inputId" class="form-control"
+                               required="">
+
+                        <label for="inputName1" class="sr-only">name</label>
+                        <input type="text" name="name" id="inputName1"
+                               class="form-control"
+                               required=""/>
+
+                        <label for="inputCountry1" class="sr-only">Country</label>
+                        <input type="text" name="location" id="inputCountry1"
+                               class="form-control"
+                               required=""/>
+
+                        <label for="inputCity1" class="sr-only">City</label>
+                        <input type="text" name="cityDto" id="inputCity1"
+                               class="form-control"
+                               required=""/>
+
+                        <label for="inputEmail1" class="sr-only">Email</label>
+                        <input type="email" name="email" id="inputEmail1"
+                               class="form-control"
+                               required=""/>
+
+                        <label for="inputPhone1" class="sr-only">Phone</label>
+                        <input type="text" name="phone" id="inputPhone1" class="form-control"
+                               required=""/>
+
+                        <label for="inputDescription1" class="sr-only">Description</label>
+                        <input type="text" name="description" id="inputDescription1"
+                               class="form-control"
+                               required=""/>
+                        <br>
+                    </div>
+                    <button class="btn btn-lg btn-primary btn-block mt--5" type="submit">Сохранить данные</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
 
 
-<script th:src="@{/js/market.js}"></script>
-<script src="/js/market_items.js"></script>
-
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"-->
+<!--        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"-->
+<!--        crossorigin="anonymous"></script>-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
         crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+<script th:src="@{/js/market_one.js}"></script>
+<script th:src="@{/js/market.js}"></script>
+
+<script src="/js/market_items.js"></script>
+<script src="/js/adminItems.js"></script>
+
 </body>
 </html>
