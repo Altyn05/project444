@@ -1,4 +1,3 @@
-
 function userProfile() {
     tempUser = JSON.parse(JSON.stringify(user));
 
@@ -11,7 +10,7 @@ function userProfile() {
     userProfile[2].value = user.email;
     userProfile[3].value = user.phone;
     userProfile[4].value = user.age;
-    userProfile[5].value = user.birthday;
+    userProfile[5].value = user.birthday.slice(0,10);
     if(user.gender === "MALE") userProfile[6].setAttribute("selected", "selected")
         else userProfile[7].setAttribute("selected", "selected")
     userProfile[8].value = user.password;
@@ -34,7 +33,7 @@ function extractUser(form) {
     tempUser.email =  form[2].value
     tempUser.phone =  form[3].value
     tempUser.age =  form[4].value
-    tempUser.birthday =  form[5].value
+    tempUser.birthday = form[5].value +"T21:00:00.001+00:00"
     tempUser.password = form[8].value
 }
 
