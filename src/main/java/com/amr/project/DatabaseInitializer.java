@@ -152,7 +152,7 @@ public class DatabaseInitializer {
         user.setAge(Integer.parseInt(randomNumberString(2)));
         user.setUsername(user.getFirstName().toLowerCase() + user.getAge());
         user.setPassword(randomNumberString(4));
-        user.setBirthday(new GregorianCalendar(1870, Calendar.APRIL,23));
+//       user.setBirthday(new GregorianCalendar(1870, Calendar.APRIL,23));
         user.addAddress(getRandomAddress());
         user.addAddress(getRandomAddress());
         user.addAddress(getRandomAddress());
@@ -271,6 +271,7 @@ public class DatabaseInitializer {
         shop.setPhone(randomPhone());
         shop.setRating(randomRating());
         shop.setLocation(randomListElement(countries));
+        shop.setCity(randomListElement(cities));
         shop.setUser(randomListElement(users));
 
         return shop;

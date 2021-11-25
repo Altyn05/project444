@@ -10,13 +10,20 @@ import java.util.List;
 public interface ShopService extends ReadWriteService<Shop,Long> {
     Shop findById(Long id);
     Shop findByName(String name);
+
     Page<ShopMainPageDTO> findPagedPopularShops(Pageable pageable);
     Page<ShopMainPageDTO> findPagedShopsByCategoryId(Long categoryId, Pageable pageable);
     Page<ShopMainPageDTO> searchPagedShops(String search, Pageable pageable);
+
+    void addNewShop(Shop shop);
+
     Page<ShopMainPageDTO> searchPagedShopsByCategoryId(String search, Long categoryId, Pageable pageable);
+
+    void deleteUserShop(Shop shopDb);
 
     List<Shop> getNotModeratedShops();
     Shop rejectShop(Long id, String rejectReason);
     Shop approveShop(Long id);
+
 
 }

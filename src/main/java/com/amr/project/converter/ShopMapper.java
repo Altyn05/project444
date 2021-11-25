@@ -12,6 +12,8 @@ public interface ShopMapper {
     @Mapping(target = "username", source = "user.username")
     ShopDto shopToDto(Shop shop);
 
+    Shop dtoToModel(ShopDto shopDto);
+
     List<ShopMainPageDTO> shopListToListShopMainPageDTO(List<Shop> list);
 
     List<ShopDto> shopListToListShopDto(List<Shop> list);

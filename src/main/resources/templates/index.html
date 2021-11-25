@@ -74,7 +74,7 @@
 <!-- Begin main content -->
 <main role="main" class="flex-shrink-0">
     <div class="container py-2">
-    
+
 <!-- Items Block -->
         <h4 class="pt-4" id="item-header">Подборка популярных товаров</h4>
         
@@ -90,7 +90,6 @@
             <!-- the block is generated in main-page/data.js -->
         </div>
         
-        <!-- Items Pagination -->
         <nav aria-label="Popular items page navigation">
             <ul class="pagination justify-content-center mt-2"
                 id="item-pages">
@@ -106,14 +105,13 @@
             id="shop-size">
             <!-- the block is generated in main-page/pagination.js -->
         </ul>
-        
+
         <!-- Popular Shops -->
         <div class="card-deck row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-6"
              id="shop-block">
             <!-- the block is generated in main-page/data.js -->
         </div>
     
-        <!-- Shops Pagination -->
         <nav aria-label="Popular shops page navigation">
             <ul class="pagination justify-content-center mt-2"
                 id="shop-pages">
@@ -189,7 +187,47 @@
             </div>
             <div class="modal-footer flex-column p-3">
                 <p>а если вы у нас впервые:</p>
-                <a th:href="@{/signup}">зарегистрироваться</a>
+                <a href="#registerModal"  data-toggle="modal" data-target="#registerModal" data-dismiss="modal">зарегистрироваться</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content text-center text-muted">
+            <div class="modal-header flex-column p-4">
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <div class="m-auto">
+                    <img th:src="@{/img/logo.png}" alt="logo">
+                </div>
+            </div>
+            <div class="modal-body p-4 pb-3 border-bottom">
+                <form method="post"  content="application/json" action="/signup">
+
+                    <div class="form-group mt-2">
+                        <input class="form-control w-100 p-2"
+                               type="text"
+                               name="username"
+                               placeholder="Имя пользователя"
+                               required>
+                    </div>
+                    <div class="form-group mt-4 pt-2">
+                        <input class="form-control w-100 p-2"
+                               type="password"
+                               name="password"
+                               placeholder="Пароль"
+                               required>
+                    </div>
+                    <div class="form-group mb-0 text-sm-right">
+                        <input   class="btn btn-outline-primary"
+                               type="submit"
+                               value="Зарегистрироваться">
+<!--                        <a href="#loginModal"  ></a>-->
+
+                    </div>
+                </form>
             </div>
         </div>
     </div>

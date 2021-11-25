@@ -5,10 +5,21 @@ import com.amr.project.model.entity.User;
 import com.amr.project.util.SingleResultUtil;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 import java.util.Optional;
 
 @Repository
 public class UserDaoImpl extends ReadWriteDaoImpl<User, Long> implements UserDao {
+
+    @Override
+    public boolean checkByUsername(String username) {
+        List<User> listUser = (List<User>) em.createQuery("select uf from User uf where uf.username like :username", User.class).
+                setParameter("username", username).getResultList();
+        return listUser.size() == 0;
+    }
+
+
     @Override
     public User findById(Long id) {
         return em.find(User.class, id);
@@ -35,5 +46,19 @@ public class UserDaoImpl extends ReadWriteDaoImpl<User, Long> implements UserDao
         return (User) em.createQuery("Select e FROM User e WHERE e.activationCode = :activationCode")
                 .setParameter("activationCode", activationCode)
                 .getSingleResult();
+    }
+
+    public void update(User user) {
+        User userDb = findUserByUsername(user.getUsername());
+
+        userDb.setAge(user.getAge());
+        userDb.setEmail(user.getEmail());
+        userDb.setFirstName(user.getFirstName());
+        userDb.setGender(user.getGender());
+        userDb.setLastName(user.getLastName());
+        userDb.setPhone(user.getPhone());
+        userDb.setAddress(user.getAddress());
+        userDb.setBirthday(user.getBirthday());
+        persist(userDb);
     }
 }

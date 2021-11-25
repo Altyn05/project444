@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -11,6 +12,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "countries")
 public class Country {
@@ -30,6 +32,18 @@ public class Country {
 
     public Country(String name) {
         this.name = name;
+    }
+
+
+    public void addCity(City city) {
+        if (this.cities == null) {
+            this.cities = new ArrayList<>();
+        }
+        this.cities.add(city);
+    }
+
+     public List<City> getCities() {
+        return cities;
     }
 
     @Override

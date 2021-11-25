@@ -8,21 +8,35 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AddressServiceImpl extends ReadWriteServiceImpl<Address, Long> implements AddressService {
+    private final AddressDao addressDao;
 
-    AddressDao addressDao;
-
-    public AddressServiceImpl(ReadWriteDao<Address, Long> readWriteDao, AddressDao addressDao) {
+    protected AddressServiceImpl(ReadWriteDao<Address, Long> readWriteDao, AddressDao addressDao) {
         super(readWriteDao);
         this.addressDao = addressDao;
     }
-
-    @Override
-    public Address findById(Long id) {
-        return addressDao.findById(id);
-    }
-
     @Override
     public Address findByCityIndex(String index) {
         return addressDao.findByCityIndex(index);
+    }
+    @Override
+    public void addNewAddress(Address address) {
+        if (addressDao.findByAddress(address)) {
+            addressDao.persist(address);
+        }
+//        else {
+//            Long id = addressDao.getByAddress(address).getId();
+//            if (id != null) {
+//                address.setId(id);
+//                addressDao.update(address);
+//            }
+        }
+
+    @Override
+    public Address getByAddress(Address address) {
+        return addressDao.getByAddress(address);
+    }
+    @Override
+    public Address findById(Long id) {
+        return addressDao.findById(id);
     }
 }

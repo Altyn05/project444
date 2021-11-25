@@ -10,4 +10,9 @@ public interface UserDao extends ReadWriteDao<User, Long> {
     Optional<User> findUserByEmail(String email);
     Optional<User> findUserByIdProvider(String id);
     User findUserByActivationCode(String activationCode);
+
+    void update(User user);
+
+    boolean checkByUsername(String username);
+
 }

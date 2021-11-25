@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ru" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <!-- служебная часть -->
@@ -7,17 +8,17 @@
     <title>Мой профиль</title>
     <!-- настраиваем служебную информацию для браузеров -->
     <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Bootstrap шаблон</title>
-    <meta name="description" content="">
-    <meta name="keywords" content="">
+    <meta name="description" content=""/>
+    <meta name="keywords" content=""/>
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous"/>
     <!-- кастомный css -->
-    <link rel="stylesheet" href="/css/user.css">
+    <link rel="stylesheet" href="/css/user.css"/>
     <!-- закрываем служебную часть страницы -->
 
 </head>
@@ -49,7 +50,7 @@
                     <li>
 
                         <img class="avatar" style="border-radius: 50%; max-width: 40px" name="avatar_foto"
-                             src="https://www.avito.st/stub_avatars/А/10_256x256.png" alt="Аватар">
+                             src="https://www.avito.st/stub_avatars/А/10_256x256.png" alt="Аватар"/>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="avatar_name nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink"
@@ -118,6 +119,8 @@
                     <li class="user_data link-dark rounded">Возраст:</li>
                     <li class="user_data link-dark rounded">Пол:</li>
 
+
+
                     <!-- TABS -->
                     <li>
                         <ul class="addr11 address-tab nav nav-tabs">
@@ -129,17 +132,20 @@
                         </div>
                     </li>
 
-                    <li hidden class="user_data link-dark rounded">Страна:</li>
-                    <li hidden class="user_data link-dark rounded">Город:</li>
-                    <li hidden class="user_data link-dark rounded">Улица:</li>
+                    <li hidden="" class="user_data link-dark rounded">Страна:</li>
+                    <li hidden="" class="user_data link-dark rounded">Город:</li>
+                    <li hidden="" class="user_data link-dark rounded">Улица:</li>
                     <li class="user_data link-dark rounded">Почта:</li>
                     <li class="user_data link-dark rounded">Телефон:</li>
+                   <div id="test"> <li class="user_data link-dark rounded"></li></div>
                     <li class="border-top my-3"></li>
                     </li>
                     <li class="mb-1">
                     <li><a href="/?openCart=YES">Корзина</a></li>
                     <li><a href="#" onclick="openOrders()">История заказов</a></li>
                     <li><a href="#">Проданные товары</a></li>
+                    <li><a href="#newShopModal" data-toggle="modal" data-target="#newShopModal"> Новый магазин</a></li>
+
                     </li>
                 </ul>
             </div>
@@ -159,7 +165,7 @@
                             data-bs-target="#pills-orders" type="button" role="tab" aria-controls="pills-orders"
                             aria-selected="false">Мои Заказы</button>
                 </li>
-                <li hidden class="nav-item" role="presentation">
+                <li hidden="" class="nav-item" role="presentation">
                     <button class="nav-link" id="pills-settings-tab" data-bs-toggle="pill"
                             data-bs-target="#pills-settings" type="button" role="tab" aria-controls="pills-settings"
                             aria-selected="false">Настройки профиля</button>
@@ -191,12 +197,12 @@
                         <div class="d-flex align-items-start py-3 border-bottom">
                             <img style="border-radius: 50%; max-width: 100px"
                                  src="https://www.avito.st/stub_avatars/А/10_256x256.png" name="loadfoto"
-                                 class="img mx-2" alt="">
+                                 class="img mx-2" alt=""/>
                             <div class="pl-sm-4 pl-2" id="img-section"> <b>Фото профиля</b>
                                 <p>Добавить файл не более 1MB</p>
                                 <div class="btn btn-mdb-color btn-rounded float-left">
                                     <input type="file" accept="image/jpeg,image/png" class="newfoto"
-                                           onchange="loadFoto()">
+                                           onchange="loadFoto()"/>
                                     <button type="button" data-toggle="modal" data-target="#editFoto"
                                             onclick="fotoEdit()">Редактировать</button>
                                 </div>
@@ -205,25 +211,27 @@
                         <!-- Edit Profile -->
                         <div class="py-2">
                             <div class="row py-2">
-                                <div class="col-md-6"> <label for="firstname">Имя</label> <input type="text"
-                                                                                                 class="profile bg-light form-control" placeholder="Имя"> </div>
-                                <div class="col-md-6 pt-md-0 pt-3"> <label for="lastname">Фамилия</label> <input
-                                        type="text" class="profile bg-light form-control" placeholder="Фамилия">
+                                <div class="col-md-6"> <label for="firstname">Имя</label>
+                                    <input type="text" class="profile bg-light form-control" placeholder="Имя"/> </div>
+                                <div class="col-md-6 pt-md-0 pt-3"> <label for="lastname">Фамилия</label>
+                                    <input
+                                        type="text" class="profile bg-light form-control" placeholder="Фамилия"/>
                                 </div>
                             </div>
                             <div class="row py-2">
-                                <div class="col-md-6"> <label for="email">Почта</label> <input type="text"
-                                                                                               class="profile bg-light form-control" placeholder="email@email.com"> </div>
-                                <div class="col-md-6 pt-md-0 pt-3"> <label for="phone">Телефон</label> <input
+                                <div class="col-md-6"> <label for="email">Почта</label>
+                                    <input type="text" class="profile bg-light form-control" placeholder="email@email.com"/> </div>
+                                <div class="col-md-6 pt-md-0 pt-3"> <label for="phone">Телефон</label>
+                                    <input
                                         type="tel" class="profile bg-light form-control"
-                                        placeholder="+7 000 000 0000"> </div>
+                                        placeholder="+7 000 000 0000"/> </div>
                             </div>
                             <div class="row py-2">
-                                <div class="col-md-6"> <label for="age">Возраст</label> <input type="number"
-                                                                                               class="profile bg-light form-control" placeholder="100"> </div>
+                                <div class="col-md-6"> <label for="age">Возраст</label>
+                                    <input type="number" class="profile bg-light form-control" placeholder="100"/> </div>
                                 <div class="col-md-6 pt-md-0 pt-3"> <label for="birthday">Дата рождения</label>
                                     <input type="date" class="profile bg-light form-control"
-                                           placeholder="01.01.2001"> </div>
+                                           placeholder="01.01.2001"/> </div>
                             </div>
                             <div class="row py-2">
                                 <div class="col-md-6"> <label for="gender">Пол</label> <select name="gender"
@@ -269,7 +277,7 @@
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="editFotoModalLabel">Поменять картинки</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
+                                        <span aria-hidden="true">x</span>
                                     </button>
                                 </div>
                                 <!-- Modal windows -->
@@ -300,8 +308,58 @@
 
     </div>
 </div>
+<div class="modal fade" id="newShopModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content text-center text-muted">
+            <div class="modal-header flex-column p-4">
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">x</span>
+                </button>
+                <div class="m-auto">
+                    <img th:src="@{/img/logo.png}" alt="logo"/>
+                </div>
+            </div>
+            <div class="modal-body p-4 pb-3 border-bottom">
+                <form class="form-shop mx-auto font-weight-bold text-center p-3" content="application/json"
+                      action="/user/newShop" method="post" style="width: 300px;">
 
+                    <h1 class="h3 mb-3 font-weight-normal">Введите данные для создания магазина</h1>
 
+                    <label for="inputName" class="sr-only">name</label>
+                    <input type="text" name="name" id="inputName"
+                           class="form-control" placeholder="Название"
+                           required=""/>
+
+                    <label for="inputCountry" class="sr-only">Country</label>
+                    <input type="text" name="location.name" id="inputCountry"
+                           class="form-control"
+                           placeholder="Страна" required=""/>
+
+                    <label for="inputCity" class="sr-only">City</label>
+                    <input type="text" name="cityDto" id="inputCity" class="form-control"
+                           placeholder="Город" required=""/>
+
+                    <label for="inputEmail" class="sr-only">Email</label>
+                    <input type="email" name="email" id="inputEmail"
+                           class="form-control"
+                           placeholder="Email" required=""/>
+
+                    <label for="inputPhone" class="sr-only">Phone</label>
+                    <input type="text" name="phone" id="inputPhone" class="form-control"
+                           placeholder="Телефон" required=""/>
+
+                    <label for="inputDescription" class="sr-only">Description</label>
+                    <input type="text" name="description" id="inputDescription" class="form-control"
+                           placeholder="Описание" required=""/>
+
+                    <br/>
+                    <button class="btn btn-lg btn-primary btn-block mt--5" type="submit">Сохранить данные</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- custom scripts -->
 <script src="/js/user_page/user_page_rest.js"></script>
@@ -331,8 +389,6 @@
         crossorigin="anonymous"></script>
 </body>
 
-
-</body>
 <!-- конец всей страницы -->
 
 </html>
