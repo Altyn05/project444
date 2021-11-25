@@ -13,6 +13,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ShopServiceImpl
         extends ReadWriteServiceImpl<Shop, Long>
@@ -146,4 +148,30 @@ public class ShopServiceImpl
         shopDb.setModerateAccept(false);
         shopDao.update(shopDb);
     }
+
+
+    @Override
+    public List<Shop> getNotModeratedShops() {
+        return shopDao.getNotModeratedShops();
+    }
+
+    @Override
+    public Shop rejectShop(Long id, String rejectReason) {
+        Shop shop = shopDao.findById(id);
+        shop.setModerated(true);
+        shop.setModerateAccept(false);
+        shop.setModeratedRejectReason(rejectReason);
+        shopDao.update(shop);
+        return shop;
+    }
+
+    @Override
+    public Shop approveShop(Long id) {
+        Shop shop = shopDao.findById(id);
+        shop.setModerated(true);
+        shop.setModerateAccept(true);
+        shopDao.update(shop);
+        return shop;
+    }
+
 }

@@ -124,4 +124,11 @@ public class ShopDaoImpl extends ReadWriteDaoImpl<Shop,Long> implements ShopDao 
                 .getResultList();
         return new PageImpl<>(list, pageable, size);
     }
+
+    @Override
+    public List<Shop> getNotModeratedShops() {
+        return em.createQuery("select sh from Shop sh where sh.isModerated = false", Shop.class)
+                .getResultList();
+    }
+
 }

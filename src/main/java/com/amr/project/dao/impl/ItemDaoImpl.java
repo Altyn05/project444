@@ -113,4 +113,10 @@ public class ItemDaoImpl extends ReadWriteDaoImpl<Item,Long> implements ItemDao 
 
         return new PageImpl<>(list, pageable, size);
     }
+
+    @Override
+    public List<Item> getNotModeratedItems() {
+        return em.createQuery("Select u from Item u where u.isModerated = false", Item.class)
+                .getResultList();
+    }
 }

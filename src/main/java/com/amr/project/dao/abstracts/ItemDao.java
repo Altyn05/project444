@@ -1,6 +1,8 @@
 package com.amr.project.dao.abstracts;
 
+import com.amr.project.model.entity.Address;
 import com.amr.project.model.entity.Item;
+import com.amr.project.model.entity.Shop;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -19,4 +21,9 @@ public interface ItemDao extends ReadWriteDao<Item, Long> {
     Page<Item> findPagedPopularItems(Pageable pageable);
     Page<Item> searchPagedItems(String search, Pageable pageable);
     Page<Item> searchPagedItemsByCategoryId(String search, Long categoryId, Pageable pageable);
+
+    List<Item> getNotModeratedItems();
+
+
+
 }
