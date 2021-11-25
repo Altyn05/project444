@@ -8,6 +8,6 @@ import java.util.List;
 public interface ReviewService extends ReadWriteService<Review, Long> {
     Review findById(Long id);
     List<Review> getNotModeratedReviews();
-    void rejectReview(Long id, String rejectReason);
-    void approveReview(Long id);
+    Review rejectReview(Long id, String rejectReason);
+    Review approveReview(Long id);
 }

@@ -140,20 +140,22 @@ public class ShopServiceImpl
     }
 
     @Override
-    public void rejectShop(Long id, String rejectReason) {
+    public Shop rejectShop(Long id, String rejectReason) {
         Shop shop = shopDao.findById(id);
         shop.setModerated(true);
         shop.setModerateAccept(false);
         shop.setModeratedRejectReason(rejectReason);
         shopDao.update(shop);
+        return shop;
     }
 
     @Override
-    public void approveShop(Long id) {
+    public Shop approveShop(Long id) {
         Shop shop = shopDao.findById(id);
         shop.setModerated(true);
         shop.setModerateAccept(true);
         shopDao.update(shop);
+        return shop;
     }
 
 }

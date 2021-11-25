@@ -16,7 +16,7 @@ public interface ItemService extends ReadWriteService<Item,Long>{
     Page<ItemMainPageDTO> searchPagedItemsByCategoryId(String search, Long cateegoryId, Pageable pageable);
 
     List<Item> getNotModeratedItems();
-    void rejectItem(Long id, String rejectReason);
-    void approveItem(Long id);
+    Item rejectItem(Long id, String rejectReason);
+    Item approveItem(Long id);
 
 }

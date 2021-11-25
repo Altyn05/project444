@@ -46,17 +46,17 @@ public class ModeratorRestController {
     }
     @PutMapping("/moderatorReject")
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
-    public String rejectShop(@RequestParam(value ="shopId") Long id,
+    public ModeratorShopDto rejectShop(@RequestParam(value ="shopId") Long id,
                              @RequestParam(value ="rejectReason") String reason) {
-        shopService.rejectShop(id,reason);
-        return  "";
+
+        return  shopMapper.shoptoModeratorShopDto(shopService.rejectShop(id,reason));
     }
 
     @PutMapping("/moderatorApprove/{id}")
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
-    public String approveShop(@PathVariable("id") Long id) {
-        shopService.approveShop(id);
-        return  "";
+    public ModeratorShopDto approveShop(@PathVariable("id") Long id) {
+
+        return  shopMapper.shoptoModeratorShopDto(shopService.approveShop(id));
     }
 
     //////////////////////////// items ////////////////////////////////////
@@ -67,17 +67,17 @@ public class ModeratorRestController {
     }
     @PutMapping("/moderatorRejectItem")
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
-    public String rejectItem(@RequestParam(value ="shopId") Long id,
+    public ModeratorItemDto rejectItem(@RequestParam(value ="shopId") Long id,
                              @RequestParam(value ="rejectReason") String reason) {
-        itemService.rejectItem(id,reason);
-        return  "";
+
+        return  itemMapper.itemToModeratorItemDto(itemService.rejectItem(id,reason));
     }
 
     @PutMapping("/moderatorApproveItem/{id}")
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
-    public String approveItem(@PathVariable("id") Long id) {
-        itemService.approveItem(id);
-        return  "";
+    public ModeratorItemDto approveItem(@PathVariable("id") Long id) {
+
+        return  itemMapper.itemToModeratorItemDto(itemService.approveItem(id));
     }
 
     //////////////////////////// Reviews ////////////////////////////////////
@@ -88,17 +88,15 @@ public class ModeratorRestController {
     }
     @PutMapping("/moderatorRejectReview")
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
-    public String rejectReview(@RequestParam(value ="shopId") Long id,
+    public ReviewDto rejectReview(@RequestParam(value ="shopId") Long id,
                              @RequestParam(value ="rejectReason") String reason) {
-        reviewService.rejectReview(id,reason);
-        return  "";
+        return  reviewMapper.reviewToReviewDto(reviewService.rejectReview(id,reason));
     }
 
     @PutMapping("/moderatorApproveReview/{id}")
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
-    public String approveReview(@PathVariable("id") Long id) {
-        reviewService.approveReview(id);
-        return  "";
+    public ReviewDto approveReview(@PathVariable("id") Long id) {
+        return  reviewMapper.reviewToReviewDto(reviewService.approveReview(id));
     }
 
 

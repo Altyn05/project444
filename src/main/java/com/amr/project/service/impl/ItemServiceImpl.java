@@ -85,19 +85,21 @@ public class ItemServiceImpl
     }
 
     @Override
-    public void rejectItem(Long id, String rejectReason) {
+    public Item rejectItem(Long id, String rejectReason) {
         Item item = itemDao.findById(id);
         item.setModerated(true);
         item.setModerateAccept(false);
         item.setModeratedRejectReason(rejectReason);
         itemDao.update(item);
+        return item;
     }
 
     @Override
-    public void approveItem(Long id) {
+    public Item approveItem(Long id) {
         Item item = itemDao.findById(id);
         item.setModerated(true);
         item.setModerateAccept(true);
         itemDao.update(item);
+        return item;
     }
 }

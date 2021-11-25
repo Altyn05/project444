@@ -30,20 +30,22 @@ public class ReviewServiceImpl  extends ReadWriteServiceImpl<Review, Long> imple
     }
 
     @Override
-    public void rejectReview(Long id, String rejectReason) {
+    public Review rejectReview(Long id, String rejectReason) {
         Review review = reviewDao.findById(id);
         review.setModerated(true);
         review.setModerateAccept(false);
         review.setModeratedRejectReason(rejectReason);
         reviewDao.update(review);
+        return review;
     }
 
     @Override
-    public void approveReview(Long id) {
+    public Review approveReview(Long id) {
         Review review = reviewDao.findById(id);
         review.setModerated(true);
         review.setModerateAccept(true);
         reviewDao.update(review);
+        return review;
     }
 
 }
