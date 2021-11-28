@@ -4,11 +4,9 @@ import com.amr.project.converter.ShopMapper;
 import com.amr.project.model.dto.ShopDto;
 import com.amr.project.model.entity.City;
 import com.amr.project.model.entity.Country;
+import com.amr.project.model.entity.Image;
 import com.amr.project.model.entity.Shop;
-import com.amr.project.service.abstracts.CityService;
-import com.amr.project.service.abstracts.CountryService;
-import com.amr.project.service.abstracts.ShopService;
-import com.amr.project.service.abstracts.UserService;
+import com.amr.project.service.abstracts.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -21,24 +19,27 @@ public class NewShopController {
     private final CountryService countryService;
     private final CityService cityService;
     private final ShopMapper shopMapper;
+    private final ImageService imageService;
 
     public NewShopController(ShopService shopService, UserService userService,
                              CountryService countryService, CityService cityService,
-                             ShopMapper shopMapper) {
+                             ShopMapper shopMapper, ImageService imageService) {
         this.shopService = shopService;
         this.userService = userService;
         this.countryService = countryService;
         this.cityService = cityService;
         this.shopMapper = shopMapper;
-
+        this.imageService = imageService;
     }
 
     @PostMapping("/user/newShop")
-    public ModelAndView createNewShop(Principal principal, @ModelAttribute ShopDto shopDto) {
+    public ModelAndView createNewShop(Principal principal, @RequestBody ShopDto shopDto) {
+        System.out.println("enter to shopcontroller:::::::::::::::::::::::::::::::::::" + shopDto);
         Shop shop = shopMapper.dtoToModel(shopDto);
 
         cityService.addNewCity(new City(shopDto.getCityDto().getName()));
         countryService.addNewCountry(new Country(shopDto.getLocation().getName()));
+        imageService.addNewImage(new Image(shopDto.getLogo().getUrl(),shopDto.getLogo().getPicture(),shopDto.getLogo().getIsMain()));
 
         shop.setLocation(countryService.findByName(shopDto.getLocation().getName()));
         shop.setCity(cityService.findByName(shopDto.getCityDto().getName()));

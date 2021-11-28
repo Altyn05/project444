@@ -19,4 +19,9 @@ public class ImageServiceImpl extends ReadWriteServiceImpl<Image, Long> implemen
     protected ImageServiceImpl(ReadWriteDao<Image, Long> readWriteDao) {
         super(readWriteDao);
     }
+
+    @Override
+    public void addNewImage(Image image) {
+        imageDao.persist(image);
+    }
 }

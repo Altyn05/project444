@@ -43,7 +43,7 @@ public class Shop {
     @ToString.Exclude
     private List<Review> reviews;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "logo_id")
     @ToString.Exclude
     private Image logo;
