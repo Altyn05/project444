@@ -61,6 +61,7 @@ public class Shop {
     private List<Discount> discounts;
 
     private boolean isModerated;
+    @Column(name = "is_moderate_accept")
     private boolean isModerateAccept;
     private String moderatedRejectReason;
     private boolean isPretendedToBeDeleted = false;

@@ -65,6 +65,8 @@ function renderShops() {
     setHeader('shops')
     let str = ''
     shopArr.forEach(shop => {
+        console.log(shop)
+        if (shop.description) {
         const url = shop['logo'].url
         str += `
             <div class="shop-card d-flex">
@@ -83,6 +85,7 @@ function renderShops() {
                 </div>
             </div>
         `
+    }
     })
     shopBlock.innerHTML = str
 }
