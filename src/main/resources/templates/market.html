@@ -127,13 +127,13 @@
             </div>
             <div class="modal-body p-4 pb-3 border-bottom">
                 <form class="form-shop mx-auto font-weight-bold text-center p-3" content="application/json"
-                      th:action="@{/updateShop}" th:method="put" method="post"
+                      th:action="@{/updateShop}" th:method="POST"
                       style="width: 300px;">
                     <h1 class="h3 mb-3 font-weight-normal">Измените необходимые данные</h1>
                     <div class="form-group">
 
                         <label for="inputId" class="cr-only">ID</label>
-                        <input type="text" name="id" id="inputId" class="form-control"
+                        <input readonly type="text" name="id" id="inputId" class="form-control"
                                required="">
 
                         <label for="inputName1" class="sr-only">name</label>

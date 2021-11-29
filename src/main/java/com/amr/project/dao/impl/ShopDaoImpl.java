@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class ShopDaoImpl extends ReadWriteDaoImpl<Shop,Long> implements ShopDao {
@@ -44,7 +45,7 @@ public class ShopDaoImpl extends ReadWriteDaoImpl<Shop,Long> implements ShopDao 
     @Override
     public List<Shop> findPopularShops() {
         return em.createQuery("SELECT s FROM Shop s ORDER BY s.rating DESC", Shop.class)
-                .getResultList();
+                .getResultList().stream().filter(Shop::isModerateAccept).collect(Collectors.toList());
     }
 
     @Override
@@ -57,7 +58,7 @@ public class ShopDaoImpl extends ReadWriteDaoImpl<Shop,Long> implements ShopDao 
         List<Shop> list = em.createQuery("SELECT s FROM Shop s ORDER BY s.rating DESC", Shop.class)
                 .setFirstResult((int) pageable.getOffset())
                 .setMaxResults(pageable.getPageSize())
-                .getResultList();
+                .getResultList().stream().filter(Shop::isModerateAccept).collect(Collectors.toList());
         return new PageImpl<>(list, pageable, size);
     }
 
