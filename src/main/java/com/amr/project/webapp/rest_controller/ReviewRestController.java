@@ -1,26 +1,27 @@
 package com.amr.project.webapp.rest_controller;
 
+import com.amr.project.converter.ReviewMapper;
+import com.amr.project.model.dto.ReviewDto;
 import com.amr.project.model.entity.Review;
 import com.amr.project.service.impl.ReviewServiceImpl;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/review")
 public class ReviewRestController {
     private ReviewServiceImpl reviewService;
+    private ReviewMapper reviewMapper;
 
-    public ReviewRestController(ReviewServiceImpl reviewService) {
+    public ReviewRestController(ReviewServiceImpl reviewService, ReviewMapper reviewMapper) {
         this.reviewService = reviewService;
+        this.reviewMapper = reviewMapper;
     }
 
-//    @GetMapping("/{id}")
-//    public Review getReview(@PathVariable(value = "id", required = true) Long id){
-//        return reviewService.
-//    }
-
     @PutMapping
-    public Review addUser(@RequestBody Review review){
+    public ResponseEntity<ReviewDto> addReview(@RequestBody Review review){
         reviewService.addReview(review);
-        return review;
+        return new ResponseEntity<>(reviewMapper.toDto(review), HttpStatus.CREATED);
     }
 }

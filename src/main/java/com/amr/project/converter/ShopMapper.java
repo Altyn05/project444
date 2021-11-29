@@ -10,6 +10,7 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface ShopMapper {
     @Mapping(target = "username", source = "user.username")
+    @Mapping(target = "user_id", source = "user.id")
 
     ShopDto shopToDto(Shop shop);
 

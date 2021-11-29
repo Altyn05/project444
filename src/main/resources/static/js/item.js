@@ -99,3 +99,96 @@ function base64ToBinary(imageBase64) {
     }
     return bytes
 }
+
+let my_user = null;
+$.getJSON("/api/users/principal", function(json) {
+    my_user = json;
+});
+
+let pathArr = window.location.pathname.split("/");
+let id = pathArr[pathArr.length - 1];
+let my_item = null;
+$.getJSON("/item/findAll/" + id, function(json) {
+    my_item = json;
+});
+
+let favorite_id = null;
+let fav_id = null;
+$.getJSON("/favorites/getIdItem", function(json) {
+    favorite_id = json;
+    let item = my_item;
+});
+
+
+function newInFavorite() {
+    let item = my_item;
+    let shops = {
+        id: my_item.shopId
+    }
+ item.shop = shops;
+    item.favorite = true;
+    let user = my_user;
+
+    let items = [];
+    items.push({
+        id: item.id})
+    let users = {
+        username: user.username,
+        id: user.id
+    }
+
+    let favorite = null;
+    if(user != null){
+        let favorites = {
+            items : items,
+            user : users
+        }
+        favorite = favorites;
+    }
+
+    console.log(JSON.stringify(favorite));
+    fetch("/favorites", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(favorite),
+    })
+        .then((response) => console.log(response.status))
+    fetch("/item/findAll/editFavorite", {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(item),
+    })
+        .then((response) => console.log(response.status))
+        .catch(e => console.error(e))
+}
+
+function deleteFavorite() {
+    let item = my_item;
+    fav_id = favorite_id[my_item.id];
+    let shops = {
+        id: my_item.shopId
+    }
+    item.shop = shops;
+    item.favorite = false;
+
+    fetch("/favorites/delete/" + fav_id, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+        .then((response) => console.log(response.status))
+    fetch("/item/findAll/editFavorite", {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(item),
+    })
+        .then((response) => console.log(response.status))
+        .catch(e => console.error(e))
+}

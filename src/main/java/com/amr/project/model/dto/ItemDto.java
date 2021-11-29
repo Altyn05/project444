@@ -1,6 +1,7 @@
 package com.amr.project.model.dto;
 
 import com.amr.project.util.ImgUtil;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -18,6 +19,7 @@ public class ItemDto {
     private Integer count;
     private BigDecimal price;
     private List<ImageDto> images;
+    private boolean favorite;
     private Double rating;
     private String description;
     private String shopName;

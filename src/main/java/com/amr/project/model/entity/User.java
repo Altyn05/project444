@@ -50,7 +50,6 @@ public class User implements UserDetails {
     private Gender gender;
     private Calendar birthday;
 
-
     @ManyToMany
     @ToString.Exclude
     private List<Image> images;
@@ -79,9 +78,6 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     @ToString.Exclude
     private List<Discount> discounts;
-
-
-
 
     public void addAddress(Address address) {
         if (this.address == null) {

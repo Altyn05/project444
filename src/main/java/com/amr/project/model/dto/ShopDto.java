@@ -21,6 +21,8 @@ public class ShopDto {
     private List<ImageDto> images;
     private double rating;
     private String username;
+    private Long user_id;
+    private boolean favorite;
     private boolean isModerated;
     private boolean isModerateAccept;
     private String moderatedRejectReason;
