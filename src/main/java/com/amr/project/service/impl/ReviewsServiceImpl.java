@@ -2,14 +2,14 @@ package com.amr.project.service.impl;
 
 import com.amr.project.model.entity.Review;
 import com.amr.project.repository.ReviewRepository;
-import com.amr.project.service.abstracts.ReviewService;
+import com.amr.project.service.abstracts.ReviewsService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ReviewServiceImpl implements ReviewService {
+public class ReviewsServiceImpl implements ReviewsService {
     private ReviewRepository repository;
 
-    public ReviewServiceImpl(ReviewRepository repository) {
+    public ReviewsServiceImpl(ReviewRepository repository) {
         this.repository = repository;
     }
 

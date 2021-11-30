@@ -8,7 +8,7 @@ import com.amr.project.model.dto.ShopDto;
 import com.amr.project.model.entity.*;
 import com.amr.project.service.abstracts.ReadWriteService;
 import com.amr.project.service.abstracts.UserService;
-import com.amr.project.service.impl.ReviewServiceImpl;
+import com.amr.project.service.impl.ReviewsServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,12 +22,12 @@ import java.util.Random;
 public class MarketRestController {
     private ReadWriteService<Shop, Long> shopService;
     private ShopMapper shopMapper;
-    private ReviewServiceImpl reviewService;
+    private ReviewsServiceImpl reviewService;
     private ReviewMapper reviewMapper;
     private UserService userService;
     private ImageDao imageDao;
 
-    public MarketRestController(ReadWriteService<Shop, Long> shopService, ShopMapper shopMapper, ReviewServiceImpl reviewService, ReviewMapper reviewMapper, UserService userService, ImageDao imageDao) {
+    public MarketRestController(ReadWriteService<Shop, Long> shopService, ShopMapper shopMapper, ReviewsServiceImpl reviewService, ReviewMapper reviewMapper, UserService userService, ImageDao imageDao) {
         this.shopService = shopService;
         this.shopMapper = shopMapper;
         this.reviewService = reviewService;

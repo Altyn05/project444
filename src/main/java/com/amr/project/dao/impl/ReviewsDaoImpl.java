@@ -5,5 +5,5 @@ import com.amr.project.model.entity.Review;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ReviewDaoImpl extends ReadWriteDaoImpl<Review,Long> implements ReviewDao {
+public class ReviewsDaoImpl extends ReadWriteDaoImpl<Review,Long> implements ReviewDao {
 }
