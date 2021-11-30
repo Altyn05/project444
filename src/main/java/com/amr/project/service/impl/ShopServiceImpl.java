@@ -124,7 +124,7 @@ public class ShopServiceImpl
     @Override
     public void addNewShop(Shop shop) {
         if (shopDao.findByDataShop(shop)) {
-            shop.setModerateAccept(true);
+            shop.setModerateAccept(false);
             shopDao.persist(shop);
         }
     }

@@ -234,6 +234,75 @@ searchReset.addEventListener('click', async ev => {
     });
 })
 
+const editShopButton = document.getElementById('editButton')
+let currentShopURL = window.location.href
+let currentShopId = currentShopURL.substring(currentShopURL.lastIndexOf('/')+1)
+const URLFetchLogo = 'http://localhost:8888/getOneNew/'+currentShopId
+editShopButton.addEventListener('click', () =>{
+    console.log(URLFetchLogo)
+    downloadLogo()
+})
+async function downloadLogo() {
+    let response = await fetch(URLFetchLogo);
+    if (response.ok) {
+        let datajson = await response.json();
+        console.log(datajson)
+        logotype.src = datajson.logo;
+
+    } else {
+        alert("Error receiving user data" + response.status);
+    }
+}
+
+let SL
+function editShopLogo() {
+    let fileInput = document.querySelector(".editLogo")
+    if (fileInput.files[0] == undefined) return
+    return new Promise((resolve, reject) => {
+        let reader = new FileReader()
+        reader.onload = () => {
+            document.shoplogotype.src = reader.result
+            let res = reader.result.replace(/data:image.*,/, "")
+            console.log(res)
+            SL = {id: null, url: "file", picture: res, isMain: true}
+            resolve()
+        }
+        reader.onerror = reject
+        reader.readAsDataURL(fileInput.files[0]);
+    })
+}
+
+const editShopLogotype = document.getElementById('submitUpdatedShop')
+let shopEditProfile = document.querySelectorAll('.form-edit-shop')
+const URLUpdateShop = 'http://localhost:8888/updateShop'
+editShopLogotype.addEventListener('submit', () => {
+    let a = new Promise(function (resolve) {
+        resolve(
+            fetch(URLUpdateShop, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    id:shopEditProfile[0].value,
+                    name: shopEditProfile[1].value,
+                    location: {
+                        name: shopEditProfile[2].value
+                    },
+                    cityDto: shopEditProfile[3].value,
+                    email: shopEditProfile[4].value,
+                    phone: shopEditProfile[5].value,
+                    description: shopEditProfile[6].value,
+                    logo: SL
+                })
+            })
+        )
+    })
+    a.then(function () {
+        initUserPage().then()
+    })
+})
+
 
 
 

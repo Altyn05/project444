@@ -122,49 +122,64 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <div class="m-auto">
-                    <img th:src="@{/img/logo.png}" alt="logo">
+                    <img th:src="@{/img/logo.png}" alt="logo" id="logotype">
                 </div>
             </div>
             <div class="modal-body p-4 pb-3 border-bottom">
                 <form class="form-shop mx-auto font-weight-bold text-center p-3" content="application/json"
-                      th:action="@{/updateShop}" th:method="put" method="post"
-                      style="width: 300px;">
-                    <h1 class="h3 mb-3 font-weight-normal">Измените необходимые данные</h1>
+                      style="width: 300px;" id="submitUpdatedShop">
+                    <h6 class="h6 mb-3 font-weight-normal">Измените необходимые данные</h6>
                     <div class="form-group">
 
                         <label for="inputId" class="cr-only">ID</label>
-                        <input type="text" name="id" id="inputId" class="form-control"
+                        <input readonly type="text" name="id" id="inputId" class="form-edit-shop"
                                required="">
 
                         <label for="inputName1" class="sr-only">name</label>
                         <input type="text" name="name" id="inputName1"
-                               class="form-control"
+                               class="form-edit-shop"
                                required=""/>
 
                         <label for="inputCountry1" class="sr-only">Country</label>
                         <input type="text" name="location" id="inputCountry1"
-                               class="form-control"
+                               class="form-edit-shop"
                                required=""/>
 
                         <label for="inputCity1" class="sr-only">City</label>
                         <input type="text" name="cityDto" id="inputCity1"
-                               class="form-control"
+                               class="form-edit-shop"
                                required=""/>
 
                         <label for="inputEmail1" class="sr-only">Email</label>
                         <input type="email" name="email" id="inputEmail1"
-                               class="form-control"
+                               class="form-edit-shop"
                                required=""/>
 
                         <label for="inputPhone1" class="sr-only">Phone</label>
-                        <input type="text" name="phone" id="inputPhone1" class="form-control"
+                        <input type="text" name="phone" id="inputPhone1" class="form-edit-shop"
                                required=""/>
 
                         <label for="inputDescription1" class="sr-only">Description</label>
                         <input type="text" name="description" id="inputDescription1"
-                               class="form-control"
+                               class="form-edit-shop"
                                required=""/>
                         <br>
+
+                        <div class="pl-sm-2 pl-1" id="edit-logo-section"><b>Логотип магазина</b>
+                            <img style="border-radius: 10%; max-width: 100px"
+                                 src="/img/logo/nologo.png"
+                                 class="img mx-2" name="shoplogotype"/>
+                            <hr>
+                            <h6>Изменить логотип</h6>
+                            <div>
+                                <input type="file" accept="image/jpeg,image/png" class="form-edit-shop editLogo"
+                                       onchange="editShopLogo()"/>
+
+                            </div>
+                        </div>
+                        <br/>
+
+
                     </div>
                     <button class="btn btn-lg btn-primary btn-block mt--5" type="submit">Сохранить данные</button>
                 </form>

@@ -43,7 +43,7 @@ public class Shop {
     @ToString.Exclude
     private List<Review> reviews;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "logo_id")
     @ToString.Exclude
     private Image logo;
@@ -61,6 +61,7 @@ public class Shop {
     private List<Discount> discounts;
 
     private boolean isModerated;
+    @Column(name = "is_moderate_accept")
     private boolean isModerateAccept;
     private String moderatedRejectReason;
     private boolean isPretendedToBeDeleted = false;

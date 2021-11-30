@@ -65,13 +65,15 @@ function renderShops() {
     setHeader('shops')
     let str = ''
     shopArr.forEach(shop => {
+        console.log(shop)
+        if (shop.description) {
         const url = shop['logo'].url
         str += `
             <div class="shop-card d-flex">
                 <div class="gcard d-flex w-100">
                     <a href="/market/${shop.id}" class="text-reset">
                         <div class="d-flex justify-content-center">
-                            <img src="${url.substring(url.indexOf('/img/'))}"
+                            <img src="data:image/png;base64,${shop.logo.picture}"
                                  class="card-img-top shop-img"
                                  alt="лого магазина">
                         </div>
@@ -83,6 +85,7 @@ function renderShops() {
                 </div>
             </div>
         `
+    }
     })
     shopBlock.innerHTML = str
 }
