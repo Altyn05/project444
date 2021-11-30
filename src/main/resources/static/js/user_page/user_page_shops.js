@@ -43,7 +43,6 @@ function loadShopLogo() {
         reader.onerror = reject
         reader.readAsDataURL(fileInput.files[0]);
     })
-
 }
 
 const newShopCreate = document.getElementById('submitNewShop')
@@ -78,3 +77,4 @@ newShopCreate.addEventListener('submit', (ev) => {
         $('#newShopModal .close').click()
     })
 })
+

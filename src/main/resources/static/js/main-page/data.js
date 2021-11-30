@@ -73,7 +73,7 @@ function renderShops() {
                 <div class="gcard d-flex w-100">
                     <a href="/market/${shop.id}" class="text-reset">
                         <div class="d-flex justify-content-center">
-                            <img src="${url.substring(url.indexOf('/img/'))}"
+                            <img src="data:image/png;base64,${shop.logo.picture}"
                                  class="card-img-top shop-img"
                                  alt="лого магазина">
                         </div>
