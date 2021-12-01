@@ -6,6 +6,9 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import java.util.List;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
+
 
 @Mapper(componentModel = "spring",
         uses = {OrderMapper.class,
@@ -13,5 +16,11 @@ import java.util.List;
 public interface UserMapper {
     @Mapping(target = "id", source = "user.id")
     UserDto toDto(User user);
-    User toModel(UserDto userDto);
+    User toModel(UserDto userDto);                //это не работает тк половины полей в UserDto нет
+
+    @Mapping(target = "address", ignore = true)     //листы пока не обновляю
+    @Mapping(target = "images", ignore = true)      //листы пока не обновляю
+    @Mapping(target = "orders", ignore = true)      //листы пока не обновляю
+    @Mapping(target = "shops", ignore = true)       //листы пока не обновляю
+    void updateModel (UserDto userDto, @MappingTarget User user);
 }

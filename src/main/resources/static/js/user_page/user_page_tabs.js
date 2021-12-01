@@ -12,3 +12,11 @@ function openShops() {
     let tab_settings = new bootstrap.Tab(settings)
     tab_settings.show()
 }
+
+function openOrders() {
+    showUserOrders()
+    let settings = document.querySelector('#pills-orders-tab')
+    let tab_settings = new bootstrap.Tab(settings)
+    tab_settings.show()
+}
+

@@ -1,6 +1,7 @@
 package com.amr.project.webapp.controller;
 
 
+import com.amr.project.converter.AdminUserMapper;
 import com.amr.project.converter.UserMapper;
 import com.amr.project.service.abstracts.AdminService;
 import com.amr.project.service.abstracts.UserService;
@@ -20,7 +21,7 @@ public class AdminController {
     private final AdminService adminService;
     private final UserService userService;
 
-    private final UserMapper userMapper = Mappers.getMapper(UserMapper.class);
+    private final AdminUserMapper userMapper = Mappers.getMapper(AdminUserMapper.class);
 
     @Autowired
     public AdminController(AdminService adminService, UserService userService) {
@@ -32,7 +33,7 @@ public class AdminController {
     public String index(Model model, Principal principal){
 
         model.addAttribute("user",
-                userMapper.toDto(userService.findUserByUsername(principal.getName())));
+                userMapper.userToAdminUserDto(userService.findUserByUsername(principal.getName())));
         model.addAttribute("allYouNeed", adminService.show());
         return "admin/index";
     }

@@ -26,6 +26,12 @@ public class Image {
         this.picture = ImgUtil.toByteArr(url);
     }
 
+    public Image(String url, byte[] picture, Boolean isMain) {
+        this.url = url;
+        this.picture = picture;
+        this.isMain = isMain;
+    }
+
     public Image(String url, Boolean isMain) {
         this(url);
         this.isMain = isMain;
@@ -41,4 +47,12 @@ public class Image {
         return this;
     }
 
+    @Override
+    public String toString() {
+        return "Image{" +
+                "id=" + id +
+                ", url='" + url + '\'' +
+                ", isMain=" + isMain +
+                '}';
+    }
 }

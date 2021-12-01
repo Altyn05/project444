@@ -3,6 +3,8 @@
 import com.amr.project.dao.abstracts.*;
 import com.amr.project.model.entity.*;
 import com.amr.project.model.enums.Gender;
+import com.amr.project.model.enums.Status;
+import com.amr.project.service.abstracts.ReadWriteService;
 import com.amr.project.service.abstracts.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -27,6 +29,7 @@ public class DatabaseInitializer {
     private final ImageDao imageDao;
     private final ShopDao shopDao;
     private final ReviewDao reviewDao;
+    private final ReadWriteDao <Order, Long> rwOrder;
 
     private List<Category> categories;
     private List<Country> countries;
@@ -36,11 +39,13 @@ public class DatabaseInitializer {
     private List<Item> items;
     private List<Shop> shops;
     private List<Review> reviews;
+    private List<Order> orders;
+
 
     @Autowired
     public DatabaseInitializer(RoleDao roleDao, UserDao userDao, AddressDao addressDao,
                                CountryDao countryDao, CityDao cityDao, CategoryDao categoryDao,
-                               ItemDao itemDao, ImageDao imageDao, ShopDao shopDao, ReviewDao reviewDao,UserService userService) {
+                               ItemDao itemDao, ImageDao imageDao, ShopDao shopDao, ReviewDao reviewDao, UserService userService, ReadWriteDao <Order, Long> rwOrder) {
 
         this.roleDao = roleDao;
         this.userDao = userDao;
@@ -53,10 +58,12 @@ public class DatabaseInitializer {
         this.shopDao = shopDao;
         this.reviewDao = reviewDao;
         this.userService = userService;
+        this.rwOrder = rwOrder;
     }
 
     @PostConstruct
     public void init() {
+/*
         roles = getRoles();
         roles.forEach(roleDao::persist);
 
@@ -103,6 +110,10 @@ public class DatabaseInitializer {
         adminRole.add(roleDao.getRoleById(2L));
         userService.registerNewUser(userAlexander);
 
+        orders = getOrders();
+        orders.forEach((rwOrder::persist));
+
+*/
     }
 
     private Set<Role> getRoles() {
@@ -121,13 +132,13 @@ public class DatabaseInitializer {
         users.add(getUser("Ivan", "Ivanov", Gender.MALE, path + "0.jpg"));
         users.add(getUser("Vasily", "Vasiliev", Gender.MALE, path + "1.jpg"));
         users.add(getUser("Piter", "Petrov", Gender.MALE, path + "2.jpg"));
-//        users.add(getUser("Irina", "Irinova", Gender.FEMALE, path + "3.jpg"));
-//        users.add(getUser("Sveta", "Svetova", Gender.FEMALE, path + "4.jpg"));
-//        users.add(getUser("Alex", "Alexeev", Gender.MALE, path + "5.jpg"));
-//        users.add(getUser("Kira", "Kireeva", Gender.FEMALE, path + "6.jpg"));
-//        users.add(getUser("Dmitry", "Dmitrov", Gender.MALE, path + "7.jpg"));
-//        users.add(getUser("Kiril", "Kirilov", Gender.MALE, path + "8.jpg"));
-//        users.add(getUser("Pavel", "Pavlov", Gender.MALE, path + "9.jpg"));
+        users.add(getUser("Irina", "Irinova", Gender.FEMALE, path + "3.jpg"));
+        users.add(getUser("Sveta", "Svetova", Gender.FEMALE, path + "4.jpg"));
+        users.add(getUser("Alex", "Alexeev", Gender.MALE, path + "5.jpg"));
+        users.add(getUser("Kira", "Kireeva", Gender.FEMALE, path + "6.jpg"));
+        users.add(getUser("Dmitry", "Dmitrov", Gender.MALE, path + "7.jpg"));
+        users.add(getUser("Kiril", "Kirilov", Gender.MALE, path + "8.jpg"));
+        users.add(getUser("Pavel", "Pavlov", Gender.MALE, path + "9.jpg"));
         return users;
     }
 
@@ -141,6 +152,7 @@ public class DatabaseInitializer {
         user.setAge(Integer.parseInt(randomNumberString(2)));
         user.setUsername(user.getFirstName().toLowerCase() + user.getAge());
         user.setPassword(randomNumberString(4));
+//       user.setBirthday(new GregorianCalendar(1870, Calendar.APRIL,23));
         user.addAddress(getRandomAddress());
         user.addAddress(getRandomAddress());
         user.addAddress(getRandomAddress());
@@ -259,6 +271,7 @@ public class DatabaseInitializer {
         shop.setPhone(randomPhone());
         shop.setRating(randomRating());
         shop.setLocation(randomListElement(countries));
+        shop.setCity(randomListElement(cities));
         shop.setUser(randomListElement(users));
 
         return shop;
@@ -332,6 +345,27 @@ public class DatabaseInitializer {
         item6.setShop(randomListElement(shops));
         item6.setCount(Integer.parseInt(randomNumberString(1)) + 1);
 
+        Item item7 = new Item();
+        item7.setName("Новый 7");
+        item7.setPrice(BigDecimal.valueOf(5000000));
+        item7.addCategory(categories.get(8));
+        item7.setDescription("Новый 7 товар не в магазине.----------------------------------------------");
+        item7.setRating(randomRating());
+        item7.addImage(new Image(path + "btc/btc.jpeg"));
+        item7.setShop(null);
+        item7.setCount(null);
+        Item item8 = new Item();
+        item8.setName("Новый 8");
+        item8.setPrice(BigDecimal.valueOf(5000000));
+        item8.addCategory(categories.get(8));
+        item8.setDescription("Новый 7 товар не в магазине.----------------------------------------------");
+        item8.setRating(randomRating());
+        item8.addImage(new Image(path + "btc/btc.jpeg"));
+        item8.setShop(null);
+        item8.setCount(null);
+
+
+
         List<Item> items = new ArrayList<>();
         items.add(item1);
         items.add(item2);
@@ -339,6 +373,8 @@ public class DatabaseInitializer {
         items.add(item4);
         items.add(item5);
         items.add(item6);
+        items.add(item7);
+        items.add(item8);
 
         return items;
     }
@@ -466,4 +502,38 @@ public class DatabaseInitializer {
                 .append(randomNumberString(2)).toString();
     }
 
+    private static Status generateRandomStatus() {
+        Status[] values = Status.values();
+        int length = values.length;
+        int randIndex = new Random().nextInt(length);
+        return values[randIndex];
+    }
+
+    private Order getOrder() {
+        Order order = new Order();
+
+        order.setItems(Arrays.asList(randomListElement(items), randomListElement(items), randomListElement(items)));
+        order.setDate(new GregorianCalendar());
+        order.setStatus(generateRandomStatus());
+        order.setAddress(null);
+        order.setOrderDetails(null);
+//        order.setAddress(users.get(0).getAddress().get(0));
+        order.setTotal(new BigDecimal("1000.0"));
+        order.setUser(users.get(0));
+        order.setBuyerName("Buyer from" + getRandomAddress().getCountry());
+        order.setBuyerPhone("100");
+
+        return order;
+    }
+
+    private List<Order> getOrders() {
+        List<Order> orders = new ArrayList<>();
+        orders.add(getOrder());
+        orders.add(getOrder());
+        orders.add(getOrder());
+        orders.add(getOrder());
+        orders.add(getOrder());
+
+        return orders;
+    }
 }

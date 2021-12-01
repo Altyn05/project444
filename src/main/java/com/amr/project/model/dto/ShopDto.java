@@ -16,6 +16,7 @@ public class ShopDto {
     private String phone;
     private String description;
     private CountryDto location;
+    private CityDto cityDto;
     private List<ItemDto> items;
     private ImageDto logo;
     private List<ImageDto> images;

@@ -27,14 +27,14 @@
 
                 </div>
             </div>
-            <div class="col-3">
+            <div class="col-3" id="ch3">
                 <button type="button" class="btn btn-success btn" data-bs-toggle="modal"
                         data-bs-target="#createModalItem">
                     Создать Товар
                 </button>
             </div>
             <!--            </div>-->
-            <table class="table table">
+            <table class="table table" id="ch5">
                 <thead>
                 <tr>
                     <th scope="col">ID</th>
@@ -44,8 +44,8 @@
                     <th scope="col">Рейтинг</th>
                     <th scope="col">Описание</th>
                     <th scope="col">Магазин</th>
-                    <th scope="col">Редактирование</th>
-                    <th scope="col">Удаление</th>
+                    <th id="ch1" scope="col">Редактирование</th>
+                    <th id="ch2" scope="col">Удаление</th>
                 </tr>
                 </thead>
                 <tbody id="itemsList">
@@ -60,7 +60,7 @@
                         <div class="modal-header">
                             <h5 class="modal-title" id="editModalLabelItem">Изменить Товар</h5>
                             <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
+                                <span aria-hidden="true"></span>
                             </button>
                         </div>
                         <div class="modal-body">
@@ -124,7 +124,7 @@
                         <div class="modal-header">
                             <h5 class="modal-title" id="deleteModalLabelItem">Удалить Товар</h5>
                             <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
+                                <span aria-hidden="true"></span>
                             </button>
                         </div>
                         <div class="modal-body">
@@ -192,7 +192,7 @@
                         <div class="modal-header">
                             <h5 class="modal-title" id="createModalLabelItem">Создать Товар</h5>
                             <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
+                                <span aria-hidden="true"></span>
                             </button>
                         </div>
                         <div class="modal-body">
@@ -219,7 +219,7 @@
                                         <div class="form-group text-center">
                                             <label for="createDescriptionItem" class="font-weight-bold">Описание</label>
                                             <textarea type="text" class="form-control" id="createDescriptionItem"
-                                                   name="description"></textarea>
+                                                      name="description"></textarea>
                                             <br>
                                         </div>
                                     </div>

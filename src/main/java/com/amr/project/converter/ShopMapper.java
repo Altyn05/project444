@@ -14,6 +14,8 @@ public interface ShopMapper {
 
     ShopDto shopToDto(Shop shop);
 
+    Shop dtoToModel(ShopDto shopDto);
+
     @Mapping(source = "user.firstName", target = "userFirstName")
     @Mapping(source = "user.lastName", target = "userLastName")
     @Mapping(source = "user.images", target = "userImages")
@@ -27,5 +29,8 @@ public interface ShopMapper {
 
     AdminShopDto shopToAdminShopDto(Shop shop);
 
+    ShopMainPageDTO shopToShopMainPageDTO(Shop shop);
 
+    List<ModeratorShopDto> shopListToListModeratorShopDto (List<Shop> list);
+    ModeratorShopDto shoptoModeratorShopDto (Shop shop);
 }
