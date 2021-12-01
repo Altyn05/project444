@@ -1,7 +1,5 @@
 package com.amr.project.model.dto;
 
-import com.amr.project.util.ImgUtil;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import java.math.BigDecimal;

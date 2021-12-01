@@ -1,6 +1,5 @@
 package com.amr.project.model.dto;
 
-import com.amr.project.model.entity.Role;
 import com.amr.project.model.enums.Gender;
 import lombok.Data;
 

@@ -4,7 +4,6 @@ import com.amr.project.dao.abstracts.AddressDao;
 import com.amr.project.model.entity.Address;
 import com.amr.project.model.entity.City;
 import com.amr.project.model.entity.Country;
-import com.amr.project.model.entity.Role;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

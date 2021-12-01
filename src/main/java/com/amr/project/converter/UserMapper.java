@@ -5,8 +5,6 @@ import com.amr.project.model.entity.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-import java.util.List;
-import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
 

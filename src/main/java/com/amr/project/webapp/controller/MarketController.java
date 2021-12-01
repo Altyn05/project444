@@ -14,7 +14,6 @@ public class MarketController {
 
     private ShopService shopServices;
     private final ReadWriteService<Shop, Long> rwShopService;
-//    private final ShopServiceImpl shopServiceImpl;
     private final ShopService shopService;
 
 
