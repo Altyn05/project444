@@ -119,37 +119,3 @@ async function sendResponse(method, data) {
             console.error('Error:', error);
         });
 }
-
-$.getJSON("/favorites/getItemsByFavorite", function(json) {
-    let result =  json.filter(e => e.length);
-
-    let itemsName = [];
-    let bytes = [];
-    let i;
-    for (i = 0; i < result.length; ++i) {
-
-        itemsName.push(result[i][0]["images"][0]["picture"]);
-        if(document.getElementById("item") != null) {
-            document.getElementById("item").innerHTML += '<p>' + '<a href="/item/' + result[i][0]["id"] + ' ">' + '<img src="data:image/jpg;base64,'
-                + result[i][0]["images"][0]["picture"] + '" width="70 height="70">' + result[i][0]["name"] + '</a>' + '</p>';
-        }
-    }
-});
-
-$.getJSON("/favorites/getShopByFavorite", function(json2) {
-    let result =  json2.filter(e => e.length);
-
-    if (result != null) {
-
-        let shopsName = [];
-        let i;
-        for (i = 0; i < result.length; ++i) {
-
-            shopsName.push(result[i][0]["name"]);
-            if(document.getElementById("shops") != null){
-            document.getElementById("shops").innerHTML += '<p>' +  '<a href="/market/' + result[i][0]["id"] + ' ">' + '<img src="data:image/jpg;base64,'
-                + result[i][0]["logo"]["picture"] + '" width="70 height="70">' + result[i][0]["name"] +'</a>' + '</p>';
-            }
-        }
-    }
-});

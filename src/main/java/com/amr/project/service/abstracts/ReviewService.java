@@ -10,4 +10,5 @@ public interface ReviewService extends ReadWriteService<Review, Long> {
     List<Review> getNotModeratedReviews();
     Review rejectReview(Long id, String rejectReason);
     Review approveReview(Long id);
+    void addReview(Review review);
 }

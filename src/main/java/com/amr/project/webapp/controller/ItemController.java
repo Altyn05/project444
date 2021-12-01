@@ -10,7 +10,7 @@ import com.amr.project.model.entity.Item;
 import com.amr.project.model.entity.Review;
 import com.amr.project.model.entity.User;
 import com.amr.project.service.abstracts.ItemService;
-import com.amr.project.service.abstracts.ReviewsService;
+import com.amr.project.service.abstracts.ReviewService;
 import com.amr.project.service.abstracts.UserService;
 import com.amr.project.service.impl.ItemPageService;
 
@@ -31,12 +31,12 @@ public class ItemController {
     private final ItemPageService itemPageService;
     private ItemService itemService;
     private UserService userService;
-    private ReviewsService reviewsService;
+    private ReviewService reviewsService;
     private ReviewMapper reviewMapper;
     private ImageDao imageDao;
     private ItemPageMapper itemMapper;
 
-    public ItemController(ItemPageService itemPageService, ItemService itemService, UserService userService, ReviewsService reviewsService, ReviewMapper reviewMapper, ImageDao imageDao, ItemPageMapper itemMapper) {
+    public ItemController(ItemPageService itemPageService, ItemService itemService, UserService userService, ReviewService reviewsService, ReviewMapper reviewMapper, ImageDao imageDao, ItemPageMapper itemMapper) {
         this.itemPageService = itemPageService;
         this.itemService = itemService;
         this.userService = userService;
@@ -74,7 +74,7 @@ public class ItemController {
         review.setDate(date);
         review.setUser(user);
         reviewsService.addReview(review);
-        return new ResponseEntity<>(reviewMapper.toDto(review), HttpStatus.CREATED);
+        return new ResponseEntity<>(reviewMapper.reviewToReviewDto(review), HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/item/findAll/editFavorite", method = RequestMethod.PUT)

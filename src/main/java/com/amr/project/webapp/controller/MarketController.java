@@ -4,6 +4,7 @@ import com.amr.project.service.abstracts.ShopService;
 import com.amr.project.model.entity.Shop;
 import com.amr.project.service.abstracts.ReadWriteService;
 import com.amr.project.service.abstracts.ShopService;
+import com.amr.project.service.impl.ShopServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,10 +14,10 @@ public class MarketController {
 
     private ShopService shopServices;
     private final ReadWriteService<Shop, Long> rwShopService;
+//    private final ShopServiceImpl shopServiceImpl;
     private final ShopService shopService;
 
-    public MarketController(ShopService shopServices) {
-        this.shopServices = shopServices;
+
     public MarketController(ReadWriteService<Shop, Long> rwShopService, ShopService shopService) {
         this.rwShopService = rwShopService;
 
@@ -25,11 +26,9 @@ public class MarketController {
 
     @GetMapping("/market/{id}")
     public String marketHome(Model model, @PathVariable(value = "id", required = true) Long id) {
-        model.addAttribute("shop", shopServices.getShop(id));
-        return "market";
         if (shopService.existsById(Shop.class, id)) {
             model.addAttribute("id", id);
-            model.addAttribute("shop", shopService.findById(id));
+            model.addAttribute("shop", shopService.getShop(id));
             System.out.println("controllerMarket " + shopService.findById(id));
             return "market";
         }

@@ -314,14 +314,6 @@ editShopLogotype.addEventListener('submit', () => {
     })
 })
 
-
-
-
-
-
-
-
-
 function getReviewForEdit(id) {
 
     fetch("/market/api/info/" + id)
@@ -367,8 +359,6 @@ let id = pathArr[pathArr.length - 1];
 let my_shop = null;
 $.getJSON("/market/api/info/" + id, function (json) {
     my_shop = json;
-
-    console.log(my_shop)
 });
 
 let my_user = null;
@@ -377,7 +367,6 @@ $.getJSON("/api/users/principal", function (json) {
 });
 
 function newInFavorite() {
-    // console.log(my_shop)
     let shop = my_shop;
     shop.favorite = true;
     let user_shop = {
