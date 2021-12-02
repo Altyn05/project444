@@ -145,6 +145,9 @@
                     <li><a href="#" onclick="openOrders()">История заказов</a></li>
                     <li><a href="#">Проданные товары</a></li>
                     <li><a href="#newShopModal" data-toggle="modal" data-target="#newShopModal"> Новый магазин</a></li>
+                    <hr>
+                    <li><a href="#newItemModal" data-toggle="modal" data-target="#newItemModal">Разместить объявление</a></li>
+
 
                     </li>
                 </ul>
@@ -379,6 +382,77 @@
                     <button class="btn btn-lg btn-primary btn-block mt--5"  type="submit">Сохранить
                         данные
                     </button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+<div class="modal fade" id="newItemModal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content text-center text-muted">
+            <div class="modal-header flex-column p-4">
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body p-4 pb-3 border-bottom">
+                <form class="form-shop mx-auto font-weight-bold text-center p-3" content="application/json"
+                      style="width: 400px;" id="submitNewItem">
+
+                    <h5 class="mb-3 font-weight-normal">Введите информацию по новому объявлению:</h5>
+
+<!--                    <label for="inputItemName" class="sr-only">name</label>-->
+<!--                    <input type="text" name="name" id="inputItemName"-->
+<!--                           class="form-control-item" placeholder="Наименование товара"-->
+<!--                           required=""/>-->
+
+                    <div class="mb-3">
+                        <label for="inputItemName" class="form-label"></label>
+                        <input type="text" class="form-control-item" id="inputItemName" placeholder="Наименование товара">
+                    </div>
+
+                    <div class="mb-3">
+                    <label for="inputItemDescription" class="form-label"></label>
+                    <textarea class="form-control-item" id="inputItemDescription" placeholder="Описание товара" rows="5"></textarea>
+                    </div>
+
+<!--                    <div class="mb-3">-->
+<!--                    <label for="inputItemPhone" class="sr-only">Phone</label>-->
+<!--                    <input type="text" name="shopPhone" id="inputItemPhone" class="form-control-item"-->
+<!--                           placeholder="контактный телефон" required=""/>-->
+<!--                    </div>-->
+
+                    <div class="mb-3">
+                        <label for="inputItemPhone" class="form-label"></label>
+                        <input type="text" class="form-control-item" name="shopPhone" id="inputItemPhone" placeholder="контактный телефон">
+                    </div>
+
+                    <div class="pl-sm-2 pl-1" id="photo-section"><b>Фото товара</b>
+                        <img style="border-radius: 10%; max-width: 100px"
+                             src=""
+                             class="img mx-2" name="photo"/>
+                        <hr>
+                        <h6>Добавить фото размером не более 1MB</h6>
+                        <div>
+                            <input type="file" accept="image/jpeg,image/png" class="form-control-item"
+                                   onchange="loadItemPhoto()"/>
+
+                        </div>
+                    </div>
+
+
+                    <br/>
+                    <button class="btn btn-lg btn-primary btn-block mt--5"  type="submit">Подать объявление</button>
+
                 </form>
 
             </div>

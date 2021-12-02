@@ -97,3 +97,26 @@ function writeAddresses (addresses, addr1, addr2) {
 }
 
 initUserPage()
+
+
+let newItemCreate = document.getElementById('submitNewItem');
+let itemProfile = document.querySelectorAll('.form-control-item');
+newItemCreate.addEventListener('submit', (ev => {
+    ev.preventDefault();
+    let a = new Promise(function (resolve) {
+        resolve(
+            fetch(URLAddShop, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: itemProfile[0].value,
+                    description: itemProfile[1].value,
+                    phone: itemProfile[2].value,
+                    photo: ggggggggggggggggg
+                })
+            })
+        )
+    })
+}))
