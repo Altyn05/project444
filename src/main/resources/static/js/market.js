@@ -53,6 +53,7 @@ async function loadMarketInfo() {
 }
 
 function showMarketInfo(data) {
+
     $('#market-logo').attr("src", "data:image/jpg;base64," + data["logo"]["picture"]);
     $('#market-title').html(data["name"]);
     $('#market-info-data').html(
@@ -60,7 +61,17 @@ function showMarketInfo(data) {
         "<tr><td>Email:</td><td>" + data["email"] + "</td></tr>" +
         "<tr><td>Телефон:</td><td>" + data["phone"] + "</td></tr>"
     );
+
 }
+
+$.fn.stars = function () {
+    return this.each(function (i, e) {
+        $(e).html($('<span/>').width($(e).text() * 16));
+    });
+};
+
+
+$('.stars').stars();
 
 function getProductsTop(data, amount = -1) {
     let itemList = data["items"].sort((a, b) => parseFloat(b["rating"]) - parseFloat(a["rating"]));
@@ -303,9 +314,138 @@ editShopLogotype.addEventListener('submit', () => {
     })
 })
 
+function getReviewForEdit(id) {
 
+    fetch("/market/api/info/" + id)
+        .then(response => response.json())
+        .then(shop => {
+            console.log(shop)
+            document.getElementById('id').value = shop.id;
+            document.getElementById('name').value = shop.name;
 
+        })
+}
 
+function addReview() {
+    // event.preventDefault();
+    shops = {
+        id: $('#id').val(),
+        name: $('#name').val()
+    };
 
+    let review = {
+        dignity: $('#dignity').val(),
+        flaw: $('#flaw').val(),
+        rating: $('#rating').val(),
+        text: $('#text').val(),
+        shop: shops
+    };
+    console.log(JSON.stringify(review));
+    fetch("/market/api/", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(review),
+    })
+        .then((response) => console.log(response.status))
 
+        .catch(e => console.error(e))
+
+}
+
+let pathArr = window.location.pathname.split("/");
+let id = pathArr[pathArr.length - 1];
+let my_shop = null;
+$.getJSON("/market/api/info/" + id, function (json) {
+    my_shop = json;
+});
+
+let my_user = null;
+$.getJSON("/api/users/principal", function (json) {
+    my_user = json;
+});
+
+function newInFavorite() {
+    let shop = my_shop;
+    shop.favorite = true;
+    let user_shop = {
+        id: my_shop.user_id,
+        username: my_shop.username
+    }
+    shop.user = user_shop;
+    let user = my_user;
+
+    let shops = [];
+    shops.push({
+        id: shop.id,
+        favorite: true
+    })
+    let users = {
+        username: user.username,
+        id: user.id
+    }
+
+    let favorite = null;
+    if (user != null) {
+        let favorites = {
+            shops: shops,
+            user: users
+        }
+        favorite = favorites;
+    }
+
+    console.log(JSON.stringify(favorite));
+    fetch("/favorites", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(favorite),
+    })
+        .then((response) => console.log(response.status))
+    fetch("/market/api/editFavorite/", {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(shop),
+    })
+        .then((response) => console.log(response.status))
+        .catch(e => console.error(e))
+
+}
+
+let favorite_id = null;
+let fav_id = null;
+$.getJSON("/favorites/getIdShop", function (json) {
+    favorite_id = json;
+});
+
+function deleteFavorite() {
+    fav_id = favorite_id[my_shop.id];
+    let shop = my_shop;
+    shop.favorite = false;
+    let user_shop = {
+        id: my_shop.user_id,
+        username: my_shop.username
+    }
+    shop.user = user_shop;
+    fetch("/favorites/delete/" + fav_id, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+        .then((response) => console.log(response.status))
+    fetch("/market/api/editFavorite/", {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(shop),
+    })
+        .then((response) => console.log(response.status))
+        .catch(e => console.error(e))
+}
 

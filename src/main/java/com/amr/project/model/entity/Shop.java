@@ -13,6 +13,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @Entity
 @Table(name = "shops")
+
 public class Shop {
 
     @Id
@@ -21,6 +22,7 @@ public class Shop {
     private String name;
     private String email;
     private String phone;
+    private boolean favorite;
 
     @Column(columnDefinition = "text")
     private String description;

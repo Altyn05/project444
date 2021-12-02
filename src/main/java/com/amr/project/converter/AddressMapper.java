@@ -4,8 +4,6 @@ import com.amr.project.model.dto.AddressDto;
 import com.amr.project.model.entity.Address;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import java.util.List;
-import com.amr.project.model.dto.AdminAddressDto;
 
 @Mapper(componentModel = "spring")
 public interface AddressMapper {

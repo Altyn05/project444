@@ -1,9 +1,7 @@
 package com.amr.project.model.dto;
 
-import com.amr.project.model.entity.Country;
 import lombok.Data;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Data
