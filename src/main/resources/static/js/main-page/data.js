@@ -33,7 +33,7 @@ function renderItems() {
                 <div class="gcard d-flex flex-column flex-grow-1 w-100">
                     <div>
                         <a href="item/${item.id}">
-                            <img src="${url.substring(url.indexOf('/img'))}"
+                            <img src="data:image/png;base64,${item.images[0].picture}"
                                  class="card-img-top item-img"
                                  alt="фото товара">
                         </a>

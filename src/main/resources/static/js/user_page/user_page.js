@@ -35,7 +35,7 @@ function userFoto(images) {
     let i = 0
     for (let image of images) {
 
-        if(image.isMain === true) document.avatar_foto.src = "data:image/png;base64," + image.picture  // картинка из файла
+        if (image.isMain === true) document.avatar_foto.src = "data:image/png;base64," + image.picture  // картинка из файла
 
         let newLi = document.createElement('li')
         newLi.className = "DEL"
@@ -61,16 +61,16 @@ function userFoto(images) {
     }
 }
 
-function writeAddresses (addresses, addr1, addr2) {
-    let i=0
-    for(let address of addresses) {
+function writeAddresses(addresses, addr1, addr2) {
+    let i = 0
+    for (let address of addresses) {
         let newLi = document.createElement('li')
         newLi.className = "DEL nav-item " + addr1 + addr2
         let newA = document.createElement('a')
         newA.className = "DEL nav-link " + addr1 + addr2
         if (i === 0) newA.className = "DEL nav-link active " + addr1 + addr2
-        newA.setAttribute('data-toggle',"tab")
-        newA.href ="#" + addr1 +i
+        newA.setAttribute('data-toggle', "tab")
+        newA.href = "#" + addr1 + i
         newA.text = i.toString()
         newLi.appendChild(newA)
         document.querySelector('.' + addr1).appendChild(newLi)
@@ -88,7 +88,7 @@ function writeAddresses (addresses, addr1, addr2) {
         newDiv.appendChild(li2)
         let li3 = document.createElement('li')
         li3.className = "street" + addr1 + addr2
-        li3.innerHTML = "Улица: " + address.street + " дом: "+ address.house;
+        li3.innerHTML = "Улица: " + address.street + " дом: " + address.house;
         newDiv.appendChild(li3)
         document.querySelector('.' + addr2).appendChild(newDiv)
 
@@ -100,13 +100,14 @@ initUserPage()
 
 
 const urlCats = "http://localhost:8888/api/categories";
-let itemPhoto
+let itemPhoto = []
 let hpCats = [];
 const loadCats = async () => {
     const res = await fetch(urlCats);
     hpCats = await res.json();
 
 };
+let phCount = 0;
 
 function loadItemPhoto() {
     loadCats().then()
@@ -116,10 +117,23 @@ function loadItemPhoto() {
     return new Promise((resolve, reject) => {
         let reader = new FileReader()
         reader.onload = () => {
-            document.photo.src = reader.result
-            let res = reader.result.replace(/data:image.*,/, "")
-            console.log(res)
-            itemPhoto = {id: null, url: "file", picture: res, isMain: true}
+            let res
+            if (phCount < 1) {
+                phCount++;
+                document.getElementById('pictureItem').innerHTML +=
+                    '<div class="carousel-item active"><img src="' + reader.result + '" class="d-block w-50" alt="" ></div>'
+                // document.photo.src = reader.result
+                res = reader.result.replace(/data:image.*,/, "")
+                itemPhoto.push( {id: null, url: "file", picture: res, isMain: true})
+            } else {
+                document.getElementById('pictureItem').innerHTML +=
+                    '<div class="carousel-item"><img src="' + reader.result + '" class="d-block w-50" alt="" ></div>'
+                res = reader.result.replace(/data:image.*,/, "")
+                itemPhoto.push({id: null, url: "file", picture: res, isMain: true})
+
+            }
+            console.log(itemPhoto)
+            // itemPhoto += {id: null, url: "file", picture: res, isMain: true}
             resolve()
         }
         reader.onerror = reject
@@ -144,15 +158,15 @@ newItemCreate.addEventListener('submit', (ev) => {
                     description: itemProfile[1].value,
                     price: itemProfile[2].value,
                     count: itemProfile[3].value,
-                    images: [
+                    images:
                         itemPhoto
-                        ]
+
                 })
             })
         )
     })
-    a.then(function () {
-        initUserPage().then()
-        $('#newItemModal .close').click()
-    })
+    // a.then(function () {
+    //     initUserPage().then()
+    //     $('#newItemModal .close').click()
+    // })
 })
