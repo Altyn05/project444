@@ -27,7 +27,7 @@ public class Item {
     )
     private List<Category> categories;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Image> images;
 
     @OneToMany(mappedBy = "item")

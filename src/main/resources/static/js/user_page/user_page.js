@@ -99,13 +99,42 @@ function writeAddresses (addresses, addr1, addr2) {
 initUserPage()
 
 
+const urlCats = "http://localhost:8888/api/categories";
+let itemPhoto
+let hpCats = [];
+const loadCats = async () => {
+    const res = await fetch(urlCats);
+    hpCats = await res.json();
+
+};
+
+function loadItemPhoto() {
+    loadCats().then()
+    console.log("список категорий: " + hpCats)
+    let fileInput = document.querySelector(".newPhoto")
+    if (fileInput.files[0] == undefined) return
+    return new Promise((resolve, reject) => {
+        let reader = new FileReader()
+        reader.onload = () => {
+            document.photo.src = reader.result
+            let res = reader.result.replace(/data:image.*,/, "")
+            console.log(res)
+            itemPhoto = {id: null, url: "file", picture: res, isMain: true}
+            resolve()
+        }
+        reader.onerror = reject
+        reader.readAsDataURL(fileInput.files[0]);
+    })
+}
+
+URLCreateItem = 'http://localhost:8888/api/items/'
 let newItemCreate = document.getElementById('submitNewItem');
-let itemProfile = document.querySelectorAll('.form-control-item');
-newItemCreate.addEventListener('submit', (ev => {
+let itemProfile = document.querySelectorAll('.createItem');
+newItemCreate.addEventListener('submit', (ev) => {
     ev.preventDefault();
     let a = new Promise(function (resolve) {
         resolve(
-            fetch(URLAddShop, {
+            fetch(URLCreateItem, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -113,10 +142,17 @@ newItemCreate.addEventListener('submit', (ev => {
                 body: JSON.stringify({
                     name: itemProfile[0].value,
                     description: itemProfile[1].value,
-                    phone: itemProfile[2].value,
-                    photo: ggggggggggggggggg
+                    price: itemProfile[2].value,
+                    count: itemProfile[3].value,
+                    images: [
+                        itemPhoto
+                        ]
                 })
             })
         )
     })
-}))
+    a.then(function () {
+        initUserPage().then()
+        $('#newItemModal .close').click()
+    })
+})
