@@ -165,8 +165,8 @@ newItemCreate.addEventListener('submit', (ev) => {
             })
         )
     })
-    // a.then(function () {
-    //     initUserPage().then()
-    //     $('#newItemModal .close').click()
-    // })
+    a.then(function () {
+        initUserPage().then()
+        $('#newItemModal .close').click()
+    })
 })
