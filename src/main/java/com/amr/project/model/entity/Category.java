@@ -1,5 +1,6 @@
 package com.amr.project.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -19,6 +20,7 @@ public class Category {
     private Long id;
     private String name;
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(
             name = "categories_items",

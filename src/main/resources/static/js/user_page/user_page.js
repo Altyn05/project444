@@ -194,6 +194,8 @@ newItemCreate.addEventListener('submit', (ev) => {
     a.then(function () {
         initUserPage().then()
         phCount = 0;
+        itemPhoto = []
+        document.getElementById('pictureItem').innerHTML = ''
         document.getElementById('pictureItem').innerHTML = ''
         $('#newItemModal .close').click()
     })

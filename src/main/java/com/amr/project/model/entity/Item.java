@@ -1,6 +1,7 @@
 package com.amr.project.model.entity;
 
 import lombok.Data;
+import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -19,13 +20,13 @@ public class Item {
     private BigDecimal price;
     private boolean favorite;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+
+    @ManyToMany
     @JoinTable(
             name = "categories_items",
             joinColumns = @JoinColumn(name = "item_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
-
     private List<Category> categories;
 
     @OneToMany(cascade = CascadeType.ALL)
