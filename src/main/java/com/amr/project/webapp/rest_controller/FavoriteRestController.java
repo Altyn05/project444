@@ -111,4 +111,17 @@ public class FavoriteRestController {
         favoriteRepository.deleteById(id);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
+
+    @GetMapping("/getItemsByFavorites")
+    public ResponseEntity<List<List<ItemDto2>>> getItemByFavorites() {
+        List<Favorite> favorite = (List<Favorite>) favoriteRepository.findAll();
+        List<List<ItemDto2>> items = new ArrayList<>();
+        for (Favorite a : favorite) {
+            if (a.getItems() != null) {
+                items.add(itemMapper2.itemListToListItemDto(a.getItems()));
+            }
+        }
+        return new ResponseEntity<>(items, HttpStatus.OK);
+    }
+
 }
