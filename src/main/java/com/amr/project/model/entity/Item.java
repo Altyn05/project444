@@ -1,7 +1,7 @@
 package com.amr.project.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
-import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -20,6 +20,14 @@ public class Item {
     private BigDecimal price;
     private boolean favorite;
 
+
+    @ManyToOne
+    @JoinTable(
+            name = "users_items",
+            joinColumns = @JoinColumn(name = "items_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private User user;
 
     @ManyToMany
     @JoinTable(

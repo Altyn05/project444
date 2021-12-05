@@ -113,7 +113,6 @@ public class DatabaseInitializer {
         orders = getOrders();
         orders.forEach((rwOrder::persist));
 
-
     }
 
     private Set<Role> getRoles() {
@@ -257,6 +256,7 @@ public class DatabaseInitializer {
         shops.add(getShop("iBatt", "Аккумуляторные батареи для ноутбуков, блоки питания для ноутбуков", path + "ibatt.jpg"));
         shops.add(getShop("FotoCCCP", "Фототехника и оптика. Переходники, адаптеры и аксессуары для фото", path + "fotocccp.jpg"));
         shops.add(getShop("RedKey", "Сеть салонов Hi-Fi техники", path + "redkey.jpg"));
+        shops.add(getShop("SuperStar", "Сеть бутиков высокой моды", path + "redkey.jpg"));
 
         return shops;
     }

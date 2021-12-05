@@ -185,6 +185,7 @@ newItemCreate.addEventListener('submit', (ev) => {
                     description: itemProfile[2].value,
                     price: itemProfile[3].value,
                     count: itemProfile[4].value,
+                    user: {username:user.username},
                     images:
                         itemPhoto
                 })

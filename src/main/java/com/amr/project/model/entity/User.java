@@ -1,6 +1,7 @@
 package com.amr.project.model.entity;
 
 import com.amr.project.model.enums.Gender;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
@@ -82,6 +83,15 @@ public class User implements UserDetails {
     @ToString.Exclude
     private List<Discount> discounts;
 
+
+    @OneToMany
+    @JoinTable(
+            name = "users_items",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "items_id")
+    )
+    @ToString.Exclude
+    List<Item> items;
 
 
     public User(String username, String password) {

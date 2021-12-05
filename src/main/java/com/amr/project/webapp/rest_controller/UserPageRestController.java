@@ -48,6 +48,8 @@ public class UserPageRestController {
     @PostMapping("/items")
     public Item saveItem(@RequestBody Item item) {
         System.out.println("Вход в рест: " + item);
+        User user = userService.findUserByUsername(item.getUser().getUsername());
+        item.getUser().setId(user.getId());
         List<Category> categories = new ArrayList<>();
         for (Category category : item.getCategories()) {
             categories.add(categoryService.findByName(category.getName()));
