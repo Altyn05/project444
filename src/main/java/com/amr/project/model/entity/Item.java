@@ -19,12 +19,13 @@ public class Item {
     private BigDecimal price;
     private boolean favorite;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "categories_items",
             joinColumns = @JoinColumn(name = "item_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
+
     private List<Category> categories;
 
     @OneToMany(cascade = CascadeType.ALL)

@@ -146,7 +146,7 @@
                     <li><a href="#">Проданные товары</a></li>
                     <li><a href="#newShopModal" data-toggle="modal" data-target="#newShopModal"> Новый магазин</a></li>
                     <hr>
-                    <li><a href="#newItemModal" data-toggle="modal" data-target="#newItemModal">Разместить объявление</a></li>
+                    <li><a href="#newItemModal" data-toggle="modal" data-target="#newItemModal" id="newItemMod">Разместить объявление</a></li>
 
 
                     </li>
@@ -405,18 +405,18 @@
                 </button>
             </div>
             <div class="modal-body p-4 pb-3 border-bottom">
-                <form class="form-shop mx-auto font-weight-bold text-center p-3" content="application/json"
+                <form class="form-shop mx-auto font-weight-bold text-center p-3 createItemClass" content="application/json"
                       style="width: 400px;" id="submitNewItem">
 
                     <h5 class="mb-3 font-weight-normal">Введите информацию по новому объявлению:</h5>
 
-<!--                    <div class="mb-3">-->
-<!--                        <label for="inputCategoriesCreateItem" class="form-label">Категории-->
-<!--                        </label>-->
-<!--                        <select id="inputCategoriesCreateItem" class="form-control createItem" multiple-->
-<!--                                size="3" name="categories">-->
-<!--                        </select>-->
-<!--                    </div>-->
+                    <div class="mb-3">
+                        <label for="categoriesCreateItem" class="form-label">Категории
+                        </label>
+                        <select id="categoriesCreateItem" class="form-control createItem" multiple
+                                size="3" name="categories">
+                        </select>
+                    </div>
 
                     <div class="mb-3">
                         <label for="inputItemName" class="form-label">Наименование товара</label>
@@ -439,23 +439,8 @@
                         <input type="text" class="form-control createItem" name="price" id="inputItemAmount" placeholder="Количество">
                     </div>
 
-<!--                    <div class="pl-sm-2 pl-1" id="photo-section"><b></b>-->
-<!--                        <img style="border-radius: 10%; max-width: 100px"-->
-<!--                             src=""-->
-<!--                             class="img mx-2" name="photo"/>-->
-
-
                     <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                         <div class="carousel-inner" id="pictureItem">
-<!--                            <div class="carousel-item active">-->
-<!--                                <img class="d-block w-100" src="..." alt="First slide">-->
-<!--                            </div>-->
-<!--                            <div class="carousel-item">-->
-<!--                                <img class="d-block w-100" src="..." alt="Second slide">-->
-<!--                            </div>-->
-<!--                            <div class="carousel-item">-->
-<!--                                <img class="d-block w-100" src="..." alt="Third slide">-->
-<!--                            </div>-->
                         </div>
                         <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -466,19 +451,12 @@
                             <span class="sr-only">Next</span>
                         </a>
                     </div>
-
-
-
                         <hr>
                         <h6>Добавить фото размером не более 1MB</h6>
                         <div>
                             <input type="file" accept="image/jpeg,image/png" class="form-control newPhoto"
                                    onchange="loadItemPhoto()"/>
-
                         </div>
-<!--                    </div>-->
-
-
                     <br/>
                     <button class="btn btn-lg btn-primary btn-block mt--5"  type="submit">Подать объявление</button>
 

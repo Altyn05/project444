@@ -122,7 +122,6 @@ function loadItemPhoto() {
                 phCount++;
                 document.getElementById('pictureItem').innerHTML +=
                     '<div class="carousel-item active"><img src="' + reader.result + '" class="d-block w-50" alt="" ></div>'
-                // document.photo.src = reader.result
                 res = reader.result.replace(/data:image.*,/, "")
                 itemPhoto.push( {id: null, url: "file", picture: res, isMain: true})
             } else {
@@ -130,10 +129,8 @@ function loadItemPhoto() {
                     '<div class="carousel-item"><img src="' + reader.result + '" class="d-block w-50" alt="" ></div>'
                 res = reader.result.replace(/data:image.*,/, "")
                 itemPhoto.push({id: null, url: "file", picture: res, isMain: true})
-
             }
             console.log(itemPhoto)
-            // itemPhoto += {id: null, url: "file", picture: res, isMain: true}
             resolve()
         }
         reader.onerror = reject
@@ -141,11 +138,40 @@ function loadItemPhoto() {
     })
 }
 
+
+URLCategories = 'http://localhost:8888/api/categories'
+
+const newItemModalBTN = document.getElementById('newItemMod')
+
+newItemModalBTN.addEventListener('click', () =>{
+    loadCategoriesField().then()
+})
+let hpCat = []
+const loadCategoriesField = async () => {
+    const res = await fetch(URLCategories);
+    hpCat = await res.json();
+    selCats(hpCat)
+};
+
+const  selCats = (categories) => {
+    document.getElementById('categoriesCreateItem').innerHTML = categories
+        .map((c) => {
+            return `
+            <option value="${c.name}">${c.name}</option>
+        `;
+        })
+        .join('');
+
+}
+
 URLCreateItem = 'http://localhost:8888/api/items/'
 let newItemCreate = document.getElementById('submitNewItem');
 let itemProfile = document.querySelectorAll('.createItem');
 newItemCreate.addEventListener('submit', (ev) => {
     ev.preventDefault();
+    let sel = Array.from(document.querySelector(".createItemClass").categories.options)
+        .filter(option => option.selected)
+        .map(option => option.value);
     let a = new Promise(function (resolve) {
         resolve(
             fetch(URLCreateItem, {
@@ -154,19 +180,21 @@ newItemCreate.addEventListener('submit', (ev) => {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    name: itemProfile[0].value,
-                    description: itemProfile[1].value,
-                    price: itemProfile[2].value,
-                    count: itemProfile[3].value,
+                    categories: sel,
+                    name: itemProfile[1].value,
+                    description: itemProfile[2].value,
+                    price: itemProfile[3].value,
+                    count: itemProfile[4].value,
                     images:
                         itemPhoto
-
                 })
             })
         )
     })
     a.then(function () {
         initUserPage().then()
+        phCount = 0;
+        document.getElementById('pictureItem').innerHTML = ''
         $('#newItemModal .close').click()
     })
 })

@@ -47,14 +47,6 @@ public class UserPageRestController {
 
     @PostMapping("/items")
     public Item saveItem(@RequestBody Item item) {
-        System.out.println("Вход в рест: " + item);
-//        Long id = Long.parseLong(item.getShop().getName());
-//        item.setShop(shopService.findById(id));
-//        List<Category> categories = new ArrayList<>();
-//        for (Category category : item.getCategories()) {
-//            categories.add(categoryService.findByName(category.getName()));
-//        }
-//        item.setCategories(categories);
         itemService.persist(item);
         return item;
     }
