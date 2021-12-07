@@ -1,5 +1,6 @@
 package com.amr.project.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -19,6 +20,15 @@ public class Item {
     private BigDecimal price;
     private boolean favorite;
 
+
+    @ManyToOne
+    @JoinTable(
+            name = "users_items",
+            joinColumns = @JoinColumn(name = "items_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private User user;
+
     @ManyToMany
     @JoinTable(
             name = "categories_items",
@@ -27,7 +37,7 @@ public class Item {
     )
     private List<Category> categories;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Image> images;
 
     @OneToMany(mappedBy = "item")

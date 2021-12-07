@@ -63,7 +63,7 @@ public class DatabaseInitializer {
 
     @PostConstruct
     public void init() {
-/*
+
         roles = getRoles();
         roles.forEach(roleDao::persist);
 
@@ -79,7 +79,7 @@ public class DatabaseInitializer {
         users = getUsers();
         //USER Можно пока одного юзера сделать фискированным чтобы время сэкономить?
         users.get(0).setUsername("user");
-        users.get(0).setPassword("user");
+        users.get(0).setPassword("1");
         users.get(0).setRoles(null);
         users.get(0).addRole(roles.stream().filter(r -> r.getName() == "USER").findFirst().orElse(null));
         //USER Можно пока одного юзера сделать фискированным чтобы время сэкономить?
@@ -91,13 +91,13 @@ public class DatabaseInitializer {
 
         shops = getShops();
         shops.forEach(shop -> {
-            imageDao.persist(shop.getLogo());
+//            imageDao.persist(shop.getLogo());
             shopDao.persist(shop);
         });
 
         items = getItems();
         items.forEach(item -> {
-            item.getImages().forEach(imageDao::persist);
+//            item.getImages().forEach(imageDao::persist);
             itemDao.persist(item);
         });
 
@@ -113,7 +113,6 @@ public class DatabaseInitializer {
         orders = getOrders();
         orders.forEach((rwOrder::persist));
 
-*/
     }
 
     private Set<Role> getRoles() {
@@ -139,6 +138,7 @@ public class DatabaseInitializer {
         users.add(getUser("Dmitry", "Dmitrov", Gender.MALE, path + "7.jpg"));
         users.add(getUser("Kiril", "Kirilov", Gender.MALE, path + "8.jpg"));
         users.add(getUser("Pavel", "Pavlov", Gender.MALE, path + "9.jpg"));
+        users.add(getUser("Konstantin", "Konstantinov", Gender.MALE, path + "9.jpg"));
         return users;
     }
 
@@ -257,6 +257,7 @@ public class DatabaseInitializer {
         shops.add(getShop("iBatt", "Аккумуляторные батареи для ноутбуков, блоки питания для ноутбуков", path + "ibatt.jpg"));
         shops.add(getShop("FotoCCCP", "Фототехника и оптика. Переходники, адаптеры и аксессуары для фото", path + "fotocccp.jpg"));
         shops.add(getShop("RedKey", "Сеть салонов Hi-Fi техники", path + "redkey.jpg"));
+        shops.add(getShop("SuperStar", "Сеть бутиков высокой моды", path + "cl.jpg"));
 
         return shops;
     }

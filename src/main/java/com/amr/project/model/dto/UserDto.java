@@ -1,6 +1,8 @@
 package com.amr.project.model.dto;
 
+import com.amr.project.converter.CategoryMapper;
 import lombok.*;
+import org.mapstruct.factory.Mappers;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.ArrayList;
@@ -27,6 +29,8 @@ public class UserDto {
     private Date birthday;
     private List<OrderDto> orders = new ArrayList<>();
     private List<ShopDto> shops = new ArrayList<>();
+    private List<CategoryDto> categories = new ArrayList<>();
+    private final CategoryMapper categoryMapper = Mappers.getMapper(CategoryMapper.class);
 
     public UserDto(String email, String username, String password, String phone, String firstName, String lastName) {
         this.email = email;
@@ -60,6 +64,10 @@ public class UserDto {
         this.phone = phone;
         this.firstName = firstName;
         this.lastName = lastName;
+    }
+
+    public UserDto(List<CategoryDto> categories) {
+        this.categories = categories;
     }
 
     public String getPassword() {

@@ -35,7 +35,7 @@ function userFoto(images) {
     let i = 0
     for (let image of images) {
 
-        if(image.isMain === true) document.avatar_foto.src = "data:image/png;base64," + image.picture  // картинка из файла
+        if (image.isMain === true) document.avatar_foto.src = "data:image/png;base64," + image.picture  // картинка из файла
 
         let newLi = document.createElement('li')
         newLi.className = "DEL"
@@ -61,16 +61,16 @@ function userFoto(images) {
     }
 }
 
-function writeAddresses (addresses, addr1, addr2) {
-    let i=0
-    for(let address of addresses) {
+function writeAddresses(addresses, addr1, addr2) {
+    let i = 0
+    for (let address of addresses) {
         let newLi = document.createElement('li')
         newLi.className = "DEL nav-item " + addr1 + addr2
         let newA = document.createElement('a')
         newA.className = "DEL nav-link " + addr1 + addr2
         if (i === 0) newA.className = "DEL nav-link active " + addr1 + addr2
-        newA.setAttribute('data-toggle',"tab")
-        newA.href ="#" + addr1 +i
+        newA.setAttribute('data-toggle', "tab")
+        newA.href = "#" + addr1 + i
         newA.text = i.toString()
         newLi.appendChild(newA)
         document.querySelector('.' + addr1).appendChild(newLi)
@@ -88,7 +88,7 @@ function writeAddresses (addresses, addr1, addr2) {
         newDiv.appendChild(li2)
         let li3 = document.createElement('li')
         li3.className = "street" + addr1 + addr2
-        li3.innerHTML = "Улица: " + address.street + " дом: "+ address.house;
+        li3.innerHTML = "Улица: " + address.street + " дом: " + address.house;
         newDiv.appendChild(li3)
         document.querySelector('.' + addr2).appendChild(newDiv)
 
@@ -97,3 +97,107 @@ function writeAddresses (addresses, addr1, addr2) {
 }
 
 initUserPage()
+
+
+const urlCats = "http://localhost:8888/api/categories";
+let itemPhoto = []
+let hpCats = [];
+const loadCats = async () => {
+    const res = await fetch(urlCats);
+    hpCats = await res.json();
+
+};
+let phCount = 0;
+
+function loadItemPhoto() {
+    loadCats().then()
+    console.log("список категорий: " + hpCats)
+    let fileInput = document.querySelector(".newPhoto")
+    if (fileInput.files[0] == undefined) return
+    return new Promise((resolve, reject) => {
+        let reader = new FileReader()
+        reader.onload = () => {
+            let res
+            if (phCount < 1) {
+                phCount++;
+                document.getElementById('pictureItem').innerHTML +=
+                    '<div class="carousel-item active"><img src="' + reader.result + '" class="d-block w-50" alt="" ></div>'
+                res = reader.result.replace(/data:image.*,/, "")
+                itemPhoto.push( {id: null, url: "file", picture: res, isMain: true})
+            } else {
+                document.getElementById('pictureItem').innerHTML +=
+                    '<div class="carousel-item"><img src="' + reader.result + '" class="d-block w-50" alt="" ></div>'
+                res = reader.result.replace(/data:image.*,/, "")
+                itemPhoto.push({id: null, url: "file", picture: res, isMain: true})
+            }
+            console.log(itemPhoto)
+            resolve()
+        }
+        reader.onerror = reject
+        reader.readAsDataURL(fileInput.files[0]);
+    })
+}
+
+
+URLCategories = 'http://localhost:8888/api/categories'
+
+const newItemModalBTN = document.getElementById('newItemMod')
+
+newItemModalBTN.addEventListener('click', () =>{
+    loadCategoriesField().then()
+})
+let hpCat = []
+const loadCategoriesField = async () => {
+    const res = await fetch(URLCategories);
+    hpCat = await res.json();
+    selCats(hpCat)
+};
+
+const  selCats = (categories) => {
+    document.getElementById('categoriesCreateItem').innerHTML = categories
+        .map((c) => {
+            return `
+            <option value="${c.name}">${c.name}</option>
+        `;
+        })
+        .join('');
+
+}
+
+URLCreateItem = 'http://localhost:8888/api/items/'
+let newItemCreate = document.getElementById('submitNewItem');
+let itemProfile = document.querySelectorAll('.createItem');
+newItemCreate.addEventListener('submit', (ev) => {
+    ev.preventDefault();
+    let sel = Array.from(document.querySelector(".createItemClass").categories.options)
+        .filter(option => option.selected)
+        .map(option => option.value);
+    let a = new Promise(function (resolve) {
+        resolve(
+            fetch(URLCreateItem, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    categories: sel,
+                    name: itemProfile[1].value,
+                    description: itemProfile[2].value,
+                    price: itemProfile[3].value,
+                    count: itemProfile[4].value,
+                    user: {username:user.username},
+                    images:
+                        itemPhoto
+                })
+            })
+        )
+    })
+    a.then(function () {
+        initUserPage().then()
+        phCount = 0;
+        itemPhoto = []
+        document.getElementById('pictureItem').innerHTML = ''
+        document.getElementById('pictureItem').innerHTML = ''
+        $('#newItemModal .close').click()
+    })
+})

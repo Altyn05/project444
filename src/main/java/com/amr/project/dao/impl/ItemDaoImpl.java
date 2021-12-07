@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class ItemDaoImpl extends ReadWriteDaoImpl<Item,Long> implements ItemDao {
@@ -26,7 +27,7 @@ public class ItemDaoImpl extends ReadWriteDaoImpl<Item,Long> implements ItemDao 
     @Override
     public List<Item> findPopularItems() {
         return em.createQuery("SELECT i FROM Item i ORDER BY i.rating DESC", Item.class)
-                .getResultList();
+                .getResultList().stream().filter(Item::isModerateAccept).collect(Collectors.toList());
     }
 
     @Override
@@ -39,7 +40,7 @@ public class ItemDaoImpl extends ReadWriteDaoImpl<Item,Long> implements ItemDao 
         List<Item> list = em.createQuery("SELECT i FROM Item i ORDER BY i.rating DESC", Item.class)
                 .setFirstResult((int) pageable.getOffset())
                 .setMaxResults(pageable.getPageSize())
-                .getResultList();
+                .getResultList().stream().filter(Item::isModerateAccept).collect(Collectors.toList());
         return new PageImpl<>(list, pageable, size);
     }
 

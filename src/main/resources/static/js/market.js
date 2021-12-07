@@ -21,7 +21,7 @@ window.onload = async function () {
     showMarketInfo(shopData);
     $('#market-list-section').html(function () {
         headerText.innerHTML = '<h3 class="market-list-title">' + popHeader + '</h3>'
-        return getProductsTop(shopData, 4) + $(this).html()
+        return  getProductsTop(shopData, 4) + $(this).html()
     });
     $('#market-list-all').html(function () {
         return getProductsTop(shopData, -1) + $(this).html()
