@@ -20,7 +20,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 @SpringBootTest
-public class UserServiceTest {
+public class
+UserServiceTest {
 
     private final UserService userService;
 
