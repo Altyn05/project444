@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.test.context.support.WithMockUser;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -38,7 +39,7 @@ public class ItemRestControllerUnitTest {
 
     @Test
     @WithMockUser(username = "konstantin19", password = "8849")
-    public void saveItemToDBTest() {
+    public void RESTGetTest() {
         Item testItem = new Item();
         User user = userRepository.findUserByUsername("konstantin19").orElse(null);
         List<Category> categories = categoryDao.getAll(Category.class).stream().limit(3).collect(Collectors.toList());
@@ -67,4 +68,24 @@ public class ItemRestControllerUnitTest {
         System.out.println("Все тесты прошли успешно");
 
     }
+
+    @Test
+    public void RESTPostTest() {
+        Item testItem = new Item();
+        User user = userRepository.findUserByUsername("konstantin19").orElse(null);
+        List<Category> categories = categoryDao.getAll(Category.class).stream().limit(3).collect(Collectors.toList());
+        testItem.setUser(user);
+        testItem.setName("UnitTestItemName");
+        testItem.setDescription("UnitTestItemDescription");
+        testItem.setFavorite(false);
+        testItem.setImages(new ArrayList<>());
+        testItem.setReviews(new ArrayList<>());
+        testItem.setPrice(new BigDecimal("1234.00"));
+        testItem.setCategories(categories);
+        testItem.setModerated(false);
+        itemRestController.saveItem(testItem);
+        Item itemRetreivedfromDB = itemRepository.findItemByName("UnitTestItemName").get();
+        Assertions.assertEquals(testItem.toString(), itemRetreivedfromDB.toString(), "Неодинаковые объекты");
+    }
+
 }
