@@ -4,22 +4,17 @@ import com.amr.project.model.dto.CityDto;
 import com.amr.project.model.dto.CountryDto;
 import com.amr.project.model.dto.ImageDto;
 import com.amr.project.model.dto.ShopDto;
-import com.amr.project.model.entity.Shop;
-import com.amr.project.model.entity.User;
 import com.amr.project.repository.ShopRepository;
 import com.amr.project.repository.UserRepository;
 import com.amr.project.util.ImgUtilFromUrl;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.List;
 import java.util.Objects;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
@@ -33,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class NewShopControllerUnitTest {
+public class NewShopControllerIntegrationTest {
 
     @Autowired
     UserRepository userRepository;
@@ -48,7 +43,6 @@ public class NewShopControllerUnitTest {
     private ObjectMapper objectMapper;
 
     @Test
-    @WithMockUser(username = "konstantin19", password = "8849")
     void userCanCreateShop() throws Exception {
         ShopDto shopDto = new ShopDto();
         shopDto.setName("TestShop");
@@ -72,6 +66,10 @@ public class NewShopControllerUnitTest {
                 .andDo(print())
                 .andExpect(status().is3xxRedirection());
 
+        if (shopRepository.findAll().stream().anyMatch(a -> a.getName().equals("TestShop"))){
+            System.out.println("Созданный магазин найден в БД");
+        }
+
     }
 
     @Test
@@ -86,12 +84,17 @@ public class NewShopControllerUnitTest {
             System.out.println("Shop с таким именем отсутствует в БД");
         }
         System.out.println(id);
+
         mockMvc.perform(get("/deleteUserShop/" + id)
                 .with(user("konstantin19").roles("USER").password("8849"))
                 .with(csrf())
                 .accept(APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().is3xxRedirection());
+
+        if (shopRepository.findAll().stream().noneMatch(a -> a.getName().equals("TestShop"))){
+            System.out.println("Shop был успешно удален из БД");
+        }
 
     }
 }
