@@ -4,7 +4,9 @@ package com.amr.project.webapp.rest_controller;
 import com.amr.project.converter.ShopMapper;
 import com.amr.project.converter.UserMapper;
 import com.amr.project.dao.abstracts.CategoryDao;
+import com.amr.project.model.dto.CityDto;
 import com.amr.project.model.dto.ItemDto;
+import com.amr.project.model.dto.ShopDto;
 import com.amr.project.model.dto.UserDto;
 import com.amr.project.model.entity.*;
 import com.amr.project.repository.CityRepository;
@@ -84,7 +86,7 @@ public class NewShopControllerUnitTest {
         Optional<Shop> shop = shopRepository.findAll().stream().filter(a -> a.getName().equals("UnitTestShopName")).findAny();
         Long id = shop.get().getId();
         String response = newShopController.getOneNew(id);
-        System.out.println("ot rest" + response);
+//        System.out.println("ot rest" + response);
         String name = JsonPath.read(response, "$.name");
         String description = JsonPath.read(response, "$.description");
         String phone = JsonPath.read(response, "$.phone");
@@ -116,17 +118,19 @@ public class NewShopControllerUnitTest {
         testShop.setCity(cityService.findById(1L));
         testShop.setPhone("12345");
         Principal  userPrincipal = SecurityContextHolder.getContext().getAuthentication();
-        System.out.println(userPrincipal.getName());
-        ModelAndView response = newShopController.createNewShop(userPrincipal, shopMapper.shopToDto(testShop));
-        System.out.println("ot rest" + response);
-        String name = JsonPath.read(response, "$.name");
-        String description = JsonPath.read(response, "$.description");
-        String phone = JsonPath.read(response, "$.phone");
-        Assertions.assertEquals("UnitTestShopName", name,
-                "Не совпадает имя полученное из RESTController и записанное в БД");
-        Assertions.assertEquals("UnitTestShopDescription", description,
-                "Не совпадает описание полученное из RESTController и записанное в БД");
-        Assertions.assertEquals("12345", phone,
+//        System.out.println(userPrincipal.getName());
+        ShopDto shopDto = shopMapper.shopToDto(testShop);
+        shopDto.setCityDto(new CityDto("Katmandu"));
+//        System.out.println(shopDto);
+        newShopController.createNewShop(userPrincipal, shopDto);
+        Shop shopfromDB = shopService.findByName("UnitTestShopName");
+//        System.out.println("ot DB" + shopfromDB);
+
+        Assertions.assertEquals("UnitTestShopName", shopfromDB.getName(),
+                "Не совпадает имя полученное из тестовой модели и записанное в БД");
+        Assertions.assertEquals("UnitTestShopDescription", shopfromDB.getDescription(),
+                "Не совпадает описание полученное из тестовой модели и записанное в БД");
+        Assertions.assertEquals("12345", shopfromDB.getPhone(),
                 "Не совпадает описание полученное из RESTController и записанное в БД");
 
         shopRepository.delete(testShop);
