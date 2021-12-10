@@ -2,13 +2,12 @@ package com.amr.project.webapp.rest_controller;
 
 
 import com.amr.project.converter.ShopMapper;
-import com.amr.project.converter.UserMapper;
 import com.amr.project.dao.abstracts.CategoryDao;
 import com.amr.project.model.dto.CityDto;
-import com.amr.project.model.dto.ItemDto;
 import com.amr.project.model.dto.ShopDto;
-import com.amr.project.model.dto.UserDto;
-import com.amr.project.model.entity.*;
+import com.amr.project.model.entity.Image;
+import com.amr.project.model.entity.Shop;
+import com.amr.project.model.entity.User;
 import com.amr.project.repository.CityRepository;
 import com.amr.project.repository.ShopRepository;
 import com.amr.project.repository.UserRepository;
@@ -17,28 +16,17 @@ import com.amr.project.service.abstracts.CountryService;
 import com.amr.project.service.abstracts.ShopService;
 import com.amr.project.util.ImgUtilFromUrl;
 import com.amr.project.webapp.controller.NewShopController;
-import com.google.gson.Gson;
 import com.jayway.jsonpath.JsonPath;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.json.JsonParser;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.servlet.ModelAndView;
-import springfox.documentation.spring.web.json.Json;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.security.Principal;
-import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @SpringBootTest
 public class NewShopControllerUnitTest {
