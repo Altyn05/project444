@@ -1,8 +1,11 @@
 package com.amr.project.webapp.rest_controller;
 
 
+import com.amr.project.converter.ShopMapper;
+import com.amr.project.converter.UserMapper;
 import com.amr.project.dao.abstracts.CategoryDao;
 import com.amr.project.model.dto.ItemDto;
+import com.amr.project.model.dto.UserDto;
 import com.amr.project.model.entity.*;
 import com.amr.project.repository.CityRepository;
 import com.amr.project.repository.ShopRepository;
@@ -21,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.json.JsonParser;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.ModelAndView;
@@ -53,6 +57,11 @@ public class NewShopControllerUnitTest {
     CountryService countryService;
     @Autowired
     CityService cityService;
+    @Autowired
+    UserPageRestController userPageRestController;
+    @Autowired
+    ShopMapper shopMapper;
+
 
 
 
@@ -106,10 +115,9 @@ public class NewShopControllerUnitTest {
         testShop.setLocation(countryService.findById(1L));
         testShop.setCity(cityService.findById(1L));
         testShop.setPhone("12345");
-
-        Optional<Shop> shop = shopRepository.findAll().stream().filter(a -> a.getName().equals("UnitTestShopName")).findAny();
-
-        String response = newShopController.createNewShop()
+        Principal  userPrincipal = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println(userPrincipal.getName());
+        ModelAndView response = newShopController.createNewShop(userPrincipal, shopMapper.shopToDto(testShop));
         System.out.println("ot rest" + response);
         String name = JsonPath.read(response, "$.name");
         String description = JsonPath.read(response, "$.description");
