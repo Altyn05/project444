@@ -151,7 +151,7 @@ public class ShopServiceImpl
         User user = shopDb.getUser();
         shopDb.setUser(null);
         shopDb.setModerateAccept(false);
-        shopDao.update(shopDb);
+        shopDao.delete(shopDb);
     }
 
 

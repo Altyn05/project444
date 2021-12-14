@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 
 @Service
-@Transactional
+//@Transactional
 public class ImageServiceImpl extends ReadWriteServiceImpl<Image, Long> implements ImageService {
 
     @Autowired

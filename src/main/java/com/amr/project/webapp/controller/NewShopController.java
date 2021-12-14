@@ -8,6 +8,7 @@ import com.amr.project.model.entity.Image;
 import com.amr.project.model.entity.Shop;
 import com.amr.project.service.abstracts.*;
 import org.springframework.security.crypto.codec.Base64;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -15,7 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.security.Principal;
 import java.util.Arrays;
 
-@RestController
+@Controller
 public class NewShopController {
     private final ShopService shopService;
     private final UserService userService;
