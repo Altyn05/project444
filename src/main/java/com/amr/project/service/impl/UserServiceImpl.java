@@ -14,10 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @Transactional
@@ -109,5 +106,10 @@ public User findUserByUsername(String username) {
     @Override
     public User findById(Long id) {
         return userDao.findById(id);
+    }
+
+
+    public List<User> findUsersByEMail(String eMail){
+        return userDao.findUsersByEMail(eMail);
     }
 }

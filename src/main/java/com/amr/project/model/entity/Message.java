@@ -13,15 +13,15 @@ public class Message {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne //(fetch = FetchType.LAZY)
     @JoinColumn(name = "chat_id")
     private Chat chat;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne//(fetch = FetchType.LAZY)
     @JoinColumn(name = "to_user_id")
     private User to;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne//(fetch = FetchType.LAZY)
     @JoinColumn(name = "from_user_id")
     private User from;
 

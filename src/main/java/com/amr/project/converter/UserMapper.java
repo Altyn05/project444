@@ -6,6 +6,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
+import java.util.List;
+
 
 @Mapper(componentModel = "spring",
         uses = {OrderMapper.class,
@@ -19,4 +21,7 @@ public interface UserMapper {
     @Mapping(target = "orders", ignore = true)      //листы пока не обновляю
     @Mapping(target = "shops", ignore = true)       //листы пока не обновляю
     void updateModel (UserDto userDto, @MappingTarget User user);
+
+    List<UserChatDTO> listUserToListUserChatDTO(List<User> list);
+    UserChatDTO userToChatDTO(User user);
 }

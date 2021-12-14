@@ -2,6 +2,8 @@ package com.amr.project.service.abstracts;
 
 
 import com.amr.project.model.entity.User;
+
+import java.util.List;
 import java.util.Optional;
 public interface UserService extends ReadWriteService<User, Long> {
     User findById(Long id);
@@ -21,5 +23,8 @@ public interface UserService extends ReadWriteService<User, Long> {
         boolean checkByUsername(String name);
 
         void updateUser(User user);
+
+        List<User> findUsersByEMail(String eMail);
+
     }
 
