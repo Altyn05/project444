@@ -3,10 +3,12 @@ package com.amr.project.service.impl;
 import com.amr.project.converter.ShopMapper;
 import com.amr.project.dao.abstracts.ReadWriteDao;
 import com.amr.project.dao.abstracts.ShopDao;
+import com.amr.project.model.dto.ShopDto;
 import com.amr.project.model.dto.ShopMainPageDTO;
 import com.amr.project.model.entity.Shop;
 import com.amr.project.model.entity.User;
 import com.amr.project.service.abstracts.ShopService;
+import org.mapstruct.factory.Mappers;
 import com.amr.project.util.EmailUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,19 +23,17 @@ public class ShopServiceImpl
         implements ShopService {
 
     private final ShopDao shopDao;
+    private final ShopMapper shopMapper = Mappers.getMapper(ShopMapper.class);
     private final EmailUtil emailUtil;
-    private final ShopMapper shopMapper;
 
     @Autowired
     public ShopServiceImpl(
             ReadWriteDao<Shop, Long> readWriteDao,
             ShopDao shopDao,
-            ShopMapper shopMapper,
             EmailUtil emailUtil
     ) {
         super(readWriteDao);
         this.shopDao = shopDao;
-        this.shopMapper = shopMapper;
         this.emailUtil = emailUtil;
     }
 
@@ -99,6 +99,11 @@ public class ShopServiceImpl
         return shopDao.findByName(name);
     }
 
+    @Override
+    public ShopDto getShop(Long id) {
+        return shopMapper.shopToDto(shopDao.getByKey(Shop.class, id).orElse(new Shop()));
+    }
+
 
     @Override
     public Page<ShopMainPageDTO> findPagedPopularShops(Pageable pageable) {
@@ -124,7 +129,7 @@ public class ShopServiceImpl
     @Override
     public void addNewShop(Shop shop) {
         if (shopDao.findByDataShop(shop)) {
-            shop.setModerateAccept(true);
+            shop.setModerateAccept(false);
             shopDao.persist(shop);
         }
     }
@@ -146,7 +151,7 @@ public class ShopServiceImpl
         User user = shopDb.getUser();
         shopDb.setUser(null);
         shopDb.setModerateAccept(false);
-        shopDao.update(shopDb);
+        shopDao.delete(shopDb);
     }
 
 

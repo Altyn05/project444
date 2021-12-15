@@ -17,6 +17,16 @@ public class Item {
     private Long id;
     private String name;
     private BigDecimal price;
+    private boolean favorite;
+
+
+    @ManyToOne
+    @JoinTable(
+            name = "users_items",
+            joinColumns = @JoinColumn(name = "items_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private User user;
 
     @ManyToMany
     @JoinTable(
@@ -26,8 +36,7 @@ public class Item {
     )
     private List<Category> categories;
 
-    @OneToMany
-//    @JoinColumn(name = "item_img_id")
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Image> images;
 
     @OneToMany(mappedBy = "item")

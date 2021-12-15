@@ -17,13 +17,15 @@ public class ItemDto {
     private Integer count;
     private BigDecimal price;
     private List<ImageDto> images;
+    private boolean favorite;
     private Double rating;
     private String description;
-
     private String shopName;
     private String shopPhone;
     private ImageDto shopLogo;
     private CountryDto shopLocation;
+    private byte[] picture;
+    private String url;
 
     private boolean isModerateAccept;
     private boolean isModerated;
@@ -46,4 +48,5 @@ public class ItemDto {
         }
         return null;
     }
+
 }

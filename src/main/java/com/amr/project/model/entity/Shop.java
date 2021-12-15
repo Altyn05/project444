@@ -13,6 +13,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @Entity
 @Table(name = "shops")
+
 public class Shop {
 
     @Id
@@ -21,6 +22,7 @@ public class Shop {
     private String name;
     private String email;
     private String phone;
+    private boolean favorite;
 
     @Column(columnDefinition = "text")
     private String description;
@@ -43,7 +45,7 @@ public class Shop {
     @ToString.Exclude
     private List<Review> reviews;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "logo_id")
     @ToString.Exclude
     private Image logo;
@@ -61,6 +63,7 @@ public class Shop {
     private List<Discount> discounts;
 
     private boolean isModerated;
+    @Column(name = "is_moderate_accept")
     private boolean isModerateAccept;
     private String moderatedRejectReason;
     private boolean isPretendedToBeDeleted = false;

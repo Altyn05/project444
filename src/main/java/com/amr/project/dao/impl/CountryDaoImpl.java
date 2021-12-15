@@ -2,7 +2,6 @@ package com.amr.project.dao.impl;
 
 import com.amr.project.dao.abstracts.CountryDao;
 import com.amr.project.model.entity.Country;
-import com.amr.project.model.entity.Role;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

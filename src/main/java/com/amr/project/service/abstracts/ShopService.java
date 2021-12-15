@@ -1,5 +1,6 @@
 package com.amr.project.service.abstracts;
 
+import com.amr.project.model.dto.ShopDto;
 import com.amr.project.model.dto.ShopMainPageDTO;
 import com.amr.project.model.entity.Shop;
 import org.springframework.data.domain.Page;
@@ -10,6 +11,7 @@ import java.util.List;
 public interface ShopService extends ReadWriteService<Shop,Long> {
     Shop findById(Long id);
     Shop findByName(String name);
+    public ShopDto getShop(Long id);
 
     Page<ShopMainPageDTO> findPagedPopularShops(Pageable pageable);
     Page<ShopMainPageDTO> findPagedShopsByCategoryId(Long categoryId, Pageable pageable);

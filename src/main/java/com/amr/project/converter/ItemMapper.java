@@ -3,7 +3,6 @@ package com.amr.project.converter;
 import com.amr.project.model.dto.*;
 import com.amr.project.model.entity.Item;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 import java.util.List;
 

@@ -2,7 +2,6 @@ package com.amr.project.model.dto;
 
 import lombok.*;
 
-import java.util.List;
 
 @Data
 @NoArgsConstructor

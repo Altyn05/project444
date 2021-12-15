@@ -11,6 +11,7 @@
           integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
     <link th:href="@{/img/favicon.ico}" rel="shortcut icon" type="image/x-icon">
     <link th:href="@{/css/sticky-footer-navbar.css}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css">
     <link th:href="@{/css/main-page.css}" rel="stylesheet">
 </head>
 
@@ -47,6 +48,13 @@
                     </div>
                 </form>
                 <button class="btn btn-outline-warning mr-3 nav-link" data-toggle="modal" data-target="#cart-modal">Корзина</button>
+
+                <!--                                         Избранное                                                                       -->
+                <button sec:authorize="isAuthenticated()" type="button" class="btn btn-outline-warning mr-3"
+                        data-toggle="modal" data-target="#Favorites">
+                    <i class="bi bi-heart-fill"></i>
+                </button>
+
                 <button sec:authorize="isAnonymous()" type="button" class="btn btn-outline-primary"
                         data-toggle="modal" data-target="#loginModal">Войти</button>
                 <div sec:authorize="isAuthenticated()" class="d-flex">
@@ -77,19 +85,19 @@
 
 <!-- Items Block -->
         <h4 class="pt-4" id="item-header">Подборка популярных товаров</h4>
-        
+
         <!-- Number of items per page -->
         <ul class="pagination pagination-sm justify-content-end mb-0 size-block"
             id="item-size">
             <!-- the block is generated in main-page/pagination.js -->
         </ul>
-    
+
         <!-- Popular Items -->
         <div class="card-deck row row-cols-1 row-cols-sm-2 row-cols-lg-4 d-flex"
              id="item-block">
             <!-- the block is generated in main-page/data.js -->
         </div>
-        
+
         <nav aria-label="Popular items page navigation">
             <ul class="pagination justify-content-center mt-2"
                 id="item-pages">
@@ -99,7 +107,7 @@
 
 <!-- Shops Block -->
         <h4 class="pt-4" id="shop-header">Подборка популярных магазинов</h4>
-    
+
         <!-- Number of shops per page -->
         <ul class="pagination pagination-sm justify-content-end mb-0 size-block"
             id="shop-size">
@@ -111,7 +119,7 @@
              id="shop-block">
             <!-- the block is generated in main-page/data.js -->
         </div>
-    
+
         <nav aria-label="Popular shops page navigation">
             <ul class="pagination justify-content-center mt-2"
                 id="shop-pages">
@@ -127,6 +135,41 @@
         <span class="text-muted">Market Place &#169; 2021</span>
     </div>
 </footer>
+
+
+<div style="text-align: center;">
+    <div class="row justify-content-center align-items-center">
+        <form>
+            <div class="modal fade" id="Favorites" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Избранное</h5>
+                            <button type="button" class="close" data-dismiss="modal">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <table class="table table-striped" id="favorites1" align="left">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Товары</th>
+                                    <th scope="col">Магазины</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <td id="item" style="text-align:left"></td>
+                                <td id="shops" style="text-align:left"></td>
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 
 
 <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -239,8 +282,8 @@
 <span id="openCart" style="display: none;" th:text="${openCart}"></span>
 
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
         crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
         integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"

@@ -2,8 +2,8 @@ package com.amr.project.service.impl;
 
 import com.amr.project.dao.abstracts.ReadWriteDao;
 import com.amr.project.dao.abstracts.ReviewDao;
-import com.amr.project.model.entity.Item;
 import com.amr.project.model.entity.Review;
+import com.amr.project.repository.ReviewRepository;
 import com.amr.project.service.abstracts.ReviewService;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +12,12 @@ import java.util.List;
 @Service
 public class ReviewServiceImpl  extends ReadWriteServiceImpl<Review, Long> implements ReviewService {
     private final ReviewDao reviewDao;
+    private ReviewRepository repository;
 
-    public ReviewServiceImpl(ReadWriteDao<Review, Long> readWriteDao, ReviewDao reviewDao) {
+    public ReviewServiceImpl(ReadWriteDao<Review, Long> readWriteDao, ReviewDao reviewDao, ReviewRepository repository) {
         super(readWriteDao);
         this.reviewDao = reviewDao;
+        this.repository = repository;
     }
 
 
@@ -46,6 +48,11 @@ public class ReviewServiceImpl  extends ReadWriteServiceImpl<Review, Long> imple
         review.setModerateAccept(true);
         reviewDao.update(review);
         return review;
+    }
+
+    @Override
+    public void addReview(Review review) {
+        repository.save(review);
     }
 
 }
