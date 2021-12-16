@@ -14,11 +14,18 @@ public class Chat {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany
+    @ManyToMany
     private List<User> members;
 
     @OneToMany(mappedBy = "chat")
     private List<Message> messages;
 
     private Long hash;
+
+    private String chatName;
+
+    @OneToOne
+    private User owner;
+
+
 }

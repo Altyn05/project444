@@ -2,6 +2,7 @@ package com.amr.project.dao.abstracts;
 
 import com.amr.project.model.entity.User;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserDao extends ReadWriteDao<User, Long> {
@@ -15,4 +16,5 @@ public interface UserDao extends ReadWriteDao<User, Long> {
 
     boolean checkByUsername(String username);
 
+    List<User> findUsersByEMail(String eMail);
 }
