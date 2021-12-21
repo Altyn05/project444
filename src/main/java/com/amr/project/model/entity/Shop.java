@@ -41,7 +41,7 @@ public class Shop {
     @ToString.Exclude
     private List<Item> items = new ArrayList<>();
 
-    @OneToMany(mappedBy = "shop")
+    @OneToMany(mappedBy = "shop", cascade = CascadeType.REMOVE)
     @ToString.Exclude
     private List<Review> reviews;
 
