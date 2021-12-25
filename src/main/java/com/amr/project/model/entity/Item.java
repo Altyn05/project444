@@ -39,8 +39,11 @@ public class Item {
     @OneToMany(cascade = CascadeType.ALL)
     private List<Image> images;
 
-    @OneToMany(mappedBy = "item")
+    @OneToMany(mappedBy = "item", cascade = CascadeType.REMOVE)
     private List<Review> reviews;
+
+    @ManyToMany(mappedBy = "items", cascade = CascadeType.REMOVE)
+    private List<Order> orders;
 
     private Integer count;
     private Double rating;
