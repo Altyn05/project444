@@ -17,7 +17,7 @@ public class ShopDto2 {
     private String description;
     private CountryDto location;
     private ImageDto logo;
-    private double rating;
+    private Integer rating;
     private String username;
     private boolean isModerated;
     private boolean isModerateAccept;

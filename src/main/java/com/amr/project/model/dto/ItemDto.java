@@ -18,7 +18,7 @@ public class ItemDto {
     private BigDecimal price;
     private List<ImageDto> images;
     private boolean favorite;
-    private Double rating;
+    private Integer rating;
     private String description;
     private String shopName;
     private String shopPhone;
