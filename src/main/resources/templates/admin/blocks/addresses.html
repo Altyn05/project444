@@ -266,7 +266,7 @@
                                         </div>
                                         <br>
                                         <div class="form-group text-center">
-                                            <label for="editNameRegion" class="font-weight-bold">Название Города</label>
+                                            <label for="editNameRegion" class="font-weight-bold">Название Региона</label>
                                             <input type="text" class="form-control" id="editNameRegion" name="name"/>
                                         </div>
                                         <br>
@@ -405,6 +405,13 @@
                                             </select>
                                         </div>
                                         <br>
+                                        <div class="form-group text-center">
+                                            <label for="inputCityCountry"><p class="font-weight-bold">Страна</p>
+                                            </label>
+                                            <select id="inputCityCountry" class="form-control" name="country">
+                                            </select>
+                                        </div>
+                                        <br>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -425,7 +432,7 @@
                 <div class="modal-dialog ">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="deleteModalLabelCity">Удалить страну</h5>
+                            <h5 class="modal-title" id="deleteModalLabelCity">Удалить город</h5>
                             <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true"></span>
                             </button>
@@ -453,6 +460,15 @@
                                                 Регион</p>
                                             </label>
                                             <select id="inputRegionDelete" class="form-control" name="country"
+                                                    disabled>
+                                            </select>
+                                        </div>
+                                        <br>
+                                        <div class="form-group text-center">
+                                            <label for="inputCityCountryDelete"><p class="font-weight-bold" disabled>
+                                                Страна</p>
+                                            </label>
+                                            <select id="inputCityCountryDelete" class="form-control" name="country"
                                                     disabled>
                                             </select>
                                         </div>
@@ -499,9 +515,16 @@
                                         </div>
                                         <br>
                                         <div class="form-group text-center">
-                                            <label for="inputRegionEdit"><p class="font-weight-bold">Страна</p>
+                                            <label for="inputRegionEdit"><p class="font-weight-bold">Регион</p>
                                             </label>
-                                            <select id="inputRegionEdit" class="form-control" name="country">
+                                            <select id="inputRegionEdit" class="form-control" name="region">
+                                            </select>
+                                        </div>
+                                        <br>
+                                        <div class="form-group text-center">
+                                            <label for="inputCityCountryEdit"><p class="font-weight-bold">Страна</p>
+                                            </label>
+                                            <select id="inputCityCountryEdit" class="form-control" name="country">
                                             </select>
                                         </div>
                                         <br>
@@ -584,6 +607,13 @@
                                         </div>
                                         <br>
                                         <div class="form-group text-center">
+                                            <label for="inputRegionAddress"><p class="font-weight-bold">Регион</p>
+                                            </label>
+                                            <select id="inputRegionAddress" class="form-control" name="region">
+                                            </select>
+                                        </div>
+                                        <br>
+                                        <div class="form-group text-center">
                                             <label for="inputCity"><p class="font-weight-bold">Город</p>
                                             </label>
                                             <select id="inputCity" class="form-control" name="city">
@@ -655,6 +685,12 @@
                                             </select>
                                         </div>
                                         <br>
+                                        <div class="form-group text-center">
+                                            <label for="inputRegionAddressDelete"><p class="font-weight-bold">Регион</p>
+                                            </label>
+                                            <select id="inputRegionAddressDelete" class="form-control" name="region">
+                                            </select>
+                                        </div>
                                         <br>
                                         <div class="form-group text-center">
                                             <label for="inputCityDelete"><p class="font-weight-bold" disabled>Город</p>
@@ -723,6 +759,13 @@
                                             <label for="inputAddressEdit"><p class="font-weight-bold">Страна</p>
                                             </label>
                                             <select id="inputAddressEdit" class="form-control" name="country">
+                                            </select>
+                                        </div>
+                                        <br>
+                                        <div class="form-group text-center">
+                                            <label for="inputRegionAddressEdit"><p class="font-weight-bold">Регион</p>
+                                            </label>
+                                            <select id="inputRegionAddressEdit" class="form-control" name="region">
                                             </select>
                                         </div>
                                         <br>
