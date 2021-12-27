@@ -75,7 +75,7 @@ btnDel.addEventListener('click', async (e) => {
     }).then((res) => {
         res.json()
         loadCities();
-        // loadRegions();
+        loadRegions();
         loadAddresses();
         loadCountries();
         loadShops();
@@ -97,7 +97,7 @@ btnSub.addEventListener('click', async (e) => {
     }).then(res => {
         res.json()
         loadCities();
-        // loadRegions();
+        loadRegions();
         loadAddresses();
         loadCountries();
         loadShops();
@@ -117,7 +117,7 @@ btnCreate.addEventListener('click', async (e) => {
     }).then(res => {
         res.json();
         loadCities();
-        // loadRegions();
+        loadRegions();
         loadAddresses();
         loadCountries();
         loadShops();
@@ -125,6 +125,169 @@ btnCreate.addEventListener('click', async (e) => {
 })
 
 loadCountries().then();
+
+//Regions
+const regionsList = document.getElementById('regionsList');
+const searchBarRegion = document.getElementById('searchBarRegion');
+let hpRegion = [];
+
+const editFormRegion = document.querySelector('.editFormRegion')
+const btnSubRegion = document.querySelector('.subBTNRegion')
+
+const deleteFormRegion = document.querySelector('.deleteFormRegion')
+const btnDelRegion = document.querySelector('.delBTNRegion')
+
+const btnCreateRegion = document.querySelector('.createBTNRegion')
+
+const urlRegion = "http://localhost:8888/adminapi/regions";
+
+
+searchBarRegion.addEventListener('keyup', (e) => {
+    const searchString = e.target.value.toLowerCase();
+
+    const filteredRegions = hpRegion.filter((region) => {
+        return (
+            region.name.toLowerCase().includes(searchString) ||
+            region.country.name.toLowerCase().includes(searchString) ||
+            JSON.stringify(region.id).toLowerCase().includes(searchString)
+        );
+    });
+    displayRegions(filteredRegions);
+    loadRegionsModals(filteredRegions);
+});
+
+const loadRegions = async () => {
+    const res = await fetch(urlRegion);
+    hpRegion = await res.json();
+    displayRegions(hpRegion);
+    loadRegionsModals(hpRegion);
+    modalCreateSelectRegions(hpCity)
+};
+
+const loadRegionsModals = (list) => {
+    list.forEach(region => {
+        const btnEdit = document.querySelector(`#dataId${region.id} .btn-info`);
+        btnEdit.addEventListener('click', () => {
+            editFormRegion.id.value = region.id
+            editFormRegion.name.value = region.name
+            editFormRegion.country.value = region.country.name
+        })
+
+        const btnDelete = document.querySelector(`#dataId${region.id} .btn-danger`);
+        btnDelete.addEventListener('click', () => {
+            deleteFormRegion.id.value = region.id
+            deleteFormRegion.name.value = region.name
+            deleteFormRegion.country.value = region.country.name
+        })
+    })
+};
+
+const displayRegions = (regions) => {
+    regionsList.innerHTML = regions
+        .map((region) => {
+            return `
+            <tr id="dataId${region.id}">
+                <td>${region.id}</td>
+                <td>${region.name}</td>
+                <td>${region.country.name}</td>
+                <td><button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#editModalRegion">Ред</button></td>
+                <td><button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModalRegion">Удл</button></td>
+            </tr>
+        `;
+        })
+        .join('');
+};
+
+
+btnDelRegion.addEventListener('click', async (e) => {
+    e.preventDefault();
+    let id = document.getElementById('deleteIdRegion').value;
+    let delURL = urlRegion + '/' + id;
+    await fetch(delURL, {
+        method: 'DELETE'
+    }).then((res) => {
+        res.json()
+        loadCities();
+        loadRegions();
+        loadAddresses();
+        loadCountries();
+        loadShops();
+    })
+
+})
+
+btnSubRegion.addEventListener('click', async (e) => {
+    e.preventDefault();
+    await fetch(urlRegion, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            id: document.getElementById('editIdRegion').value,
+            name: document.getElementById('editNameRegion').value,
+            country: document.getElementById('inputCountryEdit').value
+        })
+    }).then(res => {
+        res.json()
+        loadCities();
+        loadRegions();
+        loadAddresses();
+        loadCountries();
+        loadShops();
+    })
+})
+
+btnCreateRegion.addEventListener('click', async (e) => {
+    e.preventDefault();
+    await fetch(urlRegion, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            name: document.getElementById('createNameRegion').value,
+            country: document.getElementById('inputCountry').value
+        })
+    }).then(res => {
+        res.json();
+        loadCities();
+        loadRegions();
+        loadAddresses();
+        loadCountries();
+        loadShops();
+    })
+})
+
+
+
+
+const modalCreateSelectRegions = (regions) => {
+    document.getElementById('inputRegion').innerHTML = regions
+        .map((region) => {
+            return `
+            <option value="${region.id}">${region.name}</option>
+        `;
+        })
+        .join('');
+    document.getElementById('inputRegionEdit').innerHTML = regions
+        .map((region) => {
+            return `
+            <option value="${region.id}">${region.name}</option>
+        `;
+        })
+        .join('');
+    document.getElementById('inputRegionDelete').innerHTML = regions
+        .map((region) => {
+            return `
+            <option value="${region.id}">${region.name}</option>
+        `;
+        })
+        .join('');
+
+}
+
+loadRegions().then();
 
 // Cities
 
