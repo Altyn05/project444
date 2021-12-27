@@ -28,6 +28,11 @@ public class Address {
     private Country country;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "region_id")
+    @ToString.Exclude
+    private Region region;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "city_id")
     @ToString.Exclude
     private City city;
@@ -44,13 +49,22 @@ public class Address {
     @ToString.Exclude
     private Set<User> users;
 
-    public Address(String cityIndex, Country country, City city, String street, String house) {
+    public Address(String cityIndex, Country country, Region region, City city, String street, String house) {
         this.cityIndex = cityIndex;
         this.country = country;
+        this.region = region;
         this.city = city;
         this.street = street;
         this.house = house;
     }
+
+//    public Address(String cityIndex, Country country, City city, String street, String house) {
+//        this.cityIndex = cityIndex;
+//        this.country = country;
+//        this.city = city;
+//        this.street = street;
+//        this.house = house;
+//    }
 
     public Address(String cityIndex, String street, String house) {
         this.cityIndex = cityIndex;
@@ -58,13 +72,13 @@ public class Address {
         this.house = house;
     }
 
-    public Address(Country country, City city) {
-        this.country = country;
+    public Address(Region region, City city) {
+        this.region = region;
         this.city = city;
     }
 
     public Address() {
-        this.country = new Country();
+        this.region = new Region();
         this.city = new City(); //починить - убрать null
     }
 

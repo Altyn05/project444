@@ -22,9 +22,9 @@ public class City {
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "country_id")
+    @JoinColumn(name = "region_id")
     @ToString.Exclude
-    private Country country;
+    private Region region;
 
     @OneToMany(
             mappedBy = "city",
@@ -37,9 +37,9 @@ public class City {
     @OneToMany(mappedBy = "city", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Shop> shops;
 
-    public City(String name, Country country) {
+    public City(String name, Region region) {
         this.name = name;
-        this.country = country;
+        this.region = region;
     }
 
     public City(String name) {
@@ -54,11 +54,11 @@ public class City {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         City city = (City) o;
-        return Objects.equals(name, city.name) && Objects.equals(country, city.country);
+        return Objects.equals(name, city.name) && Objects.equals(region, city.region);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, country);
+        return Objects.hash(name, region);
     }
 }

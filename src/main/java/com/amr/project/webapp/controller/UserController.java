@@ -4,14 +4,8 @@ import com.amr.project.converter.UserMapper;
 import com.amr.project.converter.AddressMapper;
 import com.amr.project.model.dto.UserDto;
 import com.amr.project.model.dto.AddressDto;
-import com.amr.project.model.entity.Address;
-import com.amr.project.model.entity.City;
-import com.amr.project.model.entity.Country;
-import com.amr.project.model.entity.User;
-import com.amr.project.service.abstracts.AddressService;
-import com.amr.project.service.abstracts.CityService;
-import com.amr.project.service.abstracts.CountryService;
-import com.amr.project.service.abstracts.UserService;
+import com.amr.project.model.entity.*;
+import com.amr.project.service.abstracts.*;
 import com.amr.project.webapp.security.SecurityConfig;
 import org.springframework.context.annotation.Import;
 import org.springframework.stereotype.Controller;
@@ -27,6 +21,7 @@ public class UserController {
 
     private final UserService userService;
     private final CountryService countryService;
+    private final RegionService regionService;
     private final CityService cityService;
     private final AddressService addressService;
     private final UserMapper mapper;
@@ -34,11 +29,12 @@ public class UserController {
 
 
     public UserController(UserService userService,
-                          CountryService countryService, CityService cityService, AddressService addressService,
+                          CountryService countryService, RegionService regionService, CityService cityService, AddressService addressService,
                           UserMapper mapper, AddressMapper addressMapper) {
 
         this.userService = userService;
         this.countryService = countryService;
+        this.regionService = regionService;
         this.cityService = cityService;
         this.addressService = addressService;
         this.mapper = mapper;
@@ -72,8 +68,9 @@ public class UserController {
         Address address = addressMapper.toModel(addressDto);
 
         countryService.addNewCountry(new Country(addressDto.getCountry()));
+        regionService.persist(new Region(addressDto.getRegion(), countryService.findByName(addressDto.getCountry())));
         cityService.addNewCity(new City(addressDto.getCity(),
-                countryService.findByName(addressDto.getCountry())));
+                regionService.findByName(addressDto.getRegion())));
 
         address.setCity(cityService.findByName(addressDto.getCity()));
         address.setCountry(countryService.findByName(addressDto.getCountry()));

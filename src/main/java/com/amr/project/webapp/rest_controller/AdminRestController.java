@@ -18,6 +18,7 @@ import java.util.Set;
 public class AdminRestController {
     private final AdminService adminService;
     private final CountryService countryService;
+    private final RegionService regionService;
     private final CityService cityService;
     private final AddressService addressService;
     private final CategoryService categoryService;
@@ -27,6 +28,7 @@ public class AdminRestController {
     private final RoleService roleService;
 
     private final CountryMapper countryMapper = Mappers.getMapper(CountryMapper.class);
+    private final RegionMapper regionMapper = Mappers.getMapper(RegionMapper.class);
     private final CityMapper cityMapper = Mappers.getMapper(CityMapper.class);
     private final AdminAddressMapper addressMapper = Mappers.getMapper(AdminAddressMapper.class);
     private final CategoryMapper categoryMapper = Mappers.getMapper(CategoryMapper.class);
@@ -34,11 +36,12 @@ public class AdminRestController {
     private final ItemMapper itemMapper = Mappers.getMapper(ItemMapper.class);
     private final AdminUserMapper userMapper = Mappers.getMapper(AdminUserMapper.class);
 
-    public AdminRestController(AdminService adminService, CountryService countryService, CityService cityService,
+    public AdminRestController(AdminService adminService, CountryService countryService, RegionService regionService, CityService cityService,
                                AddressService addressService, CategoryService categoryService, UserService userService,
                                ShopService shopService, ItemService itemService, RoleService roleService) {
         this.adminService = adminService;
         this.countryService = countryService;
+        this.regionService = regionService;
         this.cityService = cityService;
         this.addressService = addressService;
         this.categoryService = categoryService;
@@ -88,6 +91,45 @@ public class AdminRestController {
     }
 
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+    @GetMapping("/regions")
+    public List<AdminRegionDto> showListRegion() {
+        return adminService.show().getRegionDtoList();
+    }
+
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+    @GetMapping("/regions/{id}")
+    public AdminRegionDto oneRegion(@PathVariable Long id) {
+        return regionMapper.regionToAdminRegionDto(regionService.findById(id));
+    }
+
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+    @PostMapping("/regions")
+    public Region saveRegion(@RequestBody Region region) {
+//        Long id = Long.parseLong(region.getCountry().getName()); // почему парсим id из имени?
+        Long id = region.getCountry().getId();
+        region.setCountry(countryService.findById(id));
+        regionService.persist(region);
+        return region;
+    }
+
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+    @PatchMapping("/regions")
+    public Region updateRegion(@RequestBody Region region) {
+//        Long id = Long.parseLong(region.getCountry().getName()); // почему парсим id из имени?
+        Long id = region.getCountry().getId();
+        region.setCountry(countryService.findById(id));
+        regionService.update(region);
+        return region;
+    }
+
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+    @DeleteMapping("/regions/{id}")
+    public String deleteRegion(@PathVariable long id) {
+        regionService.delete(regionService.findById(id));
+        return "" + id;
+    }
+
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
     @GetMapping("/cities")
     public List<AdminCityDto> showListCity() {
         return adminService.show().getCityDtoList();
@@ -102,8 +144,9 @@ public class AdminRestController {
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
     @PostMapping("/cities")
     public City saveCity(@RequestBody City city) {
-        Long id = Long.parseLong(city.getCountry().getName());
-        city.setCountry(countryService.findById(id));
+//        Long id = Long.parseLong(city.getRegion().getName()); // почему парсим id из имени?
+        Long id = city.getRegion().getId();
+        city.setRegion(regionService.findById(id));
         cityService.persist(city);
         return city;
     }
@@ -111,8 +154,9 @@ public class AdminRestController {
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
     @PatchMapping("/cities")
     public City updateCity(@RequestBody City city) {
-        Long id = Long.parseLong(city.getCountry().getName());
-        city.setCountry(countryService.findById(id));
+//        Long id = Long.parseLong(city.getRegion().getName()); // почему парсим id из имени?
+        Long id = city.getRegion().getId();
+        city.setRegion(regionService.findById(id));
         cityService.update(city);
         return city;
     }
@@ -139,8 +183,11 @@ public class AdminRestController {
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
     @PostMapping("/addresses")
     public Address saveAddress(@RequestBody Address address) {
-        Long id = Long.parseLong(address.getCity().getName());
-        address.setCountry(cityService.findById(id).getCountry());
+//        Long id = Long.parseLong(address.getCity().getName()); // почему парсим id из имени?
+        Long id = address.getCity().getId();
+        Region region = cityService.findById(id).getRegion();
+        address.setRegion(region);
+        address.setCountry(countryService.findById(region.getCountry().getId()));
         address.setCity(cityService.findById(id));
         addressService.persist(address);
         return address;
@@ -149,8 +196,11 @@ public class AdminRestController {
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
     @PatchMapping("/addresses")
     public Address updateAddress(@RequestBody Address address) {
-        Long id = Long.parseLong(address.getCity().getName());
-        address.setCountry(cityService.findById(id).getCountry());
+//        Long id = Long.parseLong(address.getCity().getName()); // почему парсим id из имени?
+        Long id = address.getCity().getId();
+        Region region = cityService.findById(id).getRegion();
+        address.setRegion(region);
+        address.setCountry(countryService.findById(region.getCountry().getId()));
         address.setCity(cityService.findById(id));
         addressService.update(address);
         return address;

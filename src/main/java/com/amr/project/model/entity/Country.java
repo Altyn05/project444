@@ -2,9 +2,7 @@ package com.amr.project.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -20,6 +18,8 @@ public class Country {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(unique = true)
     private String name;
 
     @OneToMany(
@@ -28,7 +28,7 @@ public class Country {
     )
     @JsonIgnore
     @ToString.Exclude
-    private List<City> cities;
+    private List<Region> regions;
 
     @OneToMany(mappedBy = "location", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JsonIgnore
@@ -39,27 +39,27 @@ public class Country {
     }
 
 
-    public void addCity(City city) {
-        if (this.cities == null) {
-            this.cities = new ArrayList<>();
-        }
-        this.cities.add(city);
-    }
+//    public void addCity(City city) {
+//        if (this.cities == null) {
+//            this.cities = new ArrayList<>();
+//        }
+//        this.cities.add(city);
+//    }
 
-     public List<City> getCities() {
-        return cities;
-    }
+//     public List<City> getCities() {
+//        return cities;
+//    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Country country = (Country) o;
-        return Objects.equals(name, country.name) && Objects.equals(cities, country.cities);
+        return Objects.equals(name, country.name) && Objects.equals(regions, country.regions);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, cities);
+        return Objects.hash(name, regions);
     }
 }

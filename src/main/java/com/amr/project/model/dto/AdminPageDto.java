@@ -11,6 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 public class AdminPageDto {
     List<CountryDto> countryDtoList;
+    List<AdminRegionDto> regionDtoList;
     List<AdminCityDto> cityDtoList;
     List<AdminAddressDto> addressDtoList;
     List<CategoryDto> categoryDtoList;

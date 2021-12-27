@@ -75,6 +75,7 @@ btnDel.addEventListener('click', async (e) => {
     }).then((res) => {
         res.json()
         loadCities();
+        // loadRegions();
         loadAddresses();
         loadCountries();
         loadShops();
@@ -96,6 +97,7 @@ btnSub.addEventListener('click', async (e) => {
     }).then(res => {
         res.json()
         loadCities();
+        // loadRegions();
         loadAddresses();
         loadCountries();
         loadShops();
@@ -115,6 +117,7 @@ btnCreate.addEventListener('click', async (e) => {
     }).then(res => {
         res.json();
         loadCities();
+        // loadRegions();
         loadAddresses();
         loadCountries();
         loadShops();
@@ -123,7 +126,7 @@ btnCreate.addEventListener('click', async (e) => {
 
 loadCountries().then();
 
-// Countries
+// Cities
 
 const citiesList = document.getElementById('citiesList');
 const searchBarCity = document.getElementById('searchBarCity');
@@ -167,14 +170,14 @@ const loadCitiesModals = (list) => {
         btnEdit.addEventListener('click', () => {
             editFormCity.id.value = city.id
             editFormCity.name.value = city.name
-            editFormCity.country.value = city.country.id
+            editFormCity.region.value = city.region.id
         })
 
         const btnDelete = document.querySelector(`#dataIdCity${city.id} .btn-danger`);
         btnDelete.addEventListener('click', () => {
             deleteFormCity.id.value = city.id
             deleteFormCity.name.value = city.name
-            deleteFormCity.country.value = city.country.id
+            deleteFormCity.region.value = city.region.id
         })
     })
 };
@@ -187,7 +190,7 @@ const displayCities = (cities) => {
             <tr id="dataIdCity${city.id}">
                 <td>${city.id}</td>
                 <td>${city.name}</td>
-                <td>${city.country.name}</td>
+                <td>${city.region.name}</td>
                 <td><button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#editModalCity">Ред</button></td>
                 <td><button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModalCity">Удл</button></td>
             </tr>
@@ -280,6 +283,7 @@ btnCreateCity.addEventListener('click', async (e) => {
     }).then(res => {
         res.json();
         loadCities();
+        // loadRegions();
         loadAddresses();
         loadCountries();
     })
@@ -294,6 +298,7 @@ btnDelCity.addEventListener('click', async (e) => {
     }).then((res) => {
         res.json()
         loadCities();
+        // LoadRegions();
         loadAddresses();
         loadCountries();
     })
@@ -315,6 +320,7 @@ btnSubCity.addEventListener('click', async (e) => {
     }).then(res => {
         res.json()
         loadCities();
+        // loadRegions();
         loadAddresses();
         loadCountries();
     })
@@ -349,6 +355,7 @@ const displayAddresses = (addresses) => {
                 <td>${address.id}</td>
                 <td>${address.cityIndex}</td>
                 <td>${address.country.name}</td>
+                <td>${address.region.name}</td>
                 <td>${address.city.name}</td>
                 <td>${address.street}</td>
                 <td>${address.house}</td>
@@ -367,6 +374,7 @@ searchBarAddress.addEventListener('keyup', (e) => {
         return (
             address.street.toLowerCase().includes(searchString) ||
             address.country.name.toLowerCase().includes(searchString) ||
+            address.region.name.toLowerCase().includes(searchString) ||
             address.city.name.toLowerCase().includes(searchString) ||
             address.house.toLowerCase().includes(searchString) ||
             address.cityIndex.toLowerCase().includes(searchString) ||
@@ -392,6 +400,7 @@ const loadAddressesModals = (list) => {
             editFormAddress.id.value = address.id
             editFormAddress.index.value = address.cityIndex
             editFormAddress.country.value = address.country.name
+            editFormAddress.region.value = address.region.name
             editFormAddress.city.value = address.city.id
             editFormAddress.street.value = address.street
             editFormAddress.house.value = address.house
@@ -402,6 +411,7 @@ const loadAddressesModals = (list) => {
             deleteFormAddress.id.value = address.id
             deleteFormAddress.index.value = address.cityIndex
             deleteFormAddress.country.value = address.country.name
+            deleteFormAddress.region.value = address.region.name
             deleteFormAddress.city.value = address.city.id
             deleteFormAddress.street.value = address.street
             deleteFormAddress.house.value = address.house
