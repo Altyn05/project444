@@ -1,8 +1,11 @@
 package com.amr.project.model.entity;
 
 import lombok.*;
+import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -51,7 +54,9 @@ public class Shop {
     private Image logo;
 
     private int count;
-    private double rating;
+    @Min(value = 1, message = "Must be greater than 0")
+    @Max(value = 10, message = "Must be less than 11")
+    private Integer rating;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -183,11 +188,11 @@ public class Shop {
         this.count = count;
     }
 
-    public double getRating() {
+    public Integer getRating() {
         return rating;
     }
 
-    public void setRating(double rating) {
+    public void setRating(Integer rating) {
         this.rating = rating;
     }
 

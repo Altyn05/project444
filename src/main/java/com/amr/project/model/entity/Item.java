@@ -3,6 +3,8 @@ package com.amr.project.model.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +48,9 @@ public class Item {
     private List<Order> orders;
 
     private Integer count;
-    private Double rating;
+    @Min(value = 1, message = "Must be greater than 0")
+    @Max(value = 10, message = "Must be less than 11")
+    private Integer  rating;
 
     @Column(columnDefinition = "text")
     private String description;

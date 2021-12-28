@@ -20,7 +20,7 @@ public class ShopDto {
     private List<ItemDto> items;
     private ImageDto logo;
     private List<ImageDto> images;
-    private double rating;
+    private Integer rating;
     private String username;
     private Long user_id;
     private boolean favorite;
