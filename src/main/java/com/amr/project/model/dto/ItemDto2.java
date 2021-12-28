@@ -15,7 +15,7 @@ public class ItemDto2 {
     private String name;
     private Integer count;
     private BigDecimal price;
-    private Double rating;
+    private Integer rating;
     private String description;
     private String shopName;
     private String shopPhone;
