@@ -7,32 +7,12 @@ function showUserOrders() {
         let tr = document.createElement('tr')
         tr.className = "DELORDER"
 
-        let currentStatus;
-
-        switch (order.status) {
-            case 'START':
-                currentStatus = 'ПРИНЯТ';
-                break;
-            case 'PAID':
-                currentStatus = 'ОПЛАЧЕН';
-                break;
-            case 'SENT':
-                currentStatus = 'ОТПРАВЛЕН';
-                break;
-            case 'DELIVERED':
-                currentStatus = 'ДОСТАВЛЕН';
-                break;
-            case 'COMPLETE':
-                currentStatus = 'ЗАВЕРШЕН';
-                break;
-        }
-
         let varHTML =
             "<td>\n" +
                 "<span>ID заказа: " + order.id + "</span>\n" +
             "</td>\n" +
             "<td>\n" +
-                "<span>Статус заказа: " + currentStatus + "</span>\n" +
+                "<span>Статус заказа: " + order.status + "</span>\n" +
             "</td>\n"
 
 
