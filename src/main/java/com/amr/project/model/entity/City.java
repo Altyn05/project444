@@ -26,6 +26,11 @@ public class City {
     @ToString.Exclude
     private Region region;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "country_id")
+    @ToString.Exclude
+    private Country country;
+
     @OneToMany(
             mappedBy = "city",
             cascade = CascadeType.ALL
@@ -40,6 +45,12 @@ public class City {
     public City(String name, Region region) {
         this.name = name;
         this.region = region;
+    }
+
+    public City(String name, Region region, Country country) {
+        this.name = name;
+        this.region = region;
+        this.country = country;
     }
 
     public City(String name) {

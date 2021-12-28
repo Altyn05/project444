@@ -15,13 +15,10 @@ public class AddressDto {
     public AddressDto() {
     }
 
-    public AddressDto(String city, String region
-//            ,
-//                      String country
-                      ) {
+    public AddressDto(String city, String region, String country) {
         this.city = city;
         this.region = region;
-//        this.country = country;
+        this.country = country;
     }
 
     public AddressDto(String cityIndex, String street, String house, String city, String region, String country) {

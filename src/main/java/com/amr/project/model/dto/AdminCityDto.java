@@ -7,4 +7,5 @@ public class AdminCityDto {
     private Long id;
     private String name;
     private AdminRegionDto region;
+    private CountryDto country;
 }

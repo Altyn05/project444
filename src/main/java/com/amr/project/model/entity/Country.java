@@ -30,6 +30,14 @@ public class Country {
     @ToString.Exclude
     private List<Region> regions;
 
+    @OneToMany(
+            mappedBy = "country",
+            cascade = CascadeType.ALL
+    )
+    @JsonIgnore
+    @ToString.Exclude
+    private List<City> cities;
+
     @OneToMany(mappedBy = "location", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JsonIgnore
     private List<Shop> shops;
