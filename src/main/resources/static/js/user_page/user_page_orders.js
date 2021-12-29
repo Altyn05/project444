@@ -14,6 +14,8 @@ function showUserOrders() {
             "<td>\n" +
                 "<span>Статус заказа: " + order.status + "</span>\n" +
             "</td>\n"
+
+
         if(order.status === "COMPLETE") document.querySelector('.userOrdersClose').appendChild(tr).insertAdjacentHTML('beforeend', varHTML);
             else document.querySelector('.userOrdersOpen').appendChild(tr).insertAdjacentHTML('beforeend', varHTML);
 
