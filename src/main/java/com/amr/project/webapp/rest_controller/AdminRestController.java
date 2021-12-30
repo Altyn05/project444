@@ -144,8 +144,8 @@ public class AdminRestController {
     public City saveCity(@RequestBody City city) {
         Long id = Long.parseLong(city.getRegion().getName());
         city.setRegion(regionService.findById(id));
-        city.setCountry(countryService.findById(Long.parseLong(city.getRegion().getCountry().getName())));
-        cityService.persist(city);
+        city.setCountry(countryService.findById(Long.parseLong(city.getCountry().getName())));
+        cityService.addNewCity(city);
         return city;
     }
 
@@ -154,8 +154,8 @@ public class AdminRestController {
     public City updateCity(@RequestBody City city) {
         Long id = Long.parseLong(city.getRegion().getName());
         city.setRegion(regionService.findById(id));
-        city.setCountry(countryService.findById(Long.parseLong(city.getRegion().getCountry().getName())));
-        cityService.update(city);
+        city.setCountry(countryService.findById(Long.parseLong(city.getCountry().getName())));
+        cityService.updateCity(city);
         return city;
     }
 

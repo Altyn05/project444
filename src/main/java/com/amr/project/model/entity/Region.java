@@ -30,6 +30,7 @@ public class Region {
     private Country country;
 
     @OneToMany(mappedBy = "region", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @JsonIgnore
     private List<City> cities;
 
     public Region(String name){
