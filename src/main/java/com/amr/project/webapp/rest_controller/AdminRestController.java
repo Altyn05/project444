@@ -105,8 +105,7 @@ public class AdminRestController {
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
     @PostMapping("/regions")
     public Region saveRegion(@RequestBody Region region) {
-//        Long id = Long.parseLong(region.getCountry().getName()); // почему парсим id из имени?
-        Long id = region.getCountry().getId();
+        Long id = Long.parseLong(region.getCountry().getName());
         region.setCountry(countryService.findById(id));
         regionService.persist(region);
         return region;
@@ -115,8 +114,7 @@ public class AdminRestController {
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
     @PatchMapping("/regions")
     public Region updateRegion(@RequestBody Region region) {
-//        Long id = Long.parseLong(region.getCountry().getName()); // почему парсим id из имени?
-        Long id = region.getCountry().getId();
+        Long id = Long.parseLong(region.getCountry().getName());
         region.setCountry(countryService.findById(id));
         regionService.update(region);
         return region;
@@ -144,9 +142,9 @@ public class AdminRestController {
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
     @PostMapping("/cities")
     public City saveCity(@RequestBody City city) {
-//        Long id = Long.parseLong(city.getRegion().getName()); // почему парсим id из имени?
-        Long id = city.getRegion().getId();
+        Long id = Long.parseLong(city.getRegion().getName());
         city.setRegion(regionService.findById(id));
+        city.setCountry(countryService.findById(Long.parseLong(city.getCountry().getName())));
         cityService.persist(city);
         return city;
     }
@@ -154,9 +152,9 @@ public class AdminRestController {
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
     @PatchMapping("/cities")
     public City updateCity(@RequestBody City city) {
-//        Long id = Long.parseLong(city.getRegion().getName()); // почему парсим id из имени?
-        Long id = city.getRegion().getId();
+        Long id = Long.parseLong(city.getRegion().getName());
         city.setRegion(regionService.findById(id));
+        city.setCountry(countryService.findById(Long.parseLong(city.getCountry().getName())));
         cityService.update(city);
         return city;
     }
@@ -183,11 +181,10 @@ public class AdminRestController {
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
     @PostMapping("/addresses")
     public Address saveAddress(@RequestBody Address address) {
-//        Long id = Long.parseLong(address.getCity().getName()); // почему парсим id из имени?
-        Long id = address.getCity().getId();
+        Long id = Long.parseLong(address.getCity().getName());
         Region region = cityService.findById(id).getRegion();
         address.setRegion(region);
-        address.setCountry(countryService.findById(region.getCountry().getId()));
+        address.setCountry(countryService.findById(Long.parseLong(region.getCountry().getName())));
         address.setCity(cityService.findById(id));
         addressService.persist(address);
         return address;
@@ -196,8 +193,7 @@ public class AdminRestController {
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
     @PatchMapping("/addresses")
     public Address updateAddress(@RequestBody Address address) {
-//        Long id = Long.parseLong(address.getCity().getName()); // почему парсим id из имени?
-        Long id = address.getCity().getId();
+        Long id = Long.parseLong(address.getCity().getName());
         Region region = cityService.findById(id).getRegion();
         address.setRegion(region);
         address.setCountry(countryService.findById(region.getCountry().getId()));

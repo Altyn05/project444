@@ -166,18 +166,18 @@ const loadRegions = async () => {
 
 const loadRegionsModals = (list) => {
     list.forEach(region => {
-        const btnEdit = document.querySelector(`#dataId${region.id} .btn-info`);
+        const btnEdit = document.querySelector(`#dataIdRegion${region.id} .btn-info`);
         btnEdit.addEventListener('click', () => {
             editFormRegion.id.value = region.id
             editFormRegion.name.value = region.name
-            editFormRegion.country.value = region.country.name
+            editFormRegion.country.value = region.country.id
         })
 
-        const btnDelete = document.querySelector(`#dataId${region.id} .btn-danger`);
+        const btnDelete = document.querySelector(`#dataIdRegion${region.id} .btn-danger`);
         btnDelete.addEventListener('click', () => {
             deleteFormRegion.id.value = region.id
             deleteFormRegion.name.value = region.name
-            deleteFormRegion.country.value = region.country.name
+            deleteFormRegion.country.value = region.country.id
         })
     })
 };
@@ -186,7 +186,7 @@ const displayRegions = (regions) => {
     regionsList.innerHTML = regions
         .map((region) => {
             return `
-            <tr id="dataId${region.id}">
+            <tr id="dataIdRegion${region.id}">
                 <td>${region.id}</td>
                 <td>${region.name}</td>
                 <td>${region.country.name}</td>
@@ -259,6 +259,54 @@ btnCreateRegion.addEventListener('click', async (e) => {
     })
 })
 
+const modalCreateSelectRegions = (regions) => {
+    document.getElementById('inputRegion').innerHTML = regions
+        .map((region) => {
+            return `
+            <option value="${region.id}">${region.name}</option>
+        `;
+        })
+        .join('');
+    document.getElementById('inputRegionEdit').innerHTML = regions
+        .map((region) => {
+            return `
+            <option value="${region.id}">${region.name}</option>
+        `;
+        })
+        .join('');
+    document.getElementById('inputRegionDelete').innerHTML = regions
+        .map((region) => {
+            return `
+            <option value="${region.id}">${region.name}</option>
+        `;
+        })
+        .join('');
+    document.getElementById('inputRegionAddress').innerHTML = regions
+        .map((region) => {
+            return `
+            <option value="${region.id}">${region.name}</option>
+        `;
+        })
+        .join('');
+    document.getElementById('inputRegionAddressDelete').innerHTML = regions
+        .map((region) => {
+            return `
+            <option value="${region.id}">${region.name}</option>
+        `;
+        })
+        .join('');
+    document.getElementById('inputRegionAddressEdit').innerHTML = regions
+        .map((region) => {
+            return `
+            <option value="${region.id}">${region.name}</option>
+        `;
+        })
+        .join('');
+
+}
+
+loadRegions().then();
+
 
 
 
@@ -309,7 +357,7 @@ const loadCitiesModals = (list) => {
             editFormCity.id.value = city.id
             editFormCity.name.value = city.name
             editFormCity.region.value = city.region.id
-            editFormCity.country.value = city.country.region.id
+            editFormCity.country.value = city.country.id
         })
 
         const btnDelete = document.querySelector(`#dataIdCity${city.id} .btn-danger`);
@@ -317,7 +365,7 @@ const loadCitiesModals = (list) => {
             deleteFormCity.id.value = city.id
             deleteFormCity.name.value = city.name
             deleteFormCity.region.value = city.region.id
-            deleteFormCity.country.value = city.country.region.id
+            deleteFormCity.country.value = city.country.id
         })
     })
 };
@@ -331,7 +379,7 @@ const displayCities = (cities) => {
                 <td>${city.id}</td>
                 <td>${city.name}</td>
                 <td>${city.region.name}</td>
-                <td>${city.region.country.name}</td>
+                <td>${city.country.name}</td>
                 <td><button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#editModalCity">Ред</button></td>
                 <td><button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModalCity">Удл</button></td>
             </tr>
@@ -567,7 +615,7 @@ const loadAddressesModals = (list) => {
             editFormAddress.id.value = address.id
             editFormAddress.index.value = address.cityIndex
             editFormAddress.country.value = address.country.name
-            editFormAddress.region.value = address.region.name
+            editFormAddress.region.value = address.region.id
             editFormAddress.city.value = address.city.id
             editFormAddress.street.value = address.street
             editFormAddress.house.value = address.house
@@ -578,7 +626,7 @@ const loadAddressesModals = (list) => {
             deleteFormAddress.id.value = address.id
             deleteFormAddress.index.value = address.cityIndex
             deleteFormAddress.country.value = address.country.name
-            deleteFormAddress.region.value = address.region.name
+            deleteFormAddress.region.value = address.region.id
             deleteFormAddress.city.value = address.city.id
             deleteFormAddress.street.value = address.street
             deleteFormAddress.house.value = address.house
@@ -719,50 +767,3 @@ document.getElementById('inputAddressEdit').addEventListener('change', function 
         .join('');
 })
 
-const modalCreateSelectRegions = (regions) => {
-    document.getElementById('inputRegion').innerHTML = regions
-        .map((region) => {
-            return `
-            <option value="${region.id}">${region.name}</option>
-        `;
-        })
-        .join('');
-    document.getElementById('inputRegionEdit').innerHTML = regions
-        .map((region) => {
-            return `
-            <option value="${region.id}">${region.name}</option>
-        `;
-        })
-        .join('');
-    document.getElementById('inputRegionDelete').innerHTML = regions
-        .map((region) => {
-            return `
-            <option value="${region.id}">${region.name}</option>
-        `;
-        })
-        .join('');
-    document.getElementById('inputRegionAddress').innerHTML = regions
-        .map((region) => {
-            return `
-            <option value="${region.id}">${region.name}</option>
-        `;
-        })
-        .join('');
-    document.getElementById('inputRegionAddressDelete').innerHTML = regions
-        .map((region) => {
-            return `
-            <option value="${region.id}">${region.name}</option>
-        `;
-        })
-        .join('');
-    document.getElementById('inputRegionAddressEdit').innerHTML = regions
-        .map((region) => {
-            return `
-            <option value="${region.id}">${region.name}</option>
-        `;
-        })
-        .join('');
-
-}
-
-loadRegions().then();
