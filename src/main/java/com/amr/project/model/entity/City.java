@@ -12,7 +12,9 @@ import java.util.Objects;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "cities")
+@Table(name = "cities",
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"name", "region_id"})}
+)
 public class City {
 
     @Id
