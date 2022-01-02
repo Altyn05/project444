@@ -28,7 +28,7 @@ public class MarketController {
         if (shopService.existsById(Shop.class, id)) {
             model.addAttribute("id", id);
             model.addAttribute("shop", shopService.getShop(id));
-            System.out.println("controllerMarket " + shopService.findById(id));
+            //System.out.println("controllerMarket " + shopService.findById(id));
             return "market";
         }
         return "404";
