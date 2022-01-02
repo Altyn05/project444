@@ -32,6 +32,12 @@ window.onload = async function () {
 function showInfoPage() {
     $('.market-info-page').show();
     $('.market-items-page').hide();
+    $('.addItems').hide();
+}
+
+function showListItemsPages() {
+    $('.market-items-page').show();
+    $('.addItems').hide();
 }
 
 function showItemsPage() {
