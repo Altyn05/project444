@@ -46,6 +46,9 @@ function showItems() {
             "</td>\n" +
             "<td class='DELITEMS'>\n" +
                 "<p><input type='button' class='deleteItem' value='Удалить' onclick='deleteItems(this)'>" +
+            "</td>\n" +
+            "<td class='DELITEMS'>\n" +
+                "<p><input type='button' class='updateItem' value='Редактировать' onclick='updateItems(this)'>" +
             "</td>\n"
 
         document.querySelector('.market-items').appendChild(tr).insertAdjacentHTML('beforeend', varHTML);
@@ -164,4 +167,18 @@ async function deleteItems(item) {
     showItems();
 }
 
+async  function updateItems(item) {
+
+    let defaultModal = $('#updateItemModal');
+    defaultModal.find('.modal-title').html("Изменить товар");
+    let bodyForm = '' +
+        '<div class = "form-group"' +
+            '<label for = "titleName" class = "col-form-label">Item name</label>'+
+            '<input type="text" class="form-control" id="titleName" value = "$">'+
+        '</div>';
+    defaultModal.find(".modal-body").append(bodyForm);
+    defaultModal.modal('show');
+
+
+}
 
