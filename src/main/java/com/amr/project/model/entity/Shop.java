@@ -32,10 +32,12 @@ public class Shop {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "country_id")
+    @ToString.Exclude
     private Country location;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "city_id")
+    @ToString.Exclude
     private City city;
 
 
