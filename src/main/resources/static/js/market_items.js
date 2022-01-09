@@ -45,10 +45,8 @@ function showItems() {
                 "</form>" +
             "</td>\n" +
             "<td class='DELITEMS'>\n" +
-                "<p><input type='button' class='deleteItem' value='Удалить' onclick='deleteItems(this)'>" +
-            "</td>\n" +
-            "<td class='DELITEMS'>\n" +
-                "<p><input type='button' class='updateItem' value='Редактировать' onclick='updateItems(this)'>" +
+            "<button type='button' data-id=" + item.id + " data-action='delete' class='btn btn-danger'"+
+            "className data-toggle='modal' data-target='#deleteModal' onclick='deleteItems(this)'>Delete</button>" +
             "</td>\n"
 
         document.querySelector('.market-items').appendChild(tr).insertAdjacentHTML('beforeend', varHTML);
@@ -162,21 +160,30 @@ function saveCount() {
 }
 
 async function deleteItems(item) {
-    tempShopData.items.splice(item.count, 1); //i--
+    let idItem = item.dataset.id;
+    let ItemList = tempShopData.items;
+    for (let myItem of ItemList){
+        if(myItem.id == idItem){
+            tempShopData.items.splice(ItemList.indexOf(myItem), 1);
+            break;
+        }
+    }//i--
     shopData = await putItems();
     showItems();
 }
 
-async  function updateItems(item) {
+async  function updateItems(id) {
 
     let defaultModal = $('#updateItemModal');
     defaultModal.find('.modal-title').html("Изменить товар");
     let bodyForm = '' +
         '<div class = "form-group"' +
             '<label for = "titleName" class = "col-form-label">Item name</label>'+
-            '<input type="text" class="form-control" id="titleName" value = "$">'+
+            '<input type="text" class="form-control" id="titleName" value ="' + id + '">'+
         '</div>';
+
     defaultModal.find(".modal-body").append(bodyForm);
+
     defaultModal.modal('show');
 
 
