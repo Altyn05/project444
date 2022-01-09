@@ -172,20 +172,3 @@ async function deleteItems(item) {
     showItems();
 }
 
-async  function updateItems(id) {
-
-    let defaultModal = $('#updateItemModal');
-    defaultModal.find('.modal-title').html("Изменить товар");
-    let bodyForm = '' +
-        '<div class = "form-group"' +
-            '<label for = "titleName" class = "col-form-label">Item name</label>'+
-            '<input type="text" class="form-control" id="titleName" value ="' + id + '">'+
-        '</div>';
-
-    defaultModal.find(".modal-body").append(bodyForm);
-
-    defaultModal.modal('show');
-
-
-}
-
