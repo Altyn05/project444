@@ -44,6 +44,11 @@
                href="/">На главную страницу для покупок</a>
         </div>
 
+        <div sec:authorize="hasAuthority('ADMIN')">
+            <a class="centertext-secondary btn btn-outline-warning text-primary" style="margin-right: 50px "
+               href="/admin/">Режим администратора</a>
+        </div>
+
 
         <div class="text-secondary">
             <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
