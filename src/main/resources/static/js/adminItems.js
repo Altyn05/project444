@@ -74,6 +74,12 @@ const displayItems = (list) => {
             let regexp = /[^a-zа-яё ]/iug;
             let sCategories = JSON.stringify(item.categories, ['name']).replace(regexp, "")
                 .replace("name", "").replaceAll("name", "\n");
+            let shop;
+            if(item.shop !== null){
+                shop = item.shop.name;
+            }else{
+                shop = "Товар не в магазине";
+            }
             return `
             <tr id="dataIdItem${item.id}">
                 <td>${item.id}</td>
@@ -82,7 +88,7 @@ const displayItems = (list) => {
                 <td>${sCategories}</td>
                 <td>${JSON.stringify(item.rating).substring(0, 5)}</td>
                 <td>Des</td>
-                <td>${item.shop.name}</td>
+                <td>${shop}</td>
                 <td id="editItemTD"><button id="editItemBTN" type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#editModalItem">Редактировать</button></td>
                 <td id="deleteItemTD"><button id="deleteItemBTN" type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModalItem">Удалить</button></td>
             </tr>
