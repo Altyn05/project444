@@ -45,7 +45,8 @@ function showItems() {
                 "</form>" +
             "</td>\n" +
             "<td class='DELITEMS'>\n" +
-                "<p><input type='checkbox' class='deleteItem'><span style='margin-left: 20px'>Удалить товар из магазина</span></p>" +
+            "<button type='button' data-id=" + item.id + " data-action='delete' class='btn btn-danger'"+
+            "className data-toggle='modal' data-target='#deleteModal' onclick='deleteItems(this)'>Delete</button>" +
             "</td>\n"
 
         document.querySelector('.market-items').appendChild(tr).insertAdjacentHTML('beforeend', varHTML);
@@ -143,7 +144,7 @@ async function putItems() {
 
 async function saveItems() {
     saveCount()
-    deleteItems()
+    //deleteItems()
     shopData = await putItems()
     showEditItems()
 }
@@ -158,13 +159,16 @@ function saveCount() {
     }
 }
 
-function deleteItems() {
-    let deleteItem = document.querySelectorAll('.deleteItem')
-    let i = 0
-    for (let item of deleteItem) {
-        if (item.checked === true) { tempShopData.items.splice(i, 1); i-- }
-        i++
-    }
+async function deleteItems(item) {
+    let idItem = item.dataset.id;
+    let ItemList = tempShopData.items;
+    for (let myItem of ItemList){
+        if(myItem.id == idItem){
+            tempShopData.items.splice(ItemList.indexOf(myItem), 1);
+            break;
+        }
+    }//i--
+    shopData = await putItems();
+    showItems();
 }
-
 

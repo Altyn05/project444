@@ -1,5 +1,6 @@
 package com.amr.project.util;
 
+import com.amr.project.converter.ItemMapper;
 import com.amr.project.converter.ShopMapper;
 import com.amr.project.model.dto.ItemDto;
 import com.amr.project.model.dto.ShopDto;
@@ -34,4 +35,12 @@ public class ShopItemsUtil {
         rwShop.update(shopDB);
         return shopMapper.shopToDto(shopDB);
     }
+
+    public ShopDto updateItem(ShopDto shopDto){
+//        Item itemDB = rwItem.getByKey(Item.class,itemDto.getId()).orElse(null);
+//
+//        rwItem.update(itemDB);
+        return shopDto;
+    }
+
 }

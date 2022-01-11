@@ -31,4 +31,13 @@ public class ShopItemsRestController {
 
     @PutMapping("/shopItems")
     public ShopDto editItem(@RequestBody ShopDto shopDto) { return shopItemsUtil.updateShop(shopDto); }
+
+    @PutMapping("/shopItems/{id}")
+    public ShopDto editOneItem(@RequestBody ShopDto shopDto) {
+
+        return shopItemsUtil.updateItem(shopDto);
+
+    }
+
+
 }
