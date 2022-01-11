@@ -35,6 +35,7 @@ public class City {
     private List<Address> addresses;
 
     @OneToMany(mappedBy = "city", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @ToString.Exclude
     private List<Shop> shops;
 
     public City(String name, Country country) {

@@ -32,6 +32,7 @@ public class Country {
 
     @OneToMany(mappedBy = "location", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     @JsonIgnore
+    @ToString.Exclude
     private List<Shop> shops;
 
     public Country(String name) {
