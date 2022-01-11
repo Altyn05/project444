@@ -1,10 +1,10 @@
-    package com.amr.project;
+package com.amr.project;
 
 import com.amr.project.dao.abstracts.*;
 import com.amr.project.model.entity.*;
 import com.amr.project.model.enums.Gender;
 import com.amr.project.model.enums.Status;
-import com.amr.project.service.abstracts.ReadWriteService;
+import com.amr.project.repository.RegionRepository;
 import com.amr.project.service.abstracts.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
 import java.util.*;
-import java.util.concurrent.ThreadLocalRandom;
 
 @Component
 public class DatabaseInitializer {
@@ -23,6 +22,7 @@ public class DatabaseInitializer {
     private final UserDao userDao;
     private final AddressDao addressDao;
     private final CountryDao countryDao;
+    private final RegionRepository regionRepository;
     private final CityDao cityDao;
     private final CategoryDao categoryDao;
     private final ItemDao itemDao;
@@ -33,6 +33,7 @@ public class DatabaseInitializer {
 
     private List<Category> categories;
     private List<Country> countries;
+    private List<Region> regions;
     private List<City> cities;
     private Set<Role> roles;
     private List<User> users;
@@ -44,13 +45,14 @@ public class DatabaseInitializer {
 
     @Autowired
     public DatabaseInitializer(RoleDao roleDao, UserDao userDao, AddressDao addressDao,
-                               CountryDao countryDao, CityDao cityDao, CategoryDao categoryDao,
-                               ItemDao itemDao, ImageDao imageDao, ShopDao shopDao, ReviewDao reviewDao, UserService userService, ReadWriteDao <Order, Long> rwOrder) {
+                               CountryDao countryDao, RegionRepository regionRepository, CityDao cityDao, CategoryDao categoryDao,
+                               ItemDao itemDao, ImageDao imageDao, ShopDao shopDao, ReviewDao reviewDao, UserService userService, ReadWriteDao<Order, Long> rwOrder) {
 
         this.roleDao = roleDao;
         this.userDao = userDao;
         this.addressDao = addressDao;
         this.countryDao = countryDao;
+        this.regionRepository = regionRepository;
         this.cityDao = cityDao;
         this.categoryDao = categoryDao;
         this.itemDao = itemDao;
@@ -70,6 +72,9 @@ public class DatabaseInitializer {
         countries = getCountries();
         countries.forEach(countryDao::persist);
 
+        regions = getRegions();
+        regionRepository.saveAll(regions);
+
         cities = getCities();
         cities.forEach(cityDao::persist);
 
@@ -81,7 +86,7 @@ public class DatabaseInitializer {
         users.get(0).setUsername("user");
         users.get(0).setPassword("1");
         users.get(0).setRoles(null);
-        users.get(0).addRole(roles.stream().filter(r -> r.getName() == "USER").findFirst().orElse(null));
+        users.get(0).addRole(roles.stream().filter(r -> r.getName() == "ADMIN").findFirst().orElse(null));
         //USER Можно пока одного юзера сделать фискированным чтобы время сэкономить?
         users.forEach(user -> {
             user.getAddress().forEach(addressDao::persist);
@@ -192,7 +197,8 @@ public class DatabaseInitializer {
 
         return new Address(
                 randomNumberString(6),
-                city.getCountry(),
+                city.getRegion().getCountry(),
+                city.getRegion(),
                 city,
                 "Street " + randomNumberString(3),
                 randomNumberString(2)
@@ -213,34 +219,65 @@ public class DatabaseInitializer {
         return countries;
     }
 
+    private List<Region> getRegions() {
+        List<Region> regions = new ArrayList<>();
+
+        regions.add(new Region("Georgia", countries.get(0)));
+        regions.add(new Region("Massachusetts", countries.get(0)));
+        regions.add(new Region("Illinois", countries.get(0)));
+        regions.add(new Region("Texas", countries.get(0)));
+        regions.add(new Region("Moscow Region", countries.get(1)));
+        regions.add(new Region("Tula Region", countries.get(1)));
+        regions.add(new Region("Tomsk Region", countries.get(1)));
+        regions.add(new Region("Sverdlovsk region", countries.get(1)));
+        regions.add(new Region("Nursultan region", countries.get(2)));
+        regions.add(new Region("Akmola Region", countries.get(2)));
+        regions.add(new Region("Turkestan Region", countries.get(2)));
+        regions.add(new Region("Karaganda Region", countries.get(2)));
+        regions.add(new Region("Minsk Region", countries.get(3)));
+        regions.add(new Region("Brest Region", countries.get(3)));
+        regions.add(new Region("Gomel Region", countries.get(3)));
+        regions.add(new Region("Vitebsk Region", countries.get(3)));
+        regions.add(new Region("Kiev Region", countries.get(4)));
+        regions.add(new Region("Odessa Region", countries.get(4)));
+        regions.add(new Region("Donetsk Region", countries.get(4)));
+        regions.add(new Region("Ile-de-France", countries.get(5)));
+        regions.add(new Region("Arrondissement", countries.get(5)));
+        regions.add(new Region("Provence", countries.get(5)));
+        regions.add(new Region("Barcelona Region", countries.get(6)));
+        regions.add(new Region("Madrid Region", countries.get(6)));
+
+        return regions;
+    }
+
     private List<City> getCities() {
         List<City> cities = new ArrayList<>();
 
-        cities.add(new City("Atlanta", countries.get(0)));
-        cities.add(new City("Boston", countries.get(0)));
-        cities.add(new City("Chicago", countries.get(0)));
-        cities.add(new City("Houston", countries.get(0)));
-        cities.add(new City("Moscow", countries.get(1)));
-        cities.add(new City("Kolomna", countries.get(1)));
-        cities.add(new City("Tula", countries.get(1)));
-        cities.add(new City("Tomsk", countries.get(1)));
-        cities.add(new City("Ekaterinburg", countries.get(1)));
-        cities.add(new City("Nursultan", countries.get(2)));
-        cities.add(new City("Astana", countries.get(2)));
-        cities.add(new City("Turkestan", countries.get(2)));
-        cities.add(new City("Karaganda", countries.get(2)));
-        cities.add(new City("Minsk", countries.get(3)));
-        cities.add(new City("Brest", countries.get(3)));
-        cities.add(new City("Gomel", countries.get(3)));
-        cities.add(new City("Vitebsk", countries.get(3)));
-        cities.add(new City("Kiev", countries.get(4)));
-        cities.add(new City("Odessa", countries.get(4)));
-        cities.add(new City("Donetsk", countries.get(4)));
-        cities.add(new City("Paris", countries.get(5)));
-        cities.add(new City("Lion", countries.get(5)));
-        cities.add(new City("Marcel", countries.get(5)));
-        cities.add(new City("Barcelona", countries.get(6)));
-        cities.add(new City("Madrid", countries.get(6)));
+        cities.add(new City("Atlanta", regions.get(0), regions.get(0).getCountry()));
+        cities.add(new City("Boston", regions.get(1), regions.get(1).getCountry()));
+        cities.add(new City("Chicago", regions.get(2), regions.get(2).getCountry()));
+        cities.add(new City("Houston", regions.get(3), regions.get(3).getCountry()));
+        cities.add(new City("Moscow", regions.get(4), regions.get(4).getCountry()));
+        cities.add(new City("Kolomna", regions.get(4), regions.get(4).getCountry()));
+        cities.add(new City("Tula", regions.get(5), regions.get(5).getCountry()));
+        cities.add(new City("Tomsk", regions.get(6), regions.get(6).getCountry()));
+        cities.add(new City("Ekaterinburg", regions.get(7), regions.get(7).getCountry()));
+        cities.add(new City("Nursultan", regions.get(8), regions.get(8).getCountry()));
+        cities.add(new City("Astana", regions.get(9), regions.get(9).getCountry()));
+        cities.add(new City("Turkestan", regions.get(10), regions.get(10).getCountry()));
+        cities.add(new City("Karaganda", regions.get(11), regions.get(11).getCountry()));
+        cities.add(new City("Minsk", regions.get(12), regions.get(12).getCountry()));
+        cities.add(new City("Brest", regions.get(13), regions.get(13).getCountry()));
+        cities.add(new City("Gomel", regions.get(14), regions.get(14).getCountry()));
+        cities.add(new City("Vitebsk", regions.get(15), regions.get(15).getCountry()));
+        cities.add(new City("Kiev", regions.get(16), regions.get(16).getCountry()));
+        cities.add(new City("Odessa", regions.get(17), regions.get(17).getCountry()));
+        cities.add(new City("Donetsk", regions.get(18), regions.get(18).getCountry()));
+        cities.add(new City("Paris", regions.get(19), regions.get(19).getCountry()));
+        cities.add(new City("Lion", regions.get(20), regions.get(20).getCountry()));
+        cities.add(new City("Marcel", regions.get(21), regions.get(21).getCountry()));
+        cities.add(new City("Barcelona", regions.get(22), regions.get(22).getCountry()));
+        cities.add(new City("Madrid", regions.get(23), regions.get(23).getCountry()));
 
         return cities;
     }

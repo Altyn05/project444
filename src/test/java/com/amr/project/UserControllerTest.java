@@ -5,6 +5,7 @@ import com.amr.project.converter.UserMapper;
 import com.amr.project.model.dto.UserDto;
 import com.amr.project.model.entity.User;
 import com.amr.project.service.abstracts.CountryService;
+import com.amr.project.service.abstracts.RegionService;
 import com.amr.project.service.abstracts.UserService;
 import com.amr.project.webapp.controller.UserController;
 import org.junit.jupiter.api.Test;
@@ -27,6 +28,8 @@ class UserControllerTest {
     @Autowired
     private UserService userService;
     @Autowired
+    private RegionService regionService;
+    @Autowired
     private CountryService countryService;
     @Autowired
     UserController uc;
@@ -37,7 +40,7 @@ class UserControllerTest {
         User user = userMapper.toModel(userDto);
         userService = mock(UserService.class);
         when(userService.createNewUser(user)).thenReturn(false);
-        uc = new UserController(userService, countryService, null, null, userMapper,
+        uc = new UserController(userService, countryService, regionService, null, null, userMapper,
                 new AddressMapperImpl());
         assertEquals("index", uc.createNewUser(userDto).getViewName());
         verify(userService).createNewUser(user);
@@ -48,7 +51,7 @@ class UserControllerTest {
         UserDto userDto = new UserDto("222", "222");
         User user = userMapper.toModel(userDto);
         userService = mock(UserService.class);
-        uc = new UserController(userService, countryService, null, null, userMapper,
+        uc = new UserController(userService, countryService, regionService, null, null, userMapper,
                 new AddressMapperImpl());
         when(userService.createNewUser(user)).thenReturn(true);
         assertEquals("signup", uc.createNewUser(userDto).getViewName());

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 public class AdminServiceImpl implements AdminService {
 
     private final CountryService countryService;
+    private final RegionService regionService;
     private final CityService cityService;
     private final AddressService addressService;
     private final CategoryService categoryService;
@@ -19,8 +20,9 @@ public class AdminServiceImpl implements AdminService {
     private final UserService userService;
     private final RoleService roleService;
 
-    public AdminServiceImpl(CountryService countryService, CityService cityService, AddressService addressService, CategoryService categoryService, ShopService shopService, ItemService itemService, UserService userService, RoleService roleService) {
+    public AdminServiceImpl(CountryService countryService, RegionService regionService, CityService cityService, AddressService addressService, CategoryService categoryService, ShopService shopService, ItemService itemService, UserService userService, RoleService roleService) {
         this.countryService = countryService;
+        this.regionService = regionService;
         this.cityService = cityService;
         this.addressService = addressService;
         this.categoryService = categoryService;
@@ -31,6 +33,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     private final CountryMapper countryMapper = Mappers.getMapper(CountryMapper.class);
+    private final RegionMapper regionMapper = Mappers.getMapper(RegionMapper.class);
     private final CityMapper cityMapper = Mappers.getMapper(CityMapper.class);
     private final AdminAddressMapper addressMapper = Mappers.getMapper(AdminAddressMapper.class);
     private final CategoryMapper categoryMapper = Mappers.getMapper(CategoryMapper.class);
@@ -42,6 +45,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public AdminPageDto show() {
         return new AdminPageDto(countryMapper.countryListToListCountryDto(countryService.getAll(Country.class)),
+                regionMapper.regionListToListAdminRegionDto(regionService.getAll(Region.class)),
                 cityMapper.cityListToListAdminCityDto(cityService.getAll(City.class)),
                 addressMapper.addressListToListAdminAddressDto(addressService.getAll(Address.class)),
                 categoryMapper.categoryListToListCategoryDTO(categoryService.getAll(Category.class)),

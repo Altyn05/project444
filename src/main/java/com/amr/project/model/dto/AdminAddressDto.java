@@ -9,5 +9,6 @@ public class AdminAddressDto {
     private String street;
     private String house;
     private AdminCityDto city;
+    private AdminRegionDto region;
     private CountryDto country;
 }

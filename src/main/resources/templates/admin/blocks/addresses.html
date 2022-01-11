@@ -169,6 +169,184 @@
             </div>
         </div>
 
+        <!--        Region-->
+        <div class="col-4">
+            <div>
+                <div id="searchWrapperRegion">
+                    <label for="searchBarRegion"></label><input
+                        type="text"
+                        name="searchBarRegion"
+                        id="searchBarRegion"
+                        placeholder="поиск по регионам"
+                />
+                </div>
+                <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal"
+                        data-bs-target="#createModalRegion">
+                    Создать Регион
+                </button>
+            </div>
+            <table class="table table">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Регион</th>
+                    <th scope="col">Страна</th>
+                    <th scope="col">Редактир- ование</th>
+                    <th scope="col">Удаление</th>
+                </tr>
+                </thead>
+                <tbody id="regionsList">
+                </tbody>
+            </table>
+            <!--    Модальные окна Region-->
+            <div class="modal fade" id="createModalRegion" tabindex="-1" aria-labelledby="createModalLabelRegion"
+                 aria-hidden="true">
+                <div class="modal-dialog ">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="createModalLabelRegion">Создание Региона</h5>
+                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true"></span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form class="createFormRegion">
+                                <div class="row">
+                                    <div class="col-3">
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group text-center">
+                                            <label for="createNameRegion" class="font-weight-bold">Название
+                                                Региона</label>
+                                            <input type="text" class="form-control" id="createNameRegion" name="name"/>
+                                        </div>
+                                        <br>
+                                        <div class="form-group text-center">
+                                            <label for="inputCountry"><p class="font-weight-bold">Страна</p>
+                                            </label>
+                                            <select id="inputCountry" class="form-control" name="country">
+                                            </select>
+                                        </div>
+                                        <br>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть
+                                    </button>
+                                    <input type="button" class="btn btn-primary createBTNRegion" data-bs-dismiss="modal"
+                                           value="Создать"/>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="editModalRegion" tabindex="-1" aria-labelledby="editModalLabelRegion"
+                 aria-hidden="true">
+                <div class="modal-dialog ">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editModalLabelRegion">Редактирование</h5>
+                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true"></span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form class="editFormRegion">
+                                <div class="row">
+                                    <div class="col-3">
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group text-center">
+                                            <label for="editIdRegion" class="font-weight-bold">ID</label>
+                                            <input type="text" class="form-control" id="editIdRegion" name="id"
+                                                   readonly/>
+                                        </div>
+                                        <br>
+                                        <div class="form-group text-center">
+                                            <label for="editNameRegion" class="font-weight-bold">Название Региона</label>
+                                            <input type="text" class="form-control" id="editNameRegion" name="name"/>
+                                        </div>
+                                        <br>
+                                        <div class="form-group text-center">
+                                            <label for="inputCountryEdit"><p class="font-weight-bold">Страна</p>
+                                            </label>
+                                            <select id="inputCountryEdit" class="form-control" name="country">
+                                            </select>
+                                        </div>
+                                        <br>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть
+                                    </button>
+                                    <input type="button" class="btn btn-primary subBTNRegion" data-bs-dismiss="modal"
+                                           value="Изменить"/>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="deleteModalRegion" tabindex="-1" aria-labelledby="deleteModalLabelRegion"
+                 aria-hidden="true">
+                <div class="modal-dialog ">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deleteModalLabelRegion">Удалить регион</h5>
+                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true"></span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form class="deleteFormRegion">
+                                <div class="row">
+                                    <div class="col-3">
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group text-center">
+                                            <label for="deleteIdRegion" class="font-weight-bold">ID</label>
+                                            <input type="text" class="form-control" id="deleteIdRegion" name="id"
+                                                   readonly/>
+                                        </div>
+                                        <br>
+                                        <div class="form-group text-center">
+                                            <label for="deleteNameRegion" class="font-weight-bold">Название
+                                                Региона</label>
+                                            <input type="text" class="form-control" id="deleteNameRegion" name="name"
+                                                   readonly/>
+                                        </div>
+                                        <br>
+                                        <div class="form-group text-center">
+                                            <label for="inputCountryDelete"><p class="font-weight-bold" disabled>
+                                                Страна</p>
+                                            </label>
+                                            <select id="inputCountryDelete" class="form-control" name="country"
+                                                    disabled>
+                                            </select>
+                                        </div>
+                                        <br>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть
+                                    </button>
+                                    <input type="button" class="btn btn-primary delBTNRegion" data-bs-dismiss="modal"
+                                           value="Удалить"/>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--        City-->
         <div class="col-3">
             <div col-3>
                 <div id="searchWrapperCity">
@@ -189,6 +367,7 @@
                 <tr>
                     <th scope="col">ID</th>
                     <th scope="col">Город</th>
+                    <th scope="col">Регион</th>
                     <th scope="col">Страна</th>
                     <th scope="col">Редактир- ование</th>
                     <th scope="col">Удаление</th>
@@ -220,9 +399,16 @@
                                         </div>
                                         <br>
                                         <div class="form-group text-center">
-                                            <label for="inputCountry"><p class="font-weight-bold">Страна</p>
+                                            <label for="inputRegion"><p class="font-weight-bold">Регион</p>
                                             </label>
-                                            <select id="inputCountry" class="form-control" name="country">
+                                            <select id="inputRegion" class="form-control" name="country">
+                                            </select>
+                                        </div>
+                                        <br>
+                                        <div class="form-group text-center">
+                                            <label for="inputCityCountry"><p class="font-weight-bold">Страна</p>
+                                            </label>
+                                            <select id="inputCityCountry" class="form-control" name="country">
                                             </select>
                                         </div>
                                         <br>
@@ -246,7 +432,7 @@
                 <div class="modal-dialog ">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="deleteModalLabelCity">Удалить страну</h5>
+                            <h5 class="modal-title" id="deleteModalLabelCity">Удалить город</h5>
                             <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true"></span>
                             </button>
@@ -270,10 +456,19 @@
                                         </div>
                                         <br>
                                         <div class="form-group text-center">
-                                            <label for="inputCountryDelete"><p class="font-weight-bold" disabled>
+                                            <label for="inputRegionDelete"><p class="font-weight-bold" disabled>
+                                                Регион</p>
+                                            </label>
+                                            <select id="inputRegionDelete" class="form-control" name="country"
+                                                    disabled>
+                                            </select>
+                                        </div>
+                                        <br>
+                                        <div class="form-group text-center">
+                                            <label for="inputCityCountryDelete"><p class="font-weight-bold" disabled>
                                                 Страна</p>
                                             </label>
-                                            <select id="inputCountryDelete" class="form-control" name="country"
+                                            <select id="inputCityCountryDelete" class="form-control" name="country"
                                                     disabled>
                                             </select>
                                         </div>
@@ -320,9 +515,16 @@
                                         </div>
                                         <br>
                                         <div class="form-group text-center">
-                                            <label for="inputCountryEdit"><p class="font-weight-bold">Страна</p>
+                                            <label for="inputRegionEdit"><p class="font-weight-bold">Регион</p>
                                             </label>
-                                            <select id="inputCountryEdit" class="form-control" name="country">
+                                            <select id="inputRegionEdit" class="form-control" name="region">
+                                            </select>
+                                        </div>
+                                        <br>
+                                        <div class="form-group text-center">
+                                            <label for="inputCityCountryEdit"><p class="font-weight-bold">Страна</p>
+                                            </label>
+                                            <select id="inputCityCountryEdit" class="form-control" name="country">
                                             </select>
                                         </div>
                                         <br>
@@ -342,7 +544,7 @@
             </div>
 
         </div>
-        <div class="col-5">
+        <div class="col-10">
             <div col-3>
                 <div id="searchWrapperAddress">
                     <label for="searchBarAddress"></label><input
@@ -363,6 +565,7 @@
                     <th scope="col">ID</th>
                     <th scope="col">Индекс</th>
                     <th scope="col">Страна</th>
+                    <th scope="col">Регион</th>
                     <th scope="col">Город</th>
                     <th scope="col">Улица</th>
                     <th scope="col">Номер дома</th>
@@ -400,6 +603,13 @@
                                             <label for="inputAddress"><p class="font-weight-bold">Страна</p>
                                             </label>
                                             <select id="inputAddress" class="form-control" name="country">
+                                            </select>
+                                        </div>
+                                        <br>
+                                        <div class="form-group text-center">
+                                            <label for="inputRegionAddress"><p class="font-weight-bold">Регион</p>
+                                            </label>
+                                            <select id="inputRegionAddress" class="form-control" name="region">
                                             </select>
                                         </div>
                                         <br>
@@ -475,6 +685,12 @@
                                             </select>
                                         </div>
                                         <br>
+                                        <div class="form-group text-center">
+                                            <label for="inputRegionAddressDelete"><p class="font-weight-bold">Регион</p>
+                                            </label>
+                                            <select id="inputRegionAddressDelete" class="form-control" name="region">
+                                            </select>
+                                        </div>
                                         <br>
                                         <div class="form-group text-center">
                                             <label for="inputCityDelete"><p class="font-weight-bold" disabled>Город</p>
@@ -543,6 +759,13 @@
                                             <label for="inputAddressEdit"><p class="font-weight-bold">Страна</p>
                                             </label>
                                             <select id="inputAddressEdit" class="form-control" name="country">
+                                            </select>
+                                        </div>
+                                        <br>
+                                        <div class="form-group text-center">
+                                            <label for="inputRegionAddressEdit"><p class="font-weight-bold">Регион</p>
+                                            </label>
+                                            <select id="inputRegionAddressEdit" class="form-control" name="region">
                                             </select>
                                         </div>
                                         <br>

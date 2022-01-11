@@ -12,7 +12,9 @@ import java.util.Objects;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "cities")
+@Table(name = "cities",
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"name", "region_id"})}
+)
 public class City {
 
     @Id
@@ -20,6 +22,11 @@ public class City {
     private Long id;
 
     private String name;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "region_id")
+    @ToString.Exclude
+    private Region region;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "country_id")
@@ -38,8 +45,14 @@ public class City {
     @ToString.Exclude
     private List<Shop> shops;
 
-    public City(String name, Country country) {
+    public City(String name, Region region) {
         this.name = name;
+        this.region = region;
+    }
+
+    public City(String name, Region region, Country country) {
+        this.name = name;
+        this.region = region;
         this.country = country;
     }
 
@@ -55,11 +68,11 @@ public class City {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         City city = (City) o;
-        return Objects.equals(name, city.name) && Objects.equals(country, city.country);
+        return Objects.equals(name, city.name) && Objects.equals(region, city.region);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, country);
+        return Objects.hash(name, region);
     }
 }
