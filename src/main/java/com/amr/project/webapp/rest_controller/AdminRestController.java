@@ -57,7 +57,7 @@ public class AdminRestController {
         return adminService.show();
     }
 
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping("/countries")
     public List<CountryDto> showListCountry() {
         return adminService.show().getCountryDtoList();
@@ -90,7 +90,7 @@ public class AdminRestController {
         return "" + id;
     }
 
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping("/regions")
     public List<AdminRegionDto> showListRegion() {
         return adminService.show().getRegionDtoList();
@@ -127,7 +127,7 @@ public class AdminRestController {
         return "" + id;
     }
 
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_USER')")
     @GetMapping("/cities")
     public List<AdminCityDto> showListCity() {
         return adminService.show().getCityDtoList();

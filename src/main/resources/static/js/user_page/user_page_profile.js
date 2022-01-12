@@ -118,9 +118,11 @@ function editAddresses() {
 
     writeAddresses(user.address, "addr21", "addr22")
     let country = document.querySelectorAll('.countryaddr21addr22')
-    for (let cntry of country) cntry.insertAdjacentHTML('afterend', "<input type=\"text\" class = \"inputCountry\" >введите страну")
+    for (let cntry of country) cntry.insertAdjacentHTML('afterend', '<select class="editCountry"></select>выберете страну')
+    let region = document.querySelectorAll('.cityaddr21addr22')
+    for (let rgn of region) rgn.insertAdjacentHTML('afterend', '<select class="editRegion"></select>выберете регион')
     let city = document.querySelectorAll('.cityaddr21addr22')
-    for (let cty of city) cty.insertAdjacentHTML('afterend', "<input type=\"text\" class = \"inputCity\" >введите город")
+    for (let cty of city) cty.insertAdjacentHTML('afterend', '<select class="editCity"></select>выберете город')
     let street = document.querySelectorAll('.streetaddr21addr22')
     for (let strt of street) strt.insertAdjacentHTML('afterend', "<p><input type=\"text\" class = \"inputStreet\">введите улицу" +
         "<input type=\"text\" class = \"inputBuilding\">введите дом" +
@@ -145,28 +147,81 @@ function editAddresses() {
     let newDiv = document.createElement('div')
     newDiv.className = "DEL tab-pane addr21addr22"
     newDiv.id = "addr21new"
-    newDiv.insertAdjacentHTML('beforeend', "<input type=\"text\" class = \"inputCountry\" >_введите страну")
-    newDiv.insertAdjacentHTML('beforeend', "<input type=\"text\" class = \"inputCity\" >_введите город")
+    newDiv.insertAdjacentHTML('beforeend', '<select class="editCountry"></select>выберете страну')
+    newDiv.insertAdjacentHTML('beforeend', '<select class="editRegion"></select>выберете регион')
+    newDiv.insertAdjacentHTML('beforeend', '<select class="editCity"></select>выберете город')
     newDiv.insertAdjacentHTML('beforeend', "<p><input type=\"text\" class = \"inputStreet\" >_введите улицу_" +
         "<input type=\"text\" class = \"inputBuilding\">_введите дом</p>")
 
     document.querySelector('.addr22').appendChild(newDiv)
-
-
+    showCountries();
+    showRegions();
+    showCities();
 
 }
+
+function showCountries() {
+    fetch('/adminapi/countries')
+        .then(response => response.json())
+        .then(data => {
+            const elements = document.getElementsByClassName("editCountry");
+            for(let j = 0, length = elements.length; j < length; j++) {
+                for (let i = 0; i < data.length; i++) {
+                    let row =
+                        `<option>${data[i].name}</option>`;
+                    elements[j].innerHTML += row;
+                }
+            }
+        })
+        .catch(console.error);
+}
+
+function showRegions() {
+    fetch('/adminapi/regions')
+        .then(response => response.json())
+        .then(data => {
+            const elements = document.getElementsByClassName("editRegion");
+            for(let j = 0, length = elements.length; j < length; j++) {
+                for (let i = 0; i < data.length; i++) {
+                    let row =
+                        `<option>${data[i].name}</option>`;
+                    elements[j].innerHTML += row;
+                }
+            }
+        })
+        .catch(console.error);
+}
+
+function showCities() {
+    fetch('/adminapi/cities')
+        .then(response => response.json())
+        .then(data => {
+            const elements = document.getElementsByClassName("editCity");
+            for(let j = 0, length = elements.length; j < length; j++) {
+                for (let i = 0; i < data.length; i++) {
+                    let row =
+                        `<option>${data[i].name}</option>`;
+                    elements[j].innerHTML += row;
+                }
+            }
+        })
+        .catch(console.error);
+}
+
 
 function saveAddresses() {
     let i = 0
     let j = 0
     for (addr of user.address) {
         let country = $('#addr21' + i).find('.inputCountry')[0].value
+        let region = $('#addr21' + i).find('.inputRegion')[0].value
         let city = $('#addr21' + i).find('.inputCity')[0].value
         let street = $('#addr21' + i).find('.inputStreet')[0].value
         let building = $('#addr21' + i).find('.inputBuilding')[0].value
         let isDelete = $('#addr21' + i).find('.delAddr')[0].checked
 
         if (country !== "") tempUser.address[i].country = country
+        if (region !== "") tempUser.address[i].region = region
         if (city !== "") tempUser.address[i].city = city
         if (street !== "") tempUser.address[i].street = street
         if (building !== "") tempUser.address[i].house = building
@@ -176,13 +231,15 @@ function saveAddresses() {
     }
 
     let country = $('#addr21new').find('.inputCountry')[0].value
+    let region = $('#addr21new').find('.inputRegion')[0].value
     let city = $('#addr21new').find('.inputCity')[0].value
     let street = $('#addr21new').find('.inputStreet')[0].value
     let building = $('#addr21new').find('.inputBuilding')[0].value
 
-    if (country !== "" | city !== "" | street !== "" | building !== "") {
-        tempUser.address.push({ id: null, cityIndex: null, street: null, house: null, city: null, country: null })
+    if (country !== "" | region !== "" | city !== "" | street !== "" | building !== "") {
+        tempUser.address.push({ id: null, cityIndex: null, street: null, house: null, city: null, region: null, country: null })
         tempUser.address[j].country = country
+        tempUser.address[j].region = region
         tempUser.address[j].city = city
         tempUser.address[j].street = street
         tempUser.address[j].house = building
