@@ -42,11 +42,11 @@ public class UserProfileUtil {
         ///////Persist Addresses
         for(Address address: userFront.getAddress()) {
             Country country = address.getCountry();
-            if(countryRepository.findCountryByName(country.getName()).orElse(null) == null) rwCountry.persist(country);
-                else address.setCountry(countryRepository.findCountryByName(country.getName()).orElse(null));
+            if(countryRepository.findFirstCountryByName(country.getName()).orElse(null) == null) rwCountry.persist(country);
+                else address.setCountry(countryRepository.findFirstCountryByName(country.getName()).orElse(null));
             City city = address.getCity();
-            if(cityRepository.findCityByName(city.getName()).orElse(null) == null) rwCity.persist(city);
-                else address.setCity(cityRepository.findCityByName(city.getName()).orElse(null));
+            if(cityRepository.findFirstCityByName(city.getName()).orElse(null) == null) rwCity.persist(city);
+                else address.setCity(cityRepository.findFirstCityByName(city.getName()).orElse(null));
             if(address.getId() == null) rwAddress.persist(address);
                 else rwAddress.update(address);
         }
