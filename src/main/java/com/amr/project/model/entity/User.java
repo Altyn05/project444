@@ -1,9 +1,9 @@
 package com.amr.project.model.entity;
 
 import com.amr.project.model.enums.Gender;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
+import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -51,7 +51,7 @@ public class User implements UserDetails {
     private Set<Role> roles;
 
     private Gender gender;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date birthday;
 
 

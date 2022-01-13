@@ -2,8 +2,9 @@ package com.amr.project.util;
 
 import com.amr.project.converter.ImageMapper;
 import com.amr.project.converter.UserMapper;
+import com.amr.project.converter.UserPageMapper;
 import com.amr.project.model.dto.ImageDto;
-import com.amr.project.model.dto.UserDto;
+import com.amr.project.model.dto.UserPageDto;
 import com.amr.project.model.entity.*;
 import com.amr.project.repository.CityRepository;
 import com.amr.project.repository.CountryRepository;
@@ -28,14 +29,15 @@ public class UserProfileUtil {
     private final ReadWriteService<Address, Long> rwAddress;
     private final ReadWriteService<City, Long> rwCity;
     private final ReadWriteService<Country, Long> rwCountry;
+    private final UserPageMapper userPageMapper;
 
     /////// convert from Dto to Model and copy to userDB
-    public UserDto prepareUser(UserDto userDto) {
-        User userDB = userRepository.findUserByUsername(userDto.getUsername()).orElse(null);
-        User userFront = userMapper.toModel(userDto);
+    public UserPageDto prepareUser(UserPageDto userPageDto) {
+        User userDB = userRepository.findUserByUsername(userPageDto.getUsername()).orElse(null);
+        User userFront = userPageMapper.toModel(userPageDto);
 
         /////////Copy simple fields
-        userMapper.updateModel(userDto,userDB);
+        userPageMapper.updateModel(userPageDto,userDB);
 
         ///////Persist Addresses
         for(Address address: userFront.getAddress()) {
@@ -62,11 +64,11 @@ public class UserProfileUtil {
  Не заработал до конца */
 
 
-        List<Long> indexs = userDto.getImages().stream().map(ImageDto::getId).collect(Collectors.toList());
+        List<Long> indexs = userPageDto.getImages().stream().map(ImageDto::getId).collect(Collectors.toList());
         userDB.getImages().removeIf(image -> !indexs.contains(image.getId()));
 
-        int imageLast = userDto.getImages().size() - 1;
-        Image img = imageMapper.toModel(userDto.getImages().get(imageLast));
+        int imageLast = userPageDto.getImages().size() - 1;
+        Image img = imageMapper.toModel(userPageDto.getImages().get(imageLast));
         if(img.getId() == null) {
             rwImage.persist(img);
             userDB.getImages().add(img);
@@ -74,10 +76,10 @@ public class UserProfileUtil {
         int i = 0;
         for(Image image: userDB.getImages()) {
             image.setIsMain(false);
-            if(userDto.getImages().get(i++).getIsMain()) image.setIsMain(true);
+            if(userPageDto.getImages().get(i++).getIsMain()) image.setIsMain(true);
         }
 
         rwUser.update(userDB);
-        return userMapper.toDto(userDB);
+        return userPageMapper.toDto(userDB);
     }
 }

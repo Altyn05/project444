@@ -3,6 +3,7 @@ package com.amr.project.webapp.rest_controller;
 import com.amr.project.converter.UserMapper;
 import com.amr.project.model.dto.CategoryDto;
 import com.amr.project.model.dto.UserDto;
+import com.amr.project.model.dto.UserPageDto;
 import com.amr.project.service.abstracts.UserService;
 import com.amr.project.util.UserProfileUtil;
 import lombok.RequiredArgsConstructor;
@@ -28,8 +29,8 @@ public class UserPageRestController {
     }
 
     @PutMapping("/users")
-    public UserDto updateUser(@RequestBody UserDto userDto) {
-        return userProfileUtil.prepareUser(userDto);
+    public UserPageDto updateUser(@RequestBody UserPageDto userPageDto) {
+        return userProfileUtil.prepareUser(userPageDto);
     }
 
 

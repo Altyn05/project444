@@ -59,7 +59,7 @@ public class UserDaoImpl extends ReadWriteDaoImpl<User, Long> implements UserDao
         userDb.setPhone(user.getPhone());
         userDb.setAddress(user.getAddress());
         userDb.setBirthday(user.getBirthday());
-        persist(userDb);
+        super.update(userDb);
     }
     public List<User> findUsersByEMail(String eMail){
         return (List<User>) em.createQuery("Select e FROM User e WHERE e.email like  concat('%', :eMail, '%')")
