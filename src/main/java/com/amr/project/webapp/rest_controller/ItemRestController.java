@@ -45,7 +45,6 @@ public class ItemRestController {
             categories.add(categoryService.findByName(category.getName()));
         }
         item.setCategories(categories);
-        System.out.println(item);
         itemService.persist(item);
         return new ResponseEntity<>(item, HttpStatus.OK);
     }

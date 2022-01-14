@@ -59,7 +59,6 @@ public class ShopDaoImpl extends ReadWriteDaoImpl<Shop,Long> implements ShopDao 
                 .setFirstResult((int) pageable.getOffset())
                 .setMaxResults(pageable.getPageSize())
                 .getResultList().stream().filter(Shop::isModerateAccept).collect(Collectors.toList());
-        System.out.println(list);
         return new PageImpl<>(list, pageable, size);
     }
 

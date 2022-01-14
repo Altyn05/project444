@@ -72,7 +72,6 @@ class ItemRestControllerIntegrationTest {
         testItem.setCategories(categories);
         testItem.setModerated(false);
         testItem.setModerateAccept(false);
-        System.out.println(testItem);
         try {
             itemService.delete(itemService.findByName(testItem.getName()));
         } catch (Exception e) {
@@ -82,7 +81,6 @@ class ItemRestControllerIntegrationTest {
             System.err.println("Тестовый Item сохранен в БД");
         }
         Item itemFetch = itemService.findByName("TestItemName");
-        System.out.println("TestItemId in DB: " + itemFetch.getId());
         Long itemId = itemFetch.getId();
         String testItemName = testItem.getName();
         String testItemDescription = testItem.getDescription();

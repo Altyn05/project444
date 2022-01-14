@@ -52,23 +52,14 @@ public class ChatServiceImpl implements ChatService {
     public List<ChatDto> getChatByUser(Long user_id){
 
         List<Chat> listChat = chatDao.getListChatsByUser(userDao.findById(user_id));
-        for (Chat chat:
-             listChat) {
-            System.out.println(chat.getChatName()+ " " + chatMapper.chatToChatDTO(chat).getChatName());
 
-        }
         List<ChatDto> chatDtos = chatMapper.listChatToListChatDTO(listChat);
-        for (ChatDto chat:
-                chatDtos) {
-            System.out.println(chat.getChatName());
-        }
 
         return  chatDtos;
     }
 
     public ChatDto addUser2Chat(User ownerChat, User user ){
         //нужна проверка на существующий
-        System.out.println(ownerChat.getUsername()+ "<-" +user.getUsername());
         Chat chat = new Chat();
         if (ownerChat.getId() != user.getId()) {
             chat.setChatName(user.getFirstName() + " " + user.getLastName());

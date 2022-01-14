@@ -36,11 +36,9 @@ public class ChatRestController {
     @PreAuthorize("hasAnyAuthority({'ROLE_ADMIN', 'ROLE_USER'})")
     @PostMapping("/users")
     public List<UserChatDTO> findUsers(@RequestParam(value ="eMail") String eMail){
-        System.out.println(eMail);
        List<User>  list =  userService.findUsersByEMail(eMail);
 
        if ((list != null) && (!list.isEmpty())) {
-           System.out.println(list.size());
            return userMapper.listUserToListUserChatDTO(list);
         }
        return new ArrayList<UserChatDTO>();

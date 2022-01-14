@@ -1,7 +1,6 @@
 package com.amr.project.util;
 
 import com.amr.project.converter.ImageMapper;
-import com.amr.project.converter.UserMapper;
 import com.amr.project.converter.UserPageMapper;
 import com.amr.project.model.dto.ImageDto;
 import com.amr.project.model.dto.UserPageDto;
@@ -19,7 +18,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Service
 public class UserProfileUtil {
-    private final UserMapper userMapper;
     private final ImageMapper imageMapper;
     private final UserRepository userRepository;
     private final CityRepository cityRepository;
@@ -37,19 +35,24 @@ public class UserProfileUtil {
         User userFront = userPageMapper.toModel(userPageDto);
 
         /////////Copy simple fields
-        userPageMapper.updateModel(userPageDto,userDB);
+        userPageMapper.updateModel(userPageDto, userDB);
 
         ///////Persist Addresses
-        for(Address address: userFront.getAddress()) {
+        for (Address address : userFront.getAddress()) {
             Country country = address.getCountry();
-            if(countryRepository.findFirstCountryByName(country.getName()).orElse(null) == null) rwCountry.persist(country);
-                else address.setCountry(countryRepository.findFirstCountryByName(country.getName()).orElse(null));
+            if (countryRepository.findFirstCountryByName(country.getName()).orElse(null) == null) {
+                rwCountry.persist(country);
+            } else address.setCountry(countryRepository.findFirstCountryByName(country.getName()).orElse(null));
+
             City city = address.getCity();
-            if(cityRepository.findFirstCityByName(city.getName()).orElse(null) == null) rwCity.persist(city);
-                else address.setCity(cityRepository.findFirstCityByName(city.getName()).orElse(null));
-            if(address.getId() == null) rwAddress.persist(address);
-                else rwAddress.update(address);
+            if (cityRepository.findFirstCityByName(city.getName()).orElse(null) == null) {
+                rwCity.persist(city);
+            } else address.setCity(cityRepository.findFirstCityByName(city.getName()).orElse(null));
+            if (address.getId() == null) {
+                rwAddress.persist(address);
+            } else rwAddress.update(address);
         }
+
         userDB.setAddress(userFront.getAddress());
 
         /////////Persist Images
@@ -64,19 +67,19 @@ public class UserProfileUtil {
  Не заработал до конца */
 
 
-        List<Long> indexs = userPageDto.getImages().stream().map(ImageDto::getId).collect(Collectors.toList());
-        userDB.getImages().removeIf(image -> !indexs.contains(image.getId()));
+        List<Long> indexes = userPageDto.getImages().stream().map(ImageDto::getId).collect(Collectors.toList());
+        userDB.getImages().removeIf(image -> !indexes.contains(image.getId()));
 
         int imageLast = userPageDto.getImages().size() - 1;
         Image img = imageMapper.toModel(userPageDto.getImages().get(imageLast));
-        if(img.getId() == null) {
+        if (img.getId() == null) {
             rwImage.persist(img);
             userDB.getImages().add(img);
         }
         int i = 0;
-        for(Image image: userDB.getImages()) {
+        for (Image image : userDB.getImages()) {
             image.setIsMain(false);
-            if(userPageDto.getImages().get(i++).getIsMain()) image.setIsMain(true);
+            if (userPageDto.getImages().get(i++).getIsMain()) image.setIsMain(true);
         }
 
         rwUser.update(userDB);
