@@ -22,17 +22,20 @@ public class Address {
     private Long id;
     private String cityIndex;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,
+            cascade = CascadeType.PERSIST)
     @JoinColumn(name = "country_id")
     @ToString.Exclude
     private Country country;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,
+            cascade = CascadeType.PERSIST)
     @JoinColumn(name = "region_id")
     @ToString.Exclude
     private Region region;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,
+            cascade = CascadeType.PERSIST)
     @JoinColumn(name = "city_id")
     @ToString.Exclude
     private City city;

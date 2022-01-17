@@ -2,19 +2,24 @@ package com.amr.project.webapp.rest_controller;
 
 import com.amr.project.converter.ImageMapper;
 import com.amr.project.converter.UserMapper;
+import com.amr.project.converter.UserPageMapper;
 import com.amr.project.model.dto.ImageDto;
 import com.amr.project.model.dto.UserDto;
+import com.amr.project.model.dto.UserPageDto;
 import com.amr.project.model.entity.Image;
 import com.amr.project.model.entity.Role;
 import com.amr.project.model.entity.User;
 import com.amr.project.repository.RoleRepository;
 import com.amr.project.repository.UserRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.test.context.support.WithMockUser;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -34,6 +39,8 @@ class UserPageRestControllerTest {
     UserMapper userMapper;
     @Autowired
     ImageMapper imageMapper;
+    @Autowired
+    UserPageMapper userPageMapper;
 
 
     @Test
@@ -63,19 +70,20 @@ class UserPageRestControllerTest {
     }
 
     @Test
-    void updateUser() {
-        UserDto userDto = userMapper.toDto(userRepository.findUserByUsername("test_user").orElse(null));
+    void updateUser() throws JsonProcessingException {
+
+//        UserDto userDto = userMapper.toDto(userRepository.findUserByUsername("test_user").orElse(null));
+        UserPageDto userPageDto = userPageMapper.toDto(userRepository.findUserByUsername("test_user").orElse(null));
 
         ImageDto imagedto = imageMapper.toDto(new Image("https://thispersondoesnotexist.com/image"));
 
-        userDto.setImages(List.of(imagedto));
-        userDto.setEmail("test@test.ru");
-        userDto.setPhone("123456789");
+        userPageDto.setImages(List.of(imagedto));
+        userPageDto.setEmail("test@test.ru");
+        userPageDto.setPhone("123456789");
 
-        assertEquals(userDto, userPageRestController.updateUser(userDto), "после обновления поля DTO не совпадают");
-        assertEquals(userDto, userMapper.toDto(userRepository.findUserByUsername(userDto.getUsername()).orElse(null)),
+        assertEquals(userPageDto, userPageRestController.updateUser(userPageDto), "после обновления поля DTO не совпадают");
+        assertEquals(userPageDto, userMapper.toDto(userRepository.findUserByUsername(userPageDto.getUsername()).orElse(null)),
                 "DTO неправильно сохранился в БД");
-
 
     }
 }

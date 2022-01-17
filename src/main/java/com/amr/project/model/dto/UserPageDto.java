@@ -1,18 +1,15 @@
 package com.amr.project.model.dto;
 
-import com.amr.project.converter.CategoryMapper;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.mapstruct.factory.Mappers;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Data
 @AllArgsConstructor
-public class UserDto {
+public class UserPageDto {
 
     private String email;
     private String username;
@@ -27,12 +24,8 @@ public class UserDto {
     private List<ImageDto> images;
     @JsonFormat(pattern="yyyy-MM-dd")
     private Date birthday;
-    private List<OrderDto> orders = new ArrayList<>();
-    private List<ShopDto> shops = new ArrayList<>();
-    private List<CategoryDto> categories = new ArrayList<>();
-    private final CategoryMapper categoryMapper = Mappers.getMapper(CategoryMapper.class);
 
-    public UserDto(String email, String username, String password, String phone, String firstName, String lastName) {
+    public UserPageDto(String email, String username, String password, String phone, String firstName, String lastName) {
         this.email = email;
         this.username = username;
         this.password = password;
@@ -41,7 +34,7 @@ public class UserDto {
         this.lastName = lastName;
     }
 
-    public UserDto() {
+    public UserPageDto() {
         this.email = "";
         this.username = "";
         this.password = "";
@@ -50,12 +43,13 @@ public class UserDto {
         this.lastName = "";
     }
 
-    public UserDto(String username, String password) {
+    public UserPageDto(String username, String password) {
         this.username = username;
         this.password = password;
     }
 
-    public UserDto(String email, String username, int age, String gender, String password, String phone, String firstName, String lastName) {
+    public UserPageDto(String email, String username, int age, String gender, String password, String phone,
+                   String firstName, String lastName) {
         this.email = email;
         this.username = username;
         this.age = age;
@@ -66,13 +60,10 @@ public class UserDto {
         this.lastName = lastName;
     }
 
-    public UserDto(List<CategoryDto> categories) {
-        this.categories = categories;
-    }
-
     public String getPassword() {
         return password;
     }
+
     public String getUsername() {
         return username;
     }
@@ -96,6 +87,7 @@ public class UserDto {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+
     public void setPassword(String password) {
         this.password = password;
     }

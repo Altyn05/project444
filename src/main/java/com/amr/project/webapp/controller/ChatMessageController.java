@@ -32,7 +32,6 @@ public class ChatMessageController {
 
     @MessageMapping("/ws")
     public void processMessage(@Payload ChatSTOMPMessage stompMessage, Principal principal  ) throws Exception {
-       // System.out.println(stompMessage.getMessage());
 
         Chat chat = chatService.getChatById(stompMessage.getChatId() );
 
