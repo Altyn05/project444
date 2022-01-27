@@ -1,5 +1,20 @@
 var user
 var tempUser
+const favoritesItem = document.getElementById('favoritesItem')
+
+
+favoritesItem.addEventListener('click', () => {
+    //тут запрос за избр
+    fetch('http://localhost:8888/favorites/all').then(res => {
+      return res
+
+    }).then(date=>{
+        console.log(date)
+    });
+    const items = document.getElementById('item')
+    items.innerHTML = '';
+})
+
 
 async function initUserPage() {
     user = await getUserPrincipal()

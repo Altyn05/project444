@@ -26,6 +26,7 @@ item.addEventListener('click', evt => {
     addToCart(itemId);
 })
 
+
 // Получения объекта item
 function getReviewForItem(id) {
     fetch("/item/findAll/" + id)
@@ -119,7 +120,7 @@ $.getJSON("/favorites/getIdItem", function(json) {
 });
 
 
-function newInFavorite() {
+function newInFavoriteItem() {
     let item = my_item;
     let shops = {
         id: my_item.shopId
@@ -130,7 +131,8 @@ function newInFavorite() {
 
     let items = [];
     items.push({
-        id: item.id})
+        id: item.id
+    })
     let users = {
         username: user.username,
         id: user.id

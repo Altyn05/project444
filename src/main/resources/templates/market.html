@@ -35,7 +35,7 @@
 
                 <button sec:authorize="isAuthenticated()" th:if="${shop.favorite != true}" id="newInFavoriteButtons"
                         type="submit" href="" class="btn btn-outline-warning mr-3"
-                        onclick="newInFavorite()"><i class="bi bi-heart-fill"></i>Добавить магазин в избранное
+                        onclick="newInFavoriteMarket()"><i class="bi bi-heart-fill"></i>Добавить магазин в избранное
                 </button>
 
                 <button sec:authorize="isAuthenticated()" th:if="${shop.favorite != false}" type="submit" href=""
@@ -348,6 +348,7 @@
 
                 </div>
                 <div class = "modal-footer">
+
 
                 </div>
             </div>

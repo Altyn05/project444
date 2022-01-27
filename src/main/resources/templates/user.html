@@ -35,7 +35,9 @@
                      src="https://seeklogo.com/images/S/shop-direct-logo-D86EF9FED5-seeklogo.com.png" alt="logo"/>
                 <a class="nav-link" href="#" onclick="openShops()">Магазины</a>
                 <a class="nav-link" href="/">Товары</a>
-                <a class="nav-link" href="#">Избранное</a>
+                <button id="favoritesItem" sec:authorize="isAuthenticated()" type="button" class="btn btn-outline-warning mr-3"
+                        data-toggle="modal" data-target="#Fav">
+                    <i class="bi bi-heart-fill"></i>Избранное</button>
                 <a class="nav-link" href="#">еще...</a>
             </div>
         </div>
@@ -65,7 +67,10 @@
                         </a>
                         <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarDarkDropdownMenuLink">
                             <li><a class="dropdown-item" href="/?openCart=YES">Корзина</a></li>
-                            <li><a class="dropdown-item" href="#">Избранное</a></li>
+                            <li><button sec:authorize="isAuthenticated()" type="button" class="btn btn-outline-warning mr-3"
+                                        data-toggle="modal" data-target="#Favorites">
+                                <i class="bi bi-heart-fill"></i>
+                            Избранное</button></li>
                             <li class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="#" onclick="openShops()">Мои Магазины</a></li>
                             <li><a class="dropdown-item" href="#" onclick="openOrders()">Мои Заказы</a></li>
@@ -472,6 +477,38 @@
     </div>
 </div>
 
+<div style="text-align: center;">
+    <div class="row justify-content-center align-items-center">
+        <form>
+            <div class="modal fade" id="Fav" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Избранное</h5>
+                            <button type="button" class="close" data-dismiss="modal">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <table class="table table-striped" id="favorites1" align="left">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Товары</th>
+                                    <th scope="col">Магазины</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <td id="item" style="text-align:left"></td>
+                                <td id="shops" style="text-align:left"></td>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 
 
 <!-- custom scripts -->

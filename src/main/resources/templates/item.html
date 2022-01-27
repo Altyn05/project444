@@ -67,15 +67,16 @@
                                            alt=""> <strong th:text="${item.printRating()}"></strong></span> <span
                 class="reviews mr-3"><a id="toReviews" href="" th:text="'Отзывы: ' + ${item.reviews.size()}"></a></span>
 
-            <button sec:authorize="isAuthenticated()" th:if="${item.favorite != true}" id="newInFavoriteButtons"
+            <button sec:authorize="isAuthenticated()" th:if="${item.favorite != true}" id="InFavoriteButtons"
                     type="submit" href="" class="btn btn-outline-warning mr-3"
-                    onclick="newInFavorite()"><i class="bi bi-heart-fill"></i>Добавить товар в избранное
+                    onclick="newInFavoriteItem()"><i class="bi bi-heart-fill"></i>Добавить товар в избранное
             </button>
 
             <button sec:authorize="isAuthenticated()" th:if="${item.favorite != false}" type="submit" href=""
                     class="btn btn-outline-warning mr-3"
                     onclick="deleteFavorite()"><i class="bi bi-heart-fill"></i>Удалить товар из избранного
             </button>
+
 
         </div>
         <div class="row">

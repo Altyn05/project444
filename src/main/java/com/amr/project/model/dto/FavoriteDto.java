@@ -15,7 +15,7 @@ public class FavoriteDto {
     private Long id;
 
     private List<ShopDto> shops;
-    @JsonIgnore(value = true)
+//    @JsonIgnore(value = true)
     private List<ItemDto> items;
     @JsonIgnore(value = true)
     private User user;

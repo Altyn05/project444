@@ -71,7 +71,7 @@ public class FavoriteRestController {
         }
         return new ResponseEntity<>(favoriteId, HttpStatus.OK);
     }
-
+@GetMapping("/all")
     public List<Favorite> getFavoriteList() {
         User user = rwUser.getByKey(User.class,
                 ((User) SecurityContextHolder.getContext().getAuthentication()

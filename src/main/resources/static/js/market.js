@@ -372,7 +372,7 @@ $.getJSON("/api/users/principal", function (json) {
     my_user = json;
 });
 
-function newInFavorite() {
+function newInFavoriteMarket() {
     let shop = my_shop;
     shop.favorite = true;
     let user_shop = {
